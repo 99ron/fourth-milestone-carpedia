@@ -1,0 +1,17 @@
+# The --watch flag is optional.
+sass --watch ./static/css/style.css ./static/css/style.scss
+
+# Create a requirements file
+pip3 freeze --local > requirements.txt
+
+# Create a Procfile
+echo web: python app.py > Procfile
+
+# Get Dyno's running
+$ heroku ps:scale web=1
+
+# ignore files for git committing. Example of all .sql files.
+echo '*.sql' >> .gitignore
+
+# create a populated database from an sql schema
+mysql -u $C9_USER -p < *sql name*

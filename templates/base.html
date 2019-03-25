@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/home" class="brand-logo">Carpedia<i class="material-icons dash-logo right">commute</i></a>
+                <div class="menu-button">
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                </div>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/home">Home<i class="material-icons right">home</i></a></li>
+                    <li><a href="/summary">Summary<i class="material-icons right">view_list</i></a></li>
+                    <li><a href="/filter-cars">Search Database<i class="material-icons right">data_usage</i></a></li>
+                    <li><a href="/add-vehicle">Add a Vehicle<i class="material-icons right">add_box</i></a></li>
+                    <li><a href="/edit-vehicle">Edit a Vehicle<i class="material-icons right">build</i></a></li>
+                    <li><a href="/logout">Logout<i class="material-icons right">person</i></a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="/home">Home<i class="material-icons right">home</i></a></li>
+                    <li><a href="/summary">Summary<i class="material-icons right">view_list</i></a></li>
+                    <li><a href="/filter-cars">Search Database<i class="material-icons right">data_usage</i></a></li>
+                    <li><a href="/add-vehicle">Add a Vehicle<i class="material-icons right">add_box</i></a></li>
+                    <li><a href="/edit-vehicle">Edit a Vehicle<i class="material-icons right">build</i></a></li>
+                    <li><a href="/logout">Logout<i class="material-icons right">person</i></a></li>
+                </ul>
+            </div>
+        </nav>
+</header>
+
+<div class="container">
+    {% block content %}
+    
+    {% endblock %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="/static/js/scripts.js"></script>
+    
+</body>
+</html>
