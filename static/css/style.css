@@ -2,10 +2,34 @@
     Variables
 -------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------
+    Miscellaneous 
+-------------------------------------------------------------------------*/
+.text-colour-black {
+  color: black; }
+
+/*-------------------------------------------------------------------------
     Nav bar
 -------------------------------------------------------------------------*/
 .nav-bg-colour {
-  background-colour: #90caf9; }
+  background-color: #90caf9; }
+
+/*-------------------------------------------------------------------------
+    Body
+-------------------------------------------------------------------------*/
+.login-bg {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/images/login-bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+
+.user-details-container {
+  text-align: center;
+  color: #FFF; }
+
+.login-container {
+  display: inline-block;
+  padding: 32px 48px;
+  border: 1px solid #EEE; }
 
 /*# sourceMappingURL=style.css.map */
-

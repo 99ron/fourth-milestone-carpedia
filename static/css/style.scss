@@ -2,6 +2,17 @@
     Variables
 -------------------------------------------------------------------------*/
 $nav-bg-colour: #90caf9;
+$border-colour: #EEE;
+$text-colour: #FFF;
+
+/*-------------------------------------------------------------------------
+    Miscellaneous 
+-------------------------------------------------------------------------*/
+
+.text-colour-black {
+   color: black; 
+}
+
 
 /*-------------------------------------------------------------------------
     Nav bar
@@ -15,3 +26,24 @@ $nav-bg-colour: #90caf9;
 /*-------------------------------------------------------------------------
     Body
 -------------------------------------------------------------------------*/
+
+// Background image for login/registration page with tint.
+.login-bg {
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+    url('/static/images/login-bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.user-details-container {
+    text-align: center;
+    color: $text-colour;
+}
+
+.login-container {
+    display: inline-block; 
+    padding: 32px 48px; 
+    border: 1px solid $border-colour;
+}
