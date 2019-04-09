@@ -13,16 +13,12 @@
 .nav-bg-colour {
   background-color: #90caf9; }
 
+.brand-logo {
+  margin-left: 10px; }
+
 /*-------------------------------------------------------------------------
     Body
 -------------------------------------------------------------------------*/
-.login-bg {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/images/login-bg.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; }
-
 .user-details-container {
   text-align: center;
   color: #FFF; }
@@ -31,5 +27,31 @@
   display: inline-block;
   padding: 32px 48px;
   border: 1px solid #EEE; }
+
+/*-------------------------------------------------------------------------
+    Images
+-------------------------------------------------------------------------*/
+.login-bg {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/images/login-bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+
+.homepage-image {
+  background-image: url(/static/images/hp-image.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 355px;
+  width: 100%;
+  overflow: hidden; }
+
+.summary-image {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/static/images/summary-image.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
+  width: 100%;
+  overflow: hidden; }
 
 /*# sourceMappingURL=style.css.map */

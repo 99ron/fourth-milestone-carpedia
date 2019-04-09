@@ -24,10 +24,9 @@ def login():
 def index():
     return render_template('register.html')
 
-@app.route('/welcome', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def welcome():
-    return render_template('base.html')
-
+    return render_template('home.html')
 
 @app.route('/check-user-credentials', methods=['GET','POST'])
 def checkuser():
@@ -37,7 +36,7 @@ def checkuser():
         login = Users.query.filter_by(username=uname, password=pword).first()
         
         if login is not None:
-            return redirect (url_for('welcome'))
+            return redirect (url_for('home'))
            # flash('wrong password')
         return render_template('login.html')
 

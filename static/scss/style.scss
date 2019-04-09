@@ -22,9 +22,30 @@ $text-colour: #FFF;
      background-color: $nav-bg-colour;
 }
 
+.brand-logo {
+    margin-left: 10px;
+}
 
 /*-------------------------------------------------------------------------
     Body
+-------------------------------------------------------------------------*/
+
+
+
+.user-details-container {
+    text-align: center;
+    color: $text-colour;
+}
+
+.login-container {
+    display: inline-block; 
+    padding: 32px 48px; 
+    border: 1px solid $border-colour;
+}
+
+
+/*-------------------------------------------------------------------------
+    Images
 -------------------------------------------------------------------------*/
 
 // Background image for login/registration page with tint.
@@ -37,13 +58,23 @@ $text-colour: #FFF;
     background-size: cover;
 }
 
-.user-details-container {
-    text-align: center;
-    color: $text-colour;
+
+.homepage-image {
+    background-image: url(/static/images/hp-image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 355px;
+    width: 100%;
+    overflow: hidden;
 }
 
-.login-container {
-    display: inline-block; 
-    padding: 32px 48px; 
-    border: 1px solid $border-colour;
+
+.summary-image {
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+    url(/static/images/summary-image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
 }
