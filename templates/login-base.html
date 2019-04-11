@@ -24,6 +24,15 @@
     </main>
 </div>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-message">
+    {% for message in messages %}
+      <li><h5>{{ message }}</h5></li>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
 <!--Load the required scripts, jQuery before materialize. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
