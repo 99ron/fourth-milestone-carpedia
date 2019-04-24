@@ -1,7 +1,7 @@
 # Test app.py 
 import os
 import sys
-from forms import LoginForm
+from forms import LoginForm, RegisterForm
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, request, url_for, flash, session
 from sqlalchemy.orm import sessionmaker
@@ -36,7 +36,8 @@ def login():
 
 @app.route('/register')
 def index():
-    return render_template('register.html')
+    form = LoginForm()
+    return render_template('register.html', form=form)
 
 @app.route('/logout')
 def logout():
@@ -47,7 +48,7 @@ def logout():
     
     if session.get('logged_in'):
         session['logged_in'] = False
-        return login()
+        return home()
     else:
         flash("You're not logged in..." )
         return login()
@@ -63,42 +64,28 @@ def checkuser():
         user = Users.query.filter_by(username = form.username.data, password = form.password.data).first()
         
         if user is not None:
-            
             session['logged_in'] = True
             session['username'] = user.username
         else:
             flash('Wrong username or password, Try again.')
             return render_template('login.html', form=form)
         return redirect(url_for('home'))
-    
-    '''
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    
-        if user is not None:
-            login_user(user)
-            return render_template('home.html')
-    return render_template('home.html')
-    '''    
-    
-        
+
 @app.route('/register-user/', methods=['GET', 'POST'])
 def register():
 	
 	# This attempts to create a new user in the 'Users' table.
 	# If the user already exists it'll flash a message and ask to try again.
-	
-    try: 
+    form = RegisterForm()
+    try:
         if request.method == 'POST':
-	        uname = request.form['username']
-	        pword = request.form['password']
-	        new_user = Users(username = uname, password = pword)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
+            new_user = Users(username=form.username.data, password=form.password.data)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('login'))
     except:
         flash('This user already exists, try another.')
-        return render_template('register.html')
+        return render_template('register.html', form=form)
 
     
 @app.route('/add-vehicle')
