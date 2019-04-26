@@ -1,7 +1,7 @@
 # Test app.py 
 import os
 import sys
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, CarToDatabase
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, request, url_for, flash, session
 from sqlalchemy.orm import sessionmaker
@@ -14,7 +14,6 @@ app.secret_key = os.urandom(12)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
 
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
@@ -31,8 +30,11 @@ def home():
         
 @app.route('/login')
 def login():
-    form = LoginForm()
-    return render_template('login.html', form=form)
+    if session.get('logged_in'):
+        return redirect (url_for('home'))
+    else:
+        form = LoginForm()
+        return render_template('login.html', form=form)
 
 @app.route('/register')
 def index():
@@ -67,7 +69,7 @@ def checkuser():
             session['logged_in'] = True
             session['username'] = user.username
         else:
-            flash('Wrong username or password, Try again.')
+            flash('Wrong username or password')
             return render_template('login.html', form=form)
         return redirect(url_for('home'))
 
@@ -90,50 +92,38 @@ def register():
     
 @app.route('/add-vehicle')
 def addVehicle():
-    regions = Region.query.all()
-    makes = Make.query.all()
-    trans = Trans.query.all()
-    drives = Drive.query.all()
-    chassy = Chassy_Type.query.all()
-    return render_template('add-vehicle.html',
-                            region=regions, 
-                            make=makes,
-                            trans=trans,
-                            drives=drives,
-                            chassy=chassy)
-
+    
+    if not session.get('logged_in'):
+        form = LoginForm()
+        return render_template('login.html', form=form)
+    else:
+        form = CarToDatabase()
+        return render_template('add-vehicle.html', form=form)
 
 @app.route('/add-vehicle-to-db', methods=['GET', 'POST'])
 def addVehicleToDB():
-    
-    if request.method== 'POST':
-            _region = request.form.get('form_region')
-            _make = request.form.get('form_make')
-            _model = request.form.get('form_model')
-            _image = request.form.get('form_image')
-            _model_year = request.form.get('form_year')
-            _trans = request.form.get('form_trans')
-            _drive = request.form.get('form_drive')
-            _body = request.form.get('form_body')
-            _stats_hp = request.form.get('form_stats_hp')
-            _stats_torque = request.form.get('form_stats_torque')
-            _stats_accel = request.form.get('form_stats_accel')
+    form = CarToDatabase()
+    if request.method == 'POST':
+        user = session['username']
+        
+        add_car = Car(region=form.region.data,
+                      make=form.make.data,
+                      model=form.model.data,
+                      model_year=form.year.data,
+                      trans=form.trans.data,
+                      hp_amount=form.hp.data,
+                      torque_amount=form.torque.data,
+                      drivetrain=form.drive.data,
+                      chassy_desc=form.body.data,
+                      accel_time=form.accel.data,
+                      img_url=form.car_img.data,
+                      upload_by=user)
+                      
     try:
-        new_car = Car(region_name = _region,
-        make_name = _make,
-        model_name = _model,
-        img_url = _image,
-        model_year_num = _model_year,
-        trans_id = _trans,
-        drive_id = _drive,
-        body_id = _body,
-        hp_amount = _stats_hp,
-        torque_amount = _stats_torque,
-        accel_time = _stats_accel)
-        db.session.add(new_car)
+        db.session.add(add_car)
         db.session.commit()
         flash('Vehicle added to database.')
-        return render_template('add-vehicle.html')
+        return redirect(url_for('addVehicle'))
     except:
         flash("This vehicle couldn't be added. Try another")
         return redirect(url_for('addVehicle'))
@@ -142,7 +132,6 @@ def addVehicleToDB():
 
 
 if __name__ == '__main__':
-    
     app.run(host=os.environ.get('IP'),
     port=int(os.environ.get('PORT')),
 debug=True)
