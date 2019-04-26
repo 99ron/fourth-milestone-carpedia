@@ -1,18 +1,31 @@
 from app import db
+from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
-    
 
-class Users(db.Model):
+
+class Users(db.Model, UserMixin):
     __tablename__ = 'users'
-    user_id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(15), unique = True)
     password = db.Column(db.String(15))
     cars = db.relationship('Car', backref='users_car', lazy=True)
 
+    def is_authenticated(self):
+        return True
 
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+        
+       
 class Popularity(db.Model):
     __tablename__ = 'popularity'
-    pop_id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key = True)
     pop_num = db.Column(db.Integer)
     pops = db.relationship('Car', backref='car_pop')
 
@@ -32,8 +45,8 @@ class Car(db.Model):
     accel_time = db.Column(db.Integer, nullable=False)
     img_url = db.Column(db.String(250))
     upload_by = db.Column(db.String(30), nullable=False)
-    users_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    pop_id = db.Column(db.Integer, db.ForeignKey('popularity.pop_id'))
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pop_id = db.Column(db.Integer, db.ForeignKey('popularity.id'))
     
     
     
