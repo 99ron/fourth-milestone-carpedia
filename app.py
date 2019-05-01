@@ -2,10 +2,10 @@
 import os
 import sys
 from flask_login import current_user, login_user, LoginManager, login_required, logout_user
-from forms import LoginForm, RegisterForm, CarToDatabase
+from forms import LoginForm, RegisterForm, CarToDatabase, FilterCars, CsrfProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, request, url_for, flash, session
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, load_only
 from models import *
 
 # DB_URI = 'mysqldb://bd6203f445759d:3f8eca2f@eu-cdbr-west-02.cleardb.net/heroku_1146a0b312400c5?reconnect=true'
@@ -16,11 +16,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+CsrfProtect(app)
 db = SQLAlchemy(app)
 
 @login_manager.user_loader
-def load_user(id):
-    return Users.query.get(int(id))
+def load_user(username):
+    return Users.query.get(int(username))
 
 
 
@@ -47,6 +48,7 @@ def login():
 def index():
     form = LoginForm()
     return render_template('register.html', form=form)
+
 
 
 @app.route('/logout')
@@ -97,9 +99,13 @@ def register():
     try:
         if request.method == 'POST':
             new_user = Users(username=form.username.data, password=form.password.data)
-            db.session.add(new_user)
-            db.session.commit()
-            return redirect(url_for('login'))
+            if not new_user:
+                flash('This user already exists.')
+                return render_template('register.html', form=form)
+            else:
+                db.session.add(new_user)
+                db.session.commit()
+                return redirect(url_for('login'))
     except:
         flash('This user already exists.')
         return render_template('register.html', form=form)
@@ -111,10 +117,12 @@ def addVehicle():
         form = CarToDatabase()
         return render_template('add-vehicle.html', form=form)
 
+
 @app.route('/add-vehicle-to-db', methods=['GET', 'POST'])
 @login_required
 def addVehicleToDB():
     form = CarToDatabase()
+    print(form.errors)
     if request.method == 'POST':
         
         add_car = Car(region=form.region.data,
@@ -126,9 +134,10 @@ def addVehicleToDB():
                       torque_amount=form.torque.data,
                       drivetrain=form.drive.data,
                       chassy_desc=form.body.data,
+                      desc=form.desc.data,
                       accel_time=form.accel.data,
                       img_url=form.car_img.data,
-                      upload_by=user_id)
+                      upload_by=Users.get_id(current_user))
                       
     try:
         db.session.add(add_car)
@@ -139,10 +148,54 @@ def addVehicleToDB():
         flash("This vehicle couldn't be added. Try another")
         return redirect(url_for('addVehicle'))
 
+@app.route('/summary')
+@login_required
+def summary():
+    vehicles = Car.query.all()
+    return render_template('summary.html', vehicles=vehicles)
 
 
+@app.route('/filter-cars', methods=['GET', 'POST'])
+#@login_required
+def filter():
+    form = FilterCars()
+    region = form.region.data
+    drive = form.drive.data
+    
+    # If POST it validates the form and pushes the request.
+    if request.method == 'POST' and form.validate_on_submit():
+        
+        # Checks what the SelectFields data is set to and if region is left on
+        # 'All' then it will filter by the drivetrain data. 
+        if region == 'All' and drive != 'All': 
+            _car = Car.query.filter_by(drivetrain=drive).all()
+            return render_template('filter-cars.html', form=form, cars=_car)
+        
+        # As above, it's the reversal of what's being checked and if drive is left
+        # on 'All' then it will filter by region.
+        elif drive == 'All' and region != 'All':
+            _car = Car.query.filter_by(region=region).all()
+            return render_template('filter-cars.html', form=form, cars=_car)
+        
+        # If both SelectFields are left on 'All', pulls all information from the
+        # database to be displayed.
+        if (    region == 'All' 
+        and     drive == 'All'
+           ):
+            _car = Car.query.all()
+            return render_template('filter-cars.html', form=form, cars=_car) 
+            
+            # If both SelectFields are set to specified data from the list it will
+            # pull the filtered data as requested.
+        else:
+            _car = Car.query.filter_by(region=region, drivetrain=drive).all() 
+            return render_template('filter-cars.html', form=form, cars=_car)
+    return render_template('filter-cars.html', form=form)
 
+    
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
     port=int(os.environ.get('PORT')),
 debug=True)
+
+#and body and trans and drive
