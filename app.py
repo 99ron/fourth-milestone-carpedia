@@ -6,6 +6,7 @@ from forms import LoginForm, RegisterForm, CarToDatabase, FilterCars, CsrfProtec
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, request, url_for, flash, session
 from sqlalchemy.orm import sessionmaker, load_only
+from werkzeug.utils import secure_filename
 from models import *
 
 # DB_URI = 'mysqldb://bd6203f445759d:3f8eca2f@eu-cdbr-west-02.cleardb.net/heroku_1146a0b312400c5?reconnect=true'
@@ -23,7 +24,9 @@ db = SQLAlchemy(app)
 def load_user(username):
     return Users.query.get(int(username))
 
-
+def allowed_file(filename):
+    return '.' in filename and \
+    filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
@@ -124,7 +127,6 @@ def addVehicleToDB():
     form = CarToDatabase()
     print(form.errors)
     if request.method == 'POST':
-        
         add_car = Car(region=form.region.data,
                       make=form.make.data,
                       model=form.model.data,
@@ -134,7 +136,7 @@ def addVehicleToDB():
                       torque_amount=form.torque.data,
                       drivetrain=form.drive.data,
                       chassy_desc=form.body.data,
-                      desc=form.desc.data,
+                      car_desc=form.car_desc.data,
                       accel_time=form.accel.data,
                       img_url=form.car_img.data,
                       upload_by=Users.get_id(current_user))
@@ -161,8 +163,9 @@ def filter():
     form = FilterCars()
     region = form.region.data
     drive = form.drive.data
+    cars = Car.query.all()
     
-    # If POST it validates the form and pushes the request.
+    # If POST this then validates the form and pushes the request.
     if request.method == 'POST' and form.validate_on_submit():
         
         # Checks what the SelectFields data is set to and if region is left on
@@ -179,9 +182,7 @@ def filter():
         
         # If both SelectFields are left on 'All', pulls all information from the
         # database to be displayed.
-        if (    region == 'All' 
-        and     drive == 'All'
-           ):
+        elif ( region == 'All' and drive == 'All' ):
             _car = Car.query.all()
             return render_template('filter-cars.html', form=form, cars=_car) 
             
@@ -190,12 +191,19 @@ def filter():
         else:
             _car = Car.query.filter_by(region=region, drivetrain=drive).all() 
             return render_template('filter-cars.html', form=form, cars=_car)
-    return render_template('filter-cars.html', form=form)
-
     
+    # When the page loads it requests all cars from the database to display.
+    return render_template('filter-cars.html', form=form, cars=cars)
+
+
+@app.route('/vehicle/<int:car_id>', methods=['POST', 'GET'])
+#@login_required
+def vehicleInfo(car_id):
+    vehicles=Car.query.filter_by(id=car_id).first()
+    return render_template("vehicle-info.html", vehicles=vehicles) 
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
     port=int(os.environ.get('PORT')),
 debug=True)
-
-#and body and trans and drive
