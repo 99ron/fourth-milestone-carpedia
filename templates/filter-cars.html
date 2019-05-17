@@ -24,13 +24,13 @@
         <div class="row">
             <div class="center-align">
                 <div class="row">
-                    <div class="input-field col s6 m3">
+                    <div class="input-field col s12 m4">
                         {{ form.region.label }}<br> {{ form.region }}
                     </div>
-                    <div class="input-field col s6 m3">
+                    <div class="input-field col s12 m4">
                         {{ form.drive.label }}<br> {{ form.drive }}
                     </div>
-                    <div class="submit col s6 m3">
+                    <div class="submit col s12 m4">
                         <br>{{ form.submit(class='col s12 btn btn-large waves-effect blue lighten-1') }}
                     </div>
     
@@ -38,33 +38,78 @@
             </div>
         </div>
     </form>
+    
+    
     {% for car in cars %}
     <div class="col s12 m12 l12 xl6">
     
-        <div class="z-depth-3 grey lighten-4 row form-padding">
+        <div class="z-depth-3 grey lighten-4 box-padding">
             <div class="container">
                 <div class="row">
-                    <div class="s12 summary-image">
-                        {% if car.img_url %} 
-                            {{ car.img_url }} 
+                    <div class="col s12 summary-images z-depth-2">
+                        {% if car.img_url %}
+                            <img src= {{ car.img_url }} >
                         {% else %}
-                            <img src="./static/images/no_img.jpg"> 
+                            <img src="/static/images/vehicles/no_img.jpg"> 
                         {% endif %}
                     </div>
-                </div>
-                <div class- "row">
-                    <div class="s6 summary-make">
-                        {{ car.make }}
-                        {{ car.model }}
+                
+                    <div class="col s12 summary-make-model center">
+                        <h4>{{ car.make }} {{ car.model }}</h4>
                     </div>
-                    <div class-"s6 summary-modrl">
-                        
+                
+                    <div class="col s6 summary-year center">
+                        <p>Year: 
+                        {{ car.model_year }}
+                        </p>
+                    </div>
+                    
+                    <div class="col s6 summary-trans center">
+                        <p>Transmission:<br>
+                        {{ car.trans }} 
+                        </p>
+                    </div>
+                    
+                    <div class="col s6 summary-drive center">
+                        <p>Drivetrain: 
+                        {{ car.drivetrain }}
+                        </p>
+                    </div>
+                    
+                    <div class="col s6 summary-chassy center">
+                        <p>Body Type: <br>
+                        {{ car.chassy_desc }}</p>
+                    </div>
+                    
+                    <div class="col s6 summary-hp center">
+                        <p>HP: 
+                        {{ car.hp_amount }} BHP</p>
+                    </div>
+                    
+                    <div class="col s6 summary-torque center">
+                        <p>Torque: 
+                        {{ car.torque_amount }} lb-ft</p>
+                    </div>
+                    
+                    <div class="col s12 summary-more-info center">
+                        <a href="{{url_for('vehicleInfo', car_id=car.id)}}" class="waves-effect waves-light btn blue"><i class="material-icons right">description</i>More Info</a>
                     </div>
                 </div>
             </div>
         </div>
     
     </div>
+    {% else %}
+        <div class="col s12">
+            <div class="z-depth-3 grey lighten-4 row form-padding">
+                <div class="container">
+                    <div class="row">
+                       <h3 class="filter-no-results center-align">No Results for this Criteria!</h3>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
     {% endfor %}
     </div>
     {% endblock %}

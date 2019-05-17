@@ -68,6 +68,16 @@
   .summary-stats-table > table td {
     width: 50%; }
 
+.edit-stats-table > table {
+  border-collapse: collapse;
+  table-layout: auto; }
+  .edit-stats-table > table td {
+    width: 50%; }
+
+.box-padding {
+  padding: 10px;
+  margin: 10px; }
+
 /*-------------------------------------------------------------------------
     Images
 -------------------------------------------------------------------------*/
@@ -120,6 +130,12 @@
 .summary-images > img {
   width: 100%;
   height: 100%;
-  object-fit: cover; }
+  object-fit: contain;
+  border: 1px black solid; }
+
+.edit-images > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; }
 
 /*# sourceMappingURL=style.css.map */

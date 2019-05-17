@@ -9,12 +9,15 @@ from sqlalchemy.orm import sessionmaker, load_only
 from werkzeug.utils import secure_filename
 from models import *
 
+UPLOAD_FOLDER = './static/images/vehicles'
+
 # DB_URI = 'mysqldb://bd6203f445759d:3f8eca2f@eu-cdbr-west-02.cleardb.net/heroku_1146a0b312400c5?reconnect=true'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 CsrfProtect(app)
@@ -23,10 +26,6 @@ db = SQLAlchemy(app)
 @login_manager.user_loader
 def load_user(username):
     return Users.query.get(int(username))
-
-def allowed_file(filename):
-    return '.' in filename and \
-    filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
@@ -117,16 +116,14 @@ def register():
 @app.route('/add-vehicle')
 @login_required
 def addVehicle():
-        form = CarToDatabase()
-        return render_template('add-vehicle.html', form=form)
-
-
-@app.route('/add-vehicle-to-db', methods=['GET', 'POST'])
-@login_required
-def addVehicleToDB():
     form = CarToDatabase()
-    print(form.errors)
-    if request.method == 'POST':
+    
+    if request.method == 'POST' and form.validate_on_submit():
+        
+        file_img = form.car_img.data
+        filename = secure_filename(file_img.filename)
+        car_img_url = '/static/images/vehicles/' + filename
+        
         add_car = Car(region=form.region.data,
                       make=form.make.data,
                       model=form.model.data,
@@ -138,17 +135,21 @@ def addVehicleToDB():
                       chassy_desc=form.body.data,
                       car_desc=form.car_desc.data,
                       accel_time=form.accel.data,
-                      img_url=form.car_img.data,
-                      upload_by=Users.get_id(current_user))
+                      img_url=car_img_url,
+                      upload_by=current_user.username)
                       
-    try:
-        db.session.add(add_car)
-        db.session.commit()
-        flash('Vehicle added to database.')
-        return redirect(url_for('addVehicle'))
-    except:
-        flash("This vehicle couldn't be added. Try another")
-        return redirect(url_for('addVehicle'))
+        try:
+            db.session.add(add_car)
+            db.session.commit()
+            file_img.save(os.path.join( UPLOAD_FOLDER, filename))
+            flash('Vehicle added to database.')
+            return redirect(url_for('filter'))
+        except:
+            flash("This vehicle couldn't be added, try again.")
+            return redirect(url_for('addVehicle'))
+    else:
+        form = CarToDatabase()
+        return render_template('add-vehicle.html', form=form)
 
 @app.route('/summary')
 @login_required
@@ -202,6 +203,61 @@ def vehicleInfo(car_id):
     vehicles=Car.query.filter_by(id=car_id).first()
     return render_template("vehicle-info.html", vehicles=vehicles) 
 
+@app.route('/vehicle/edit/<int:car_id>', methods=['POST', 'GET'])
+#@login_required
+def editVehicle(car_id):
+    form = CarToDatabase()
+    vehicles=Car.query.filter_by(id=car_id).one()
+    
+    if request.method == 'GET':
+        
+        form.region.data = vehicles.region
+        form.make.data = vehicles.make
+        form.model.data = vehicles.model
+        form.hp.data = vehicles.hp_amount
+        form.torque.data = vehicles.torque_amount
+        form.year.data = vehicles.model_year
+        form.trans.data = vehicles.trans
+        form.drive.data = vehicles.drivetrain
+        form.body.data = vehicles.chassy_desc
+        form.accel.data = vehicles.accel_time
+        form.car_desc.data = vehicles.car_desc
+        
+        
+        return render_template("edit-vehicle.html", form=form, vehicles=vehicles)
+
+    if request.method == 'POST':
+        
+        file_img = form.car_img.data
+        filename = secure_filename(file_img.filename)
+        car_img_url = '/static/images/vehicles/' + filename
+        
+        vehicles.region = form.region.data
+        vehicles.make = form.make.data
+        vehicles.model = form.model.data
+        vehicles.hp_amount = form.hp.data
+        vehicles.torque_amount = form.torque.data
+        vehicles.model_year = form.year.data
+        vehicles.trans = form.trans.data
+        vehicles.drivetrain = form.drive.data
+        vehicles.chassy_desc = form.body.data
+        vehicles.accel_time = form.accel.data
+        vehicles.car_desc = form.car_desc.data
+        vehicles.img_url = car_img_url
+    
+    try:
+        form.populate_obj(vehicles)
+        db.session.merge(vehicles)
+        db.session.commit()
+        file_img.save(os.path.join( UPLOAD_FOLDER, filename))
+        flash('Vehicle updated sucessfully!')
+        return redirect(url_for('filter'))
+        
+    except:
+        flash('Error occured, try again.')
+        return render_template("edit-vehicle.html", form=form, vehicles=vehicles) 
+        
+        
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
