@@ -85,7 +85,8 @@
                 <div class="col s12 summary-buttons center">
                     {% if current_user.username == vehicles.upload_by %}
                         <button class="btn btn-large waves-effect blue lighten-1" onclick="window.history.back()">Back<i class="material-icons left">arrow_back</i></button>
-                        <a href="{{url_for('editVehicle', car_id=vehicles.id, vehicles=vehicles)}}" class="waves-effect waves-light btn btn-large blue lighten-1"><i class="material-icons right">build</i>Edit</a>
+                        <a href="{{url_for('editVehicle', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn btn-large blue lighten-1"><i class="material-icons right">build</i>Edit</a>
+                        <a href="{{url_for('deleteVehicle', car_id=vehicles.id)}}" class="waves-effect waves-light btn btn-large blue lighten-1">Delete</a>
                     {% else %}
                         <button class="btn btn-large waves-effect blue lighten-1" onclick="window.history.back()">Back<i class="material-icons left">arrow_back</i></button>
                     {% endif %}           

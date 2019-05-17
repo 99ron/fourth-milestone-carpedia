@@ -63,7 +63,7 @@ def logout():
     
     form = LoginForm()
     user = current_user
-    user.authenticated = False
+    user.is_authenticated = False
     logout_user()
     return render_template('login.html', form=form)
     
@@ -197,15 +197,15 @@ def filter():
     return render_template('filter-cars.html', form=form, cars=cars)
 
 
-@app.route('/vehicle/<int:car_id>', methods=['POST', 'GET'])
+@app.route('/vehicle/<int:car_id>', methods=['GET'])
 #@login_required
 def vehicleInfo(car_id):
     vehicles=Car.query.filter_by(id=car_id).first()
     return render_template("vehicle-info.html", vehicles=vehicles) 
 
-@app.route('/vehicle/edit/<int:car_id>', methods=['POST', 'GET'])
+@app.route('/vehicle/edit/<int:car_id>/<vehicleName>', methods=['POST', 'GET'])
 #@login_required
-def editVehicle(car_id):
+def editVehicle(car_id, vehicleName):
     form = CarToDatabase()
     vehicles=Car.query.filter_by(id=car_id).one()
     
@@ -257,7 +257,22 @@ def editVehicle(car_id):
         flash('Error occured, try again.')
         return render_template("edit-vehicle.html", form=form, vehicles=vehicles) 
         
-        
+@app.route('/delete/<int:car_id>', methods=['GET'])       
+def deleteVehicle(car_id):
+    if request.method == 'GET':
+        car_id = db.session.query(Car).filter_by(id=car_id).first()
+        db.session.delete(car_id)
+        db.session.commit()
+        try:
+            
+            
+            flash('Vehicle successfully deleted.')
+            return redirect(url_for('filter'))
+        except:
+            db.session.rollback()
+            flash('Error occured, try again.')
+            return redirect(url_for('filter'))
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
