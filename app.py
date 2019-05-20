@@ -2,7 +2,7 @@
 import os
 import sys
 from flask_login import current_user, login_user, LoginManager, login_required, logout_user
-from forms import LoginForm, RegisterForm, CarToDatabase, FilterCars, CsrfProtect
+from forms import LoginForm, RegisterForm, CarToDatabase, FilterCars, CsrfProtect, EditCar
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, request, url_for, flash, session
 from sqlalchemy.orm import sessionmaker, load_only
@@ -28,15 +28,6 @@ def load_user(username):
     return Users.query.get(int(username))
 
 @app.route('/')
-@app.route('/home', methods=['GET', 'POST'])
-@login_required
-def home():
-    
-    # Checks to see if the user is logged in, if not send user to the login screen.
-    # If the user is then sends to the homepage.
-    
-    return render_template('home.html')
-       
 @app.route('/login')
 def login():
     form = LoginForm()
@@ -46,12 +37,19 @@ def login():
         return render_template('login.html', form=form)
 
 
+@app.route('/home', methods=['GET', 'POST'])
+@login_required
+def home():
+    # Checks to see if the user is logged in, if not send user to the login screen.
+    # If the user is then sends to the homepage.
+    
+    return render_template('home.html')
+       
+
 @app.route('/register')
 def index():
     form = LoginForm()
     return render_template('register.html', form=form)
-
-
 
 @app.route('/logout')
 @login_required
@@ -70,11 +68,12 @@ def logout():
 
 @app.route('/check-user-credentials', methods=['GET','POST'])
 def checkuser():
-    
+    form = LoginForm()
+    if request.method == "GET":
+        return render_template('login.html', form=form)
     # Checks the users credentials against the 'Users' table.
     # If none match then flashes a message and asks to try again.
     if request.method == "POST":
-        form = LoginForm()
         user = Users.query.filter_by(username = form.username.data).first()
         credentials = Users.query.filter_by(username = form.username.data, password = form.password.data).first()
         if user:
@@ -83,7 +82,7 @@ def checkuser():
                 login_user(user, remember=False)
                 return redirect((url_for('home')))
             else:
-                flash('Wrong username or password')
+                flash('Wrong password.')
                 return render_template('login.html', form=form)
         else:
             flash("Username doesn't exist.")
@@ -111,7 +110,6 @@ def register():
     except:
         flash('This user already exists.')
         return render_template('register.html', form=form)
-
     
 @app.route('/add-vehicle')
 @login_required
@@ -119,10 +117,17 @@ def addVehicle():
     form = CarToDatabase()
     
     if request.method == 'POST' and form.validate_on_submit():
-        
         file_img = form.car_img.data
-        filename = secure_filename(file_img.filename)
-        car_img_url = '/static/images/vehicles/' + filename
+        
+        if file_img:
+            filename = secure_filename(file_img.filename)
+            car_img_url = '/static/images/vehicles/' + filename
+            try:
+                file_img.save(os.path.join( UPLOAD_FOLDER, filename))
+            except:
+                return
+        else:
+            car_img_url = '/static/images/vehicles/no_img.jpg'
         
         add_car = Car(region=form.region.data,
                       make=form.make.data,
@@ -141,7 +146,6 @@ def addVehicle():
         try:
             db.session.add(add_car)
             db.session.commit()
-            file_img.save(os.path.join( UPLOAD_FOLDER, filename))
             flash('Vehicle added to database.')
             return redirect(url_for('filter'))
         except:
@@ -206,7 +210,7 @@ def vehicleInfo(car_id):
 @app.route('/vehicle/edit/<int:car_id>/<vehicleName>', methods=['POST', 'GET'])
 #@login_required
 def editVehicle(car_id, vehicleName):
-    form = CarToDatabase()
+    form = EditCar()
     vehicles=Car.query.filter_by(id=car_id).one()
     
     if request.method == 'GET':
@@ -226,12 +230,21 @@ def editVehicle(car_id, vehicleName):
         
         return render_template("edit-vehicle.html", form=form, vehicles=vehicles)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate_on_submit():
         
+        vehicleImage = vehicles.img_url 
         file_img = form.car_img.data
-        filename = secure_filename(file_img.filename)
-        car_img_url = '/static/images/vehicles/' + filename
         
+        if file_img:
+            filename = secure_filename(file_img.filename)
+            car_img_url = '/static/images/vehicles/' + filename
+            try:
+                file_img.save(os.path.join( UPLOAD_FOLDER, filename))
+            except:
+                return
+        else:
+            car_img_url = vehicleImage
+           
         vehicles.region = form.region.data
         vehicles.make = form.make.data
         vehicles.model = form.model.data
@@ -249,23 +262,21 @@ def editVehicle(car_id, vehicleName):
         form.populate_obj(vehicles)
         db.session.merge(vehicles)
         db.session.commit()
-        file_img.save(os.path.join( UPLOAD_FOLDER, filename))
         flash('Vehicle updated sucessfully!')
         return redirect(url_for('filter'))
         
     except:
-        flash('Error occured, try again.')
+        flash('Invalid Input.')
         return render_template("edit-vehicle.html", form=form, vehicles=vehicles) 
         
 @app.route('/delete/<int:car_id>', methods=['GET'])       
 def deleteVehicle(car_id):
     if request.method == 'GET':
-        car_id = db.session.query(Car).filter_by(id=car_id).first()
-        db.session.delete(car_id)
-        db.session.commit()
+        
         try:
-            
-            
+            car_id = db.session.query(Car).filter_by(id=car_id).first()
+            db.session.delete(car_id)
+            db.session.commit()
             flash('Vehicle successfully deleted.')
             return redirect(url_for('filter'))
         except:

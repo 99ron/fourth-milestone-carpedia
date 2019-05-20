@@ -68,6 +68,7 @@ car_jdm_1 = Car(region='JDM',
                  chassy_desc='Coupe',
                  accel_time='4.8',
                  car_desc='Beast from the East with the 2jz!',
+                 img_url="/static/images/vehicles/no_img.jpg",
                  upload_by='Aaron')
 
 car_jdm_2 = Car(region='JDM',
@@ -81,6 +82,7 @@ car_jdm_2 = Car(region='JDM',
                  chassy_desc='Coupe',
                  accel_time='4.2',
                  car_desc='Known for its iconic RB26.',
+                 img_url="/static/images/vehicles/no_img.jpg",
                  upload_by='Aaron')
 
 car_jdm_3 = Car(region='JDM',
@@ -94,6 +96,7 @@ car_jdm_3 = Car(region='JDM',
                  chassy_desc='Coupe',
                  accel_time='4.9',
                  car_desc='Wedgelike shape like a lambo at its time.',
+                 img_url="/static/images/vehicles/no_img.jpg",
                  upload_by='Aaron')   
 
 car_jdm_4 = Car(region='JDM',
@@ -107,32 +110,35 @@ car_jdm_4 = Car(region='JDM',
                  chassy_desc='Hatchback',
                  accel_time='6.2',
                  car_desc='Loves to hit the limiter.',
+                 img_url="/static/images/vehicles/no_img.jpg",
                  upload_by='Aaron')
 
 car_usdm_1 = Car(region='USDM',
                  make='Corvette',
                  model='ZR1',
                  model_year='2019',
-                 trans='SemiA',
+                 trans='Semi-Auto',
                  hp_amount='755',
                  torque_amount='715',
                  drivetrain='RWD',
                  chassy_desc='Coupe',
                  accel_time='2.8',
                  car_desc='Huge american muscle, so much power!',
+                 img_url="/static/images/vehicles/no_img.jpg",
                  upload_by='Aaron')
 
 car_usdm_2 = Car(region='USDM',
                  make='Chevrolet',
                  model='Camaro',
                  model_year='2012',
-                 trans='SemiA',
+                 trans='Semi-Auto',
                  hp_amount='426',
                  torque_amount='400',
                  drivetrain='RWD',
                  chassy_desc='Coupe',
                  accel_time='4.4',
                  car_desc='Classic camaro power right here!',
+                 img_url="/static/images/vehicles/no_img.jpg",
                  upload_by='Aaron')
 
 car_usdm_3 = Car(region='USDM',
@@ -146,6 +152,7 @@ car_usdm_3 = Car(region='USDM',
                  chassy_desc='Hatchback',
                  accel_time='6.4',
                  car_desc='Hatchback fun right here!',
+                 img_url="/static/images/vehicles/no_img.jpg",
                  upload_by='Aaron')
 
 db.session.add(car_jdm_1)
