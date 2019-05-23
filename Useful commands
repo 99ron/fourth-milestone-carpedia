@@ -15,3 +15,49 @@ echo '*.sql' >> .gitignore
 
 # create a populated database from an sql schema
 mysql -u $C9_USER -p < *sql name*
+
+#start local mSQl
+mysql-ctl start
+
+#start mysql CLI
+mysql-ctl cli
+
+
+----------------------------------
+
+#For when you run it on heroku you will need to change that line to:
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///site.db')
+#And then set the DATABASE_URL config var on heroku. You will also need to go into the command line there and do the:
+#from app import db
+#and db.create_all()
+#To create the tables
+
+
+
+#def remote():
+#    connection = pymysql.connect(
+#        host="eu-cdbr-west-02.cleardb.net",
+#        user="bd6203f445759d",
+#        password="3f8eca2f",
+#        db="heroku_1146a0b312400c5")
+#    return connection
+
+
+
+## So yeah, you've got a foreign key there from Make to Region,
+so when you get the id of the region you can filter the make on it. 
+The syntax would probably look something like:
+
+Make.query.filter_by(region_id=<whatever_the_id_is>).all()
+
+
+
+
+        if login is not None:
+            session['logged_in'] = True
+            session['username'] = uname
+        else:
+            flash('Wrong username or password, Try again.')
+            return render_template('login.html')
+        return redirect(url_for('home'))
+        

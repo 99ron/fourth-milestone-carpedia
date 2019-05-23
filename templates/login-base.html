@@ -11,9 +11,19 @@
     <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
 </head>
 <body class="login-bg">
-
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-message">
+    {% for message in messages %}
+      <li><h4>{{ message }}</h4></li>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 <div class="section"></div>
+
     <!--Will use this class to centre all content for the login page. -->
+    
 <div class="user-details-container">
 
     <main>
@@ -23,16 +33,6 @@
         {% block content %} {% endblock %}
     </main>
 </div>
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div class="flash-message">
-    {% for message in messages %}
-      <li><h5>{{ message }}</h5></li>
-    {% endfor %}
-    </div>
-  {% endif %}
-{% endwith %}
 
 <!--Load the required scripts, jQuery before materialize. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -230,7 +230,7 @@ def editVehicle(car_id, vehicleName):
         
         return render_template("edit-vehicle.html", form=form, vehicles=vehicles)
 
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST':
         
         vehicleImage = vehicles.img_url 
         file_img = form.car_img.data

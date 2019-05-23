@@ -8,7 +8,7 @@
   <div class="z-depth-3 grey lighten-4 row login-container">
 
     <form class="col s12 text-colour-sec" action="/check-user-credentials" method="POST">
-      {{ form.hidden_tag() }}
+      {{ form.csrf_token}}
       <div class='row'>
         <div class='input-field col s12 '>
           {{ form.username.label }} 

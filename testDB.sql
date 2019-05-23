@@ -23,6 +23,7 @@ CREATE TABLE `Region`
     `region_id` INT NOT NULL AUTO_INCREMENT,
     `region_name` VARCHAR(40) NOT NULL,
     PRIMARY KEY  (`region_id`)
+    FOREIGN KEY (`make_id`) REFERENCES Make (`make_id`)
 );
 
 CREATE TABLE `Make`
@@ -30,6 +31,7 @@ CREATE TABLE `Make`
     `make_id` INT NOT NULL AUTO_INCREMENT,
     `make_name` VARCHAR(30) NOT NULL,
     PRIMARY KEY  (`make_id`)
+    FOREIGN KEY ('n')
 );
 
 CREATE TABLE `Model`

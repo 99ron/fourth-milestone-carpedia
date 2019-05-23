@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row">
+    <div class="col s12">
+            
+            <h1 class="center-align">Vehicle Summary</h1>
+            
+            <p>This page is meant to show you what vehicles are in the database currently.</p>
+            <p>Use the table below to see the who's uploaded what car!</p>
+            
+             {% with messages = get_flashed_messages() %} {% if messages %}
+             <div class="flash-message">
+                 {% for message in messages %}
+                 <li>
+                     <h4>{{ message }}</h4>
+                 </li>
+                 {% endfor %}
+             </div>
+             {% endif %} {% endwith %}
+             </div>
+{% for vehicle in vehicles %}
+<div class="col s12 m12 l12 xl6">
+
+    <div class="z-depth-3 grey lighten-4 row form-padding">
+        <div class="container">
+            <div class="row">
+                <div class="s12 summary-image">
+                    {% if vehicle.img_url %}
+                        {{ vehicle.img_url }}
+                    {% else %}
+                        <img src="./static/images/vehicles/no_img.jpg">
+                    {% endif %}
+                </div>
+            </div>
+            <div class- "row">
+                <div class="s6 summary-make">
+                    {{ vehicle.make }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endfor %}
+</div>
+{% endblock %}
+
