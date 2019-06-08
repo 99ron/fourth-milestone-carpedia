@@ -3,6 +3,7 @@
 -------------------------------------------------------------------------*/
 $nav-bg-colour: #448aff;
 $border-colour: #EEE;
+$chart-colour: #D3D3D3;
 $text-colour-prim: #FFF;
 $text-colour-seco: #000000;
 $overlay-text-colour: white;
@@ -11,10 +12,26 @@ $overlay-text-colour: white;
     Miscellaneous 
 -------------------------------------------------------------------------*/
 
+.btn-padding {
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+
+// Colour of the bars in the bar chart.
+rect { fill: $chart-colour;
+  
+    &:hover {
+        fill: $nav-bg-colour;
+    }
+}
+
+// Primary text colour
 .text-colour-pri {
    color: $text-colour-prim; 
 }
-
+// Secondary text colour
 .text-colour-sec {
     color: $text-colour-seco;
 }
@@ -54,6 +71,10 @@ $overlay-text-colour: white;
 /*-------------------------------------------------------------------------
     Nav bar
 -------------------------------------------------------------------------*/
+.side-nav .divider {
+    margin: 0px;
+    padding: 0px;
+}
 
 .nav-bg-colour {
      background-color: $nav-bg-colour;
@@ -67,6 +88,18 @@ $overlay-text-colour: white;
     Body
 -------------------------------------------------------------------------*/
 
+.hr {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4%;
+}
+
+.info-container-design {
+    background-color: $text-colour-prim;
+    border: $text-colour-seco solid 1px;
+    border-radius: 20px;
+}
 
 .user-details-container {
     text-align: center;
@@ -79,6 +112,10 @@ $overlay-text-colour: white;
     border: 1px solid $border-colour;
 }
 
+.summary-uploaded-by, .summary-more-info {
+    margin: 15px;
+}
+
 .form-padding {
     padding: 30px;
 }
@@ -86,11 +123,11 @@ $overlay-text-colour: white;
 /*-------------------------------------------------------------------------
     Table
 -------------------------------------------------------------------------*/
- .summary-stats-table > table {
-     border-collapse: collapse;
+.summary-stats-table > table {
+    border-collapse: collapse;
  
-     td {
-     width: 50%;
+    td {
+    width: 50%;
  }
 } 
 
@@ -122,7 +159,7 @@ $overlay-text-colour: white;
     background-size: cover;
 }
 
-// Homepage image to break up the page.
+// Homepage center image to break up the page.
 .homepage-image {
     background-image: url(/static/images/hp-image.jpg);
     background-position: center;
@@ -132,7 +169,7 @@ $overlay-text-colour: white;
     overflow: hidden;
 }
 
-// Summary image, when highlighted it darkens the gradient to make the text easier to read.
+// Summary image on the homepage, when highlighted it darkens the gradient to make the text easier to read.
 .summary-image {
     background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
     url(/static/images/summary-image.jpg);
@@ -155,7 +192,7 @@ $overlay-text-colour: white;
     }
 }
 
-// filter image, when highlighted it darkens the gradient to make the text easier to read.
+// filter image on the homepage, when highlighted it darkens the gradient to make the text easier to read.
 .filter-image {
     background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
     url(/static/images/filter-image.jpg);

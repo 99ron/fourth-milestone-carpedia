@@ -8,7 +8,28 @@ class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(15), unique = True)
     password = db.Column(db.String(15))
-    cars = db.relationship('Car', backref='users_car', lazy=True)
+    liked = db.relationship('Popularity', foreign_keys='Popularity.user_id', backref='user', lazy='dynamic')
+    
+    
+    def like_car(self, car):
+        if not self.has_liked_car(car):
+            vote = Popularity.query.filter(Popularity.car_id == car.id).first()
+            vote =+1
+            like = Popularity(user_id=self.id, car_id=car.id, likes=vote)
+            db.session.add(like)
+            db.session.commit()
+            
+    def unlike_car(self, car):
+        if self.has_liked_car(car):
+            Popularity.query.filter_by(
+                user_id=self.id,
+                car_id=car.id).delete()
+            db.session.commit()
+    
+    def has_liked_car(self, car):
+        return Popularity.query.filter(
+            Popularity.user_id == self.id,
+            Popularity.car_id == car.id).count() > 0
 
     def is_authenticated(self):
         return True
@@ -26,8 +47,9 @@ class Users(db.Model, UserMixin):
 class Popularity(db.Model):
     __tablename__ = 'popularity'
     id = db.Column(db.Integer, primary_key = True)
-    pop_num = db.Column(db.Integer)
-    pops = db.relationship('Car', backref='car_pop')
+    likes = db.Column(db.Integer)
+    car_id = db.Column(db.Integer, db.ForeignKey('car.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 class Car(db.Model):
@@ -46,8 +68,8 @@ class Car(db.Model):
     car_desc = db.Column(db.String(255), nullable=True)
     img_url = db.Column(db.String(250))
     upload_by = db.Column(db.String(30), nullable=False)
-    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    pop_id = db.Column(db.Integer, db.ForeignKey('popularity.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    likes = db.relationship('Popularity', backref='car', lazy='dynamic')
     
 # Prep populating data into the database # 
 '''
@@ -68,7 +90,7 @@ car_jdm_1 = Car(region='JDM',
                  chassy_desc='Coupe',
                  accel_time='4.8',
                  car_desc='Beast from the East with the 2jz!',
-                 img_url="/static/images/vehicles/no_img.jpg",
+                 img_url="/static/images/vehicles/toyota-super-05.jpg",
                  upload_by='Aaron')
 
 car_jdm_2 = Car(region='JDM',
@@ -155,6 +177,20 @@ car_usdm_3 = Car(region='USDM',
                  img_url="/static/images/vehicles/no_img.jpg",
                  upload_by='Aaron')
 
+car_euro_1 = Car(region='Euro',
+                 make='Aston',
+                 model='Martin',
+                 model_year='1996',
+                 trans='Manual',
+                 hp_amount='400',
+                 torque_amount='350',
+                 drivetrain='RWD',
+                 chassy_desc='Coupe',
+                 accel_time='5.4',
+                 car_desc='Old classic that just lived up to its reputation!',
+                 img_url="/static/images/vehicles/aston-martin.jpg",
+                 upload_by='Aaron')
+
 db.session.add(car_jdm_1)
 db.session.add(car_jdm_2)
 db.session.add(car_jdm_3)
@@ -162,7 +198,9 @@ db.session.add(car_jdm_4)
 db.session.add(car_usdm_1)
 db.session.add(car_usdm_2)
 db.session.add(car_usdm_3)
+db.session.add(car_euro_1)
 db.session.commit()
-'''
+
 #db.drop_all()
 #db.create_all()    
+'''

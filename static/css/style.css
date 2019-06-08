@@ -4,6 +4,17 @@
 /*-------------------------------------------------------------------------
     Miscellaneous 
 -------------------------------------------------------------------------*/
+.btn-padding {
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-bottom: 6px;
+  margin-top: 6px; }
+
+rect {
+  fill: #D3D3D3; }
+  rect:hover {
+    fill: #448aff; }
+
 .text-colour-pri {
   color: #FFF; }
 
@@ -39,6 +50,10 @@
 /*-------------------------------------------------------------------------
     Nav bar
 -------------------------------------------------------------------------*/
+.side-nav .divider {
+  margin: 0px;
+  padding: 0px; }
+
 .nav-bg-colour {
   background-color: #448aff; }
 
@@ -48,6 +63,17 @@
 /*-------------------------------------------------------------------------
     Body
 -------------------------------------------------------------------------*/
+.hr {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4%; }
+
+.info-container-design {
+  background-color: #FFF;
+  border: #000000 solid 1px;
+  border-radius: 20px; }
+
 .user-details-container {
   text-align: center;
   color: #FFF; }
@@ -56,6 +82,9 @@
   display: inline-block;
   padding: 32px 48px;
   border: 1px solid #EEE; }
+
+.summary-uploaded-by, .summary-more-info {
+  margin: 15px; }
 
 .form-padding {
   padding: 30px; }

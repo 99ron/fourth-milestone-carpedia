@@ -23,7 +23,7 @@
         {{ form.csrf_token }}
         <div class="row">
             <div class="center-align">
-                <div class="row">
+                <div class="row col s12">
                     <div class="input-field col s12 m4">
                         {{ form.region.label }}<br> {{ form.region }}
                     </div>
@@ -31,7 +31,9 @@
                         {{ form.drive.label }}<br> {{ form.drive }}
                     </div>
                     <div class="submit col s12 m4">
-                        <br>{{ form.submit(class='col s12 btn btn-large waves-effect blue lighten-1') }}
+                        <br><button class="col s12 btn-large waves-effect blue lighten-1">
+                            {{ form.submit }}
+                        </button>
                     </div>
     
                 </div>
@@ -53,43 +55,33 @@
                             <img src="/static/images/vehicles/no_img.jpg"> 
                         {% endif %}
                     </div>
+                </div>
+                <div class="row info-container-design">
                     <div class="col s12 summary-make-model center">
-                        <h4>{{ car.make }} {{ car.model }}</h4>
+                        <h5>{{ car.make }} {{ car.model }}</h5>
                     </div>
-                
-                    <div class="col s6 summary-year center">
-                        <p>Year: 
-                        {{ car.model_year }}
-                        </p>
+                <div class="col s12 summary-stats-table">
+                        <table class="centered striped ">
+                            <tbody>
+                                <tr>
+                                    <td>Horsepower:</td>
+                                    <td>{{ car.hp_amount }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Drivetrain type:</td>
+                                    <td>{{ car.drivetrain }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Body style:</td>
+                                    <td>{{ car.chassy_desc }}</td>
+                                </tr>
+                                <tr>
+                                    <td>0-60mph in seconds:</td>
+                                    <td>{{ car.accel_time }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    
-                    <div class="col s6 summary-trans center">
-                        <p>Transmission:<br>
-                        {{ car.trans }} 
-                        </p>
-                    </div>
-                    
-                    <div class="col s6 summary-drive center">
-                        <p>Drivetrain: 
-                        {{ car.drivetrain }}
-                        </p>
-                    </div>
-                    
-                    <div class="col s6 summary-chassy center">
-                        <p>Body Type: <br>
-                        {{ car.chassy_desc }}</p>
-                    </div>
-                    
-                    <div class="col s6 summary-hp center">
-                        <p>HP: 
-                        {{ car.hp_amount }} BHP</p>
-                    </div>
-                    
-                    <div class="col s6 summary-torque center">
-                        <p>Torque: 
-                        {{ car.torque_amount }} lb-ft</p>
-                    </div>
-                    
                     <div class="col s12 summary-more-info center">
                         <a href="{{url_for('vehicleInfo', car_id=car.id, vehicleName=car.model)}}" class="waves-effect waves-light btn blue"><i class="material-icons right">description</i>More Info</a>
                     </div>
@@ -103,7 +95,7 @@
             <div class="z-depth-3 grey lighten-4 row form-padding">
                 <div class="container">
                     <div class="row">
-                       <h3 class="filter-no-results center-align">No Results for this Criteria!</h3>
+                       <h3 class="filter-no-results center-align">No results for this criteria!</h3>
                     </div>
                 </div>
             </div>

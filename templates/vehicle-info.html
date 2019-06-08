@@ -1,13 +1,17 @@
 {% extends 'base.html' %} {% block content %}
 
 <div class="row">
+    
     <div class="col s12">
             
             <h1 class="center-align">Vehicle Information</h1>
             
-            <p>Below you will see the vehicle you clicked on to see more infomation.
+            <p class="center">Below you will see the vehicle you clicked on to see more infomation.
             If you were the one who added it to the database you can update any information if needed!</p>
-            <p class="center"><b>RWD</b> = Rear Wheel Drive <br> <b>FWD</b> - Front Wheel Drive <br> <b>AWD</b> - All Wheel Drive</p>
+            
+            <p class="center"><b>RWD</b> - Rear Wheel Drive <br> <b>FWD</b> - Front Wheel Drive <br> <b>AWD</b> - All Wheel Drive</p>
+            
+            <hr class="hr"></hr>
             
              {% with messages = get_flashed_messages() %} {% if messages %}
              <div class="flash-message">
@@ -22,7 +26,7 @@
              
 {% if vehicles %}
 <div class="col s12">
-
+   
     <div class="z-depth-3 grey lighten-4 row form-padding">
         <div class="container">
             <div class="row">
@@ -34,7 +38,8 @@
                     {% endif %}
                 </div>
             </div>
-            <div class- "row">
+            <hr class="hr">
+            <div class="row info-container-design">
                 <div class="col s12 summary-make-model center">
                     <h3>{{ vehicles.make }} {{ vehicles.model }}</h3>
                 </div>
@@ -81,12 +86,21 @@
                 <div class="col s12 summary-uploaded-by center">
                     Uploaded by <b>{{ vehicles.upload_by }}</b>
                 </div>
-                
-                <div class="col s12 summary-buttons center">
-                    {% if current_user.username == vehicles.upload_by %}
-                        <button class="btn btn-large waves-effect blue lighten-1" onclick="window.history.back()">Back<i class="material-icons left">arrow_back</i></button>
-                        <a href="{{url_for('editVehicle', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn btn-large blue lighten-1"><i class="material-icons right">build</i>Edit</a>
-                        <a href="{{url_for('deleteVehicle', car_id=vehicles.id)}}" class="waves-effect waves-light btn btn-large blue lighten-1">Delete</a>
+                <div class="col s12 summary-popularity center">
+                    
+                        {% if current_user.has_liked_car(vehicles) %}
+                            <a href="{{url_for('like', car_id=vehicles.id, action='unlike')}}" title="Down vote this car"><i class="down-vote material-icons">arrow_downward</i></a> 
+                        {% else %}
+                            <a href="{{url_for('like', car_id=vehicles.id, action='like')}}" title="Up vote this car"><i class="up-vote material-icons">arrow_upward</i></a>
+                        {% endif %}
+                        <p><strong>Likes: </strong> {{ vehicles.likes.count() }} </p>
+                    
+                    </div>
+                <div class="row summary-buttons center">
+                    {% if current_user.username == vehicles.upload_by %} 
+                        <a type="button" href="{{url_for('filter')}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left">arrow_back</i>Back</a>
+                        <a type="button" href="{{url_for('editVehicle', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons right">build</i>Edit</a>
+                        <a type="button" href="{{url_for('deleteVehicle', car_id=vehicles.id)}}" class="waves-effect waves-light btn-large blue lighten-1">Delete</a>
                     {% else %}
                         <button class="btn btn-large waves-effect blue lighten-1" onclick="window.history.back()">Back<i class="material-icons left">arrow_back</i></button>
                     {% endif %}           
