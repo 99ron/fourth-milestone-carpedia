@@ -18,8 +18,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-#def check
-
 
 # DB_URI = 'mysqldb://bd6203f445759d:3f8eca2f@eu-cdbr-west-02.cleardb.net/heroku_1146a0b312400c5?reconnect=true'
 
@@ -303,44 +301,65 @@ def summaryData():
     cars = Car.query.all()
     
     USDM = 0
+    USDMN = []
     JDM = 0
+    JDMN = []
     Euro = 0
+    EuroN = []
     Manual = 0
+    ManualN = []
     SemiAuto = 0
+    SemiAutoN = []
     Auto = 0
+    AutoN = [] 
     Sequential = 0
+    SequentialN = []
     LT4 = 0
+    LT4N = []
     LT7 = 0
+    LT7N = []
     MT7 = 0
+    MT7N = []
     
 
     for car in cars:
         
         if car.region == 'USDM':
             USDM +=1
+            USDMN.append([' ' + car.make + ' ' + car.model])
         elif car.region == 'JDM':
             JDM +=1
+            JDMN.append([' ' + car.make + ' ' + car.model])
         else:
             Euro +=1
-        
+            EuroN.append([' ' + car.make + ' ' + car.model])
+            
         if car.trans  == 'Manual':
             Manual +=1
+            ManualN.append([' ' + car.make + ' ' + car.model])
         elif car.trans == 'Semi-Auto':
             SemiAuto +=1
+            SemiAutoN.append([' ' + car.make + ' ' + car.model])
         elif car.trans == 'Auto':
             Auto +=1
+            AutoN.append([' ' + car.make + ' ' + car.model])
         else:
-            Sequential +=1        
+            Sequential +=1
+            SequentialN.append([' ' + car.make + ' ' + car.model])
     
         if car.accel_time <= 4:
             LT4 +=1
+            LT4N.append([' ' + car.make + ' ' + car.model])
         elif car.accel_time <= 7:
             LT7 +=1
+            LT7N.append([' ' + car.make + ' ' + car.model])
         else:
             MT7 +=1
+            MT7N.append([' ' + car.make + ' ' + car.model])
     
-    jsonData = [{'USDM' : USDM , 'JDM' : JDM, 'Euro' : Euro }, {'Manual': Manual, 'SemiAuto': SemiAuto, 'Auto': Auto, 'Sequential': Sequential}, {'LT4' : LT4, 'LT7': LT7, 'MT7': MT7 }]
+    jsonData = [{'USDM' : USDM , 'JDM' : JDM, 'Euro' : Euro, 'USDMN' : USDMN, 'JDMN' : JDMN, 'EuroN' : EuroN }, {'Manual': Manual, 'SemiAuto': SemiAuto, 'Auto': Auto, 'Sequential': Sequential, 'ManualN' : ManualN, 'SemiAutoN' : SemiAutoN, 'AutoN' : AutoN, 'SequentialN' : SequentialN}, {'LT4' : LT4, 'LT7': LT7, 'MT7': MT7, 'LT4N' : LT4N, 'LT7N' : LT7N, 'MT7N' : MT7N }]
     return jsonify(jsonData)
+    
 
 @app.route('/like/<int:car_id>/<action>')
 @login_required

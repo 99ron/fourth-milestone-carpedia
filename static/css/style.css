@@ -22,7 +22,7 @@ rect {
   color: #000000; }
 
 .overlay-text {
-  color: white;
+  color: #FFF;
   text-align: center;
   font-size: 75px;
   align-text: center;
@@ -31,7 +31,7 @@ rect {
   -webkit-align-items: center;
   -ms-flex-align: center; }
   .overlay-text:hover {
-    color: white;
+    color: #FFF;
     text-align: center;
     font-size: 75px;
     align-text: center;
@@ -90,7 +90,7 @@ rect {
   padding: 30px; }
 
 /*-------------------------------------------------------------------------
-    Table
+    Tables
 -------------------------------------------------------------------------*/
 .summary-stats-table > table {
   border-collapse: collapse; }
@@ -103,9 +103,29 @@ rect {
   .edit-stats-table > table td {
     width: 50%; }
 
+#tableDiv tr:hover {
+  background: #448aff;
+  color: #FFF; }
+
 .box-padding {
   padding: 10px;
   margin: 10px; }
+
+#tableDiv {
+  padding-left: 30px;
+  padding-right: 30px; }
+
+#tableDiv > table {
+  table-layout: fixed;
+  width: 100%;
+  background-color: #D3D3D3;
+  border: 2px solid;
+  margin-top: 20px;
+  border-collapse: collapse; }
+  #tableDiv > table tr {
+    border-bottom: 1px solid; }
+  #tableDiv > table td {
+    text-align: center; }
 
 /*-------------------------------------------------------------------------
     Images

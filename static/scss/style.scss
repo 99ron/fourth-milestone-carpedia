@@ -5,8 +5,10 @@ $nav-bg-colour: #448aff;
 $border-colour: #EEE;
 $chart-colour: #D3D3D3;
 $text-colour-prim: #FFF;
+$table-results-prim: #448aff;
+$table-results-seco: #D3D3D3;
 $text-colour-seco: #000000;
-$overlay-text-colour: white;
+$overlay-text-colour: #FFF;
 
 /*-------------------------------------------------------------------------
     Miscellaneous 
@@ -121,7 +123,7 @@ rect { fill: $chart-colour;
 }
 
 /*-------------------------------------------------------------------------
-    Table
+    Tables
 -------------------------------------------------------------------------*/
 .summary-stats-table > table {
     border-collapse: collapse;
@@ -140,10 +142,40 @@ rect { fill: $chart-colour;
  }
 } 
 
+#tableDiv tr:hover {
+    background: $table-results-prim;
+    color: $text-colour-prim;
+}
+
 .box-padding {
     padding: 10px;
     margin: 10px;
 }
+
+// Summary results table
+#tableDiv {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#tableDiv > table {
+    table-layout: fixed;
+    width: 100%;
+    background-color: $table-results-seco;
+    border:2px solid;
+    margin-top:20px;
+    border-collapse: collapse;
+    
+    tr {
+        border-bottom: 1px solid ;
+    }
+    
+    td {
+        text-align: center;
+    }
+}
+
+
 
 /*-------------------------------------------------------------------------
     Images
