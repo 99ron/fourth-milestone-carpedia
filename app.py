@@ -78,10 +78,13 @@ def logout():
 @app.route('/check-user-credentials', methods=['GET','POST'])
 def checkuser():
     form = LoginForm()
+    
     if request.method == "GET":
         return render_template('login.html', form=form)
+        
     # Checks the users credentials against the 'Users' table.
     # If none match then flashes a message and asks to try again.
+    
     if request.method == "POST":
         user = Users.query.filter_by(username = form.username.data).first()
         credentials = Users.query.filter_by(username = form.username.data, password = form.password.data).first()
@@ -167,42 +170,31 @@ def addVehicle():
 @app.route('/filter-cars', methods=['GET', 'POST'])
 #@login_required
 def filter():
+    cars = Car.query.all()
     form = FilterCars()
     region = form.region.data
     drive = form.drive.data
-    cars = Car.query.all()
-    
+    query = form.query.data
+
     # If POST this then validates the form and pushes the request.
     if request.method == 'POST' and form.validate_on_submit():
-        
-        # Checks what the SelectFields data is set to and if region is left on
-        # 'All' then it will filter by the drivetrain data. 
-        if region == 'All' and drive != 'All': 
-            _car = Car.query.filter_by(drivetrain=drive).all()
-            return render_template('filter-cars.html', form=form, cars=_car)
-        
-        # As above, it's the reversal of what's being checked and if drive is left
-        # on 'All' then it will filter by region.
-        elif drive == 'All' and region != 'All':
-            _car = Car.query.filter_by(region=region).all()
-            return render_template('filter-cars.html', form=form, cars=_car)
-        
-        # If both SelectFields are left on 'All', pulls all information from the
-        # database to be displayed.
-        elif ( region == 'All' and drive == 'All' ):
-            _car = Car.query.all()
-            return render_template('filter-cars.html', form=form, cars=_car) 
-            
-            # If both SelectFields are set to specified data from the list it will
-            # pull the filtered data as requested.
-        else:
-            _car = Car.query.filter_by(region=region, drivetrain=drive).all() 
-            return render_template('filter-cars.html', form=form, cars=_car)
     
+        if region != "All" and drive != "All":
+            cars=car_region_drive(region, drive, query)
+            
+        if region != "All" and drive == "All":
+            cars = car_region(region, query)
+
+        if region == "All" and drive != "All":
+            cars = car_drive(drive, query)
+            
+        if region == "All" and drive == "All":
+            cars= car_all(query)
+
+        return render_template('filter-cars.html', form=form, cars=cars)
+
     # When the page loads it requests all cars from the database to display.
     return render_template('filter-cars.html', form=form, cars=cars)
-
-
 
 
 @app.route('/vehicle/<int:car_id>', methods=['GET'])

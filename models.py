@@ -1,5 +1,7 @@
 from app import db
+from sqlalchemy import desc, func
 from flask_login import UserMixin
+from sqlalchemy.sql import label
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -69,8 +71,41 @@ class Car(db.Model):
     img_url = db.Column(db.String(250))
     upload_by = db.Column(db.String(30), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    likes = db.relationship('Popularity', backref='car', lazy='dynamic')
+    likes = db.relationship('Popularity', foreign_keys='Popularity.car_id', backref="car", lazy='dynamic')
     
+def car_region(region, query):
+    if query == "Brands":
+        region = Car.query.filter_by(region=region).order_by(Car.make)
+        return region
+    if query == "Likes":
+        region = Car.query.filter_by(region=region).join(Popularity, Car.id==Popularity.car_id).order_by(Popularity.likes)
+        return region
+    
+def car_drive(drive, query):
+    if query == "Brands":
+        drive = Car.query.filter_by(drivetrain=drive).order_by(Car.make)
+        return drive
+    if query == "Likes":
+        drive = Car.query.filter_by(drivetrain=drive).join(Popularity, Car.id==Popularity.car_id).order_by(Popularity.likes)
+        return drive
+    
+def car_region_drive(region, drive, query):
+    if query == "Brands":
+        both = Car.query.filter_by(drivetrain=drive, region=region).order_by(Car.make)
+        return both
+    if query == "Likes":
+        both = Car.query.filter_by(drivetrain=drive, region=region).join(Popularity, Car.id==Popularity.car_id).order_by(Popularity.likes)
+        return both
+
+def car_all(query):
+    if query == "Brands":
+        cars = Car.query.filter_by().order_by(Car.make)
+        return cars
+    if query == "Likes":
+        cars = Car.query.filter().join(Popularity, Car.id==Popularity.car_id).order_by(Popularity.likes)
+        return cars
+        
+        
 # Prep populating data into the database # 
 '''
 # Add a user #
