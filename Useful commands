@@ -22,6 +22,9 @@ mysql-ctl start
 #start mysql CLI
 mysql-ctl cli
 
+#Upgrading a package
+sudo -H PACKAGE-NAME install --upgrade PACKAGE-NAME
+
 
 ----------------------------------
 
@@ -50,14 +53,14 @@ The syntax would probably look something like:
 
 Make.query.filter_by(region_id=<whatever_the_id_is>).all()
 
+---------------------
+# save results as an image for graph
 
-
-
-        if login is not None:
-            session['logged_in'] = True
-            session['username'] = uname
-        else:
-            flash('Wrong username or password, Try again.')
-            return render_template('login.html')
-        return redirect(url_for('home'))
-        
+def figure_to_base64(fig1):
+    chart_io = BytesIO()
+    fig1.savefig(chart_io, format='png', dpi=180,
+                bbox_inches="tight", pad_inches=0)
+    chart_str = chart_io.getvalue()
+    return base64.b64encode(chart_str).decode('utf8')
+    
+fig1 being the 

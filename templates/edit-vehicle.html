@@ -5,7 +5,7 @@
             
             <h1 class="center-align">Edit Vehicle</h1>
             
-            <p>Make any changes as you need to and click on update</p>
+            <p class="center">Make any changes as you need to and click on the update button below.</p>
             
              {% with messages = get_flashed_messages() %} {% if messages %}
              <div class="flash-message">
@@ -125,10 +125,10 @@
                 </div>
                 <div class="col s12 edit-buttons">
                     {% if current_user.username == vehicles.upload_by %}
-                        <input type="button" class="btn btn-large waves-effect blue lighten-1 col s6" value="Back" onclick="window.history.back()" />
-                        <button type='submit' name='btn_submit' class='btn btn-large waves-effect blue lighten-1 col s6'>Submit</button>
+                        <button type="button" class="btn-large waves-effect blue lighten-1 col s6" value="Back" onclick="window.history.back()"/>Back</button>
+                        <button type='submit' name='btn_submit' class='btn-large waves-effect blue lighten-1 col s6'>Update</button>
                     {% else %}
-                        <input type="button" class="btn btn-large waves-effect blue lighten-1 col s12" value="Back" onclick="window.history.back()" />
+                        <button type="button" class="btn btn-large waves-effect blue lighten-1 col s6" value="Back" onclick="window.history.back()"/>Back</button>
                     {% endif %}           
                 </div>
             </div>

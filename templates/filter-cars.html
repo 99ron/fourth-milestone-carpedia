@@ -24,13 +24,16 @@
         <div class="row">
             <div class="center-align">
                 <div class="row col s12">
-                    <div class="input-field col s12 m4">
+                    <div class="input-field col s12 m3">
                         {{ form.region.label }}<br> {{ form.region }}
                     </div>
-                    <div class="input-field col s12 m4">
+                    <div class="input-field col s12 m3">
                         {{ form.drive.label }}<br> {{ form.drive }}
                     </div>
-                    <div class="submit col s12 m4">
+                    <div class="input-field col s12 m3">
+                        {{ form.query.label }}<br> {{ form.query }}
+                    </div>
+                    <div class="submit col s12 m3">
                         <br><button class="col s12 btn-large waves-effect blue lighten-1">
                             {{ form.submit }}
                         </button>
@@ -85,14 +88,17 @@
                     <div class="col s12 summary-more-info center">
                         <a href="{{url_for('vehicleInfo', car_id=car.id, vehicleName=car.model)}}" class="waves-effect waves-light btn blue"><i class="material-icons right">description</i>More Info</a>
                     </div>
+                    <div class="col s12 summary-total-likes center">
+                        <hr class="hr">
+                        <p>Total likes: {{ car.likes.count() }}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    
     </div>
     {% else %}
         <div class="col s12">
-            <div class="z-depth-3 grey lighten-4 row form-padding">
+            <div class="info-container-design">
                 <div class="container">
                     <div class="row">
                        <h3 class="filter-no-results center-align">No results for this criteria!</h3>

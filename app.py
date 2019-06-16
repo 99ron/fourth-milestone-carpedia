@@ -14,6 +14,7 @@ from models import *
 UPLOAD_FOLDER = './static/images/vehicles'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
+# Used to check image extension is on the allowed list. 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -38,6 +39,12 @@ def load_user(username):
 @app.route('/')
 @app.route('/login')
 def login():
+    
+    '''
+    This is the primary route when the page is loaded. Also checks to see if a user 
+    is currently logged in and if so forwards/redirects them to the homepage.
+    '''
+    
     form = LoginForm()
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -58,12 +65,14 @@ def index():
 
 @app.route('/logout')
 def logout():
+
+    '''
+     Checks that a session is active and if so sets it to False
+     If there's no session and a user tries to log out it'll
+     take you to the login screen with a message.
+    '''
+    
     form = LoginForm()
-    
-    # Checks that a session is active and if so sets it to False
-    # If there's no session and a user tries to log out it'll
-    # take you to the login screen with a message.
-    
     if current_user.is_authenticated == False:
         flash("You're not logged in.")
         return render_template('login.html', form=form)
@@ -81,15 +90,22 @@ def checkuser():
     
     if request.method == "GET":
         return render_template('login.html', form=form)
-        
-    # Checks the users credentials against the 'Users' table.
-    # If none match then flashes a message and asks to try again.
+    
+    '''    
+     Checks the users credentials against the 'Users' table.
+     If none match then flashes a message and asks the user to try again.
+    '''
     
     if request.method == "POST":
+        # I've got it to check for if the username exists in the table first.
         user = Users.query.filter_by(username = form.username.data).first()
-        credentials = Users.query.filter_by(username = form.username.data, password = form.password.data).first()
+        
         if user:
+            # Then if the user is found, to confirm the user and password match in the database.
+            credentials = Users.query.filter_by(username = form.username.data, password = form.password.data).first()
+            
             if credentials:
+                # Once confirmed user then confirms it's authenticated and redirected to the homepage.
                 user.is_authenticated = True
                 login_user(user, remember=False)
                 return redirect((url_for('home')))
@@ -105,17 +121,22 @@ def checkuser():
 @app.route('/register-user/', methods=['GET', 'POST'])
 def register():
 	
-	# This attempts to create a new user in the 'Users' table.
-	# If the user already exists it'll flash a message and ask to try again.
-	
+    '''
+    This attempts to create a new user in the 'Users' table.
+    If the user already exists it'll flash a message and ask to try again.
+    '''
     form = RegisterForm()
     try:
         if request.method == 'POST':
+            # Posts the users preferred username and password.
             new_user = Users(username=form.username.data, password=form.password.data)
+            
             if not new_user:
+                # If the username is taken then flash a message to try another.
                 flash('This user already exists.')
                 return render_template('register.html', form=form)
             else:
+                # If username isn't taken then add to the Users table.
                 db.session.add(new_user)
                 db.session.commit()
                 return redirect(url_for('login'))
@@ -129,18 +150,27 @@ def addVehicle():
     form = CarToDatabase()
     
     if request.method == 'POST' and form.validate_on_submit():
+       
+        # Collects the image filename from the form
         file_img = form.car_img.data
         
         if file_img and allowed_file(file_img.filename):
+            # This processes the image wanting to be uploaded that it is an image format
+            # and saves the filepath to the image location in the db while also physically
+            # storing the image in the images/vehicles folder.
+            
             filename = secure_filename(file_img.filename)
             car_img_url = '/static/images/vehicles/' + filename
             try:
+                # Tries to store the image on the server.
                 file_img.save(os.path.join( UPLOAD_FOLDER, filename))
             except:
+                # Fails if the same image already exists so simply doesn't upload the image.
                 return
         else:
             car_img_url = '/static/images/vehicles/no_img.jpg'
         
+        # Collects all the information from the form to compile it into a new vehicle in the database.
         add_car = Car(region=form.region.data,
                       make=form.make.data,
                       model=form.model.data,
@@ -156,6 +186,7 @@ def addVehicle():
                       upload_by=current_user.username)
                       
         try:
+            # Uploads the newly added vehicle to the db as long as there's no issues.
             db.session.add(add_car)
             db.session.commit()
             flash('Vehicle added to database.')
@@ -170,6 +201,10 @@ def addVehicle():
 @app.route('/filter-cars', methods=['GET', 'POST'])
 #@login_required
 def filter():
+    '''
+    This section processes the filter of which I've chosen by Region and Drive train type
+    to filter, it's then sorted by Manufacturer A-Z or only cars that have likes on them.
+    '''
     cars = Car.query.all()
     form = FilterCars()
     region = form.region.data
@@ -178,16 +213,20 @@ def filter():
 
     # If POST this then validates the form and pushes the request.
     if request.method == 'POST' and form.validate_on_submit():
-    
+        
+        # If region and drive have values they'll be processed here.
         if region != "All" and drive != "All":
             cars=car_region_drive(region, drive, query)
-            
+         
+        # If region has a value but drive does not then it'll be processed here.    
         if region != "All" and drive == "All":
             cars = car_region(region, query)
-
+        
+        # If drive has a value but region doesn't then it'll be processed here.
         if region == "All" and drive != "All":
             cars = car_drive(drive, query)
-            
+        
+        # If neither has values then it'll be processed here.  
         if region == "All" and drive == "All":
             cars= car_all(query)
 
@@ -200,6 +239,7 @@ def filter():
 @app.route('/vehicle/<int:car_id>', methods=['GET'])
 #@login_required
 def vehicleInfo(car_id):
+    # When the user presses the more info button this gets the vehicles ID and displays all the information for that vehicle.
     vehicles=Car.query.filter_by(id=car_id).first()
     return render_template("vehicle-info.html", vehicles=vehicles) 
 
@@ -208,53 +248,70 @@ def vehicleInfo(car_id):
 @app.route('/vehicle/edit/<int:car_id>/<vehicleName>', methods=['POST', 'GET'])
 #@login_required
 def editVehicle(car_id, vehicleName):
+    '''
+    This section is for editing the vehicle in the database, which can only be done by
+    the user who uploaded the vehicle. 
+    '''
     form = EditCar()
+    user = current_user.username
     vehicles=Car.query.filter_by(id=car_id).one()
     
     if request.method == 'GET':
         
-        form.region.data = vehicles.region
-        form.make.data = vehicles.make
-        form.model.data = vehicles.model
-        form.hp.data = vehicles.hp_amount
-        form.torque.data = vehicles.torque_amount
-        form.year.data = vehicles.model_year
-        form.trans.data = vehicles.trans
-        form.drive.data = vehicles.drivetrain
-        form.body.data = vehicles.chassy_desc
-        form.accel.data = vehicles.accel_time
-        form.car_desc.data = vehicles.car_desc
+        user_match = user_uploaded_car(user)
         
+        if user_match is True:
         
-        return render_template("edit-vehicle.html", form=form, vehicles=vehicles)
+            form.region.data = vehicles.region
+            form.make.data = vehicles.make
+            form.model.data = vehicles.model
+            form.hp.data = vehicles.hp_amount
+            form.torque.data = vehicles.torque_amount
+            form.year.data = vehicles.model_year
+            form.trans.data = vehicles.trans
+            form.drive.data = vehicles.drivetrain
+            form.body.data = vehicles.chassy_desc
+            form.accel.data = vehicles.accel_time
+            form.car_desc.data = vehicles.car_desc
+            
+            
+            return render_template("edit-vehicle.html", form=form, vehicles=vehicles)
+        else:
+            flash('You can\'t do that request. You didn\'t upload this vehicle.')
+            return redirect(url_for('filter'))
 
     if request.method == 'POST':
         
-        vehicleImage = vehicles.img_url 
-        file_img = form.car_img.data
+        # Confirms the current logged in user is who uploaded the vehicle that's trying to be edited.
+        user_match = user_uploaded_car(user)
         
-        if file_img and allowed_file(file_img.filename):
-            filename = secure_filename(file_img.filename)
-            car_img_url = '/static/images/vehicles/' + filename
-            try:
-                file_img.save(os.path.join( UPLOAD_FOLDER, filename))
-            except:
-                return
-        else:
-            car_img_url = vehicleImage
-           
-        vehicles.region = form.region.data
-        vehicles.make = form.make.data
-        vehicles.model = form.model.data
-        vehicles.hp_amount = form.hp.data
-        vehicles.torque_amount = form.torque.data
-        vehicles.model_year = form.year.data
-        vehicles.trans = form.trans.data
-        vehicles.drivetrain = form.drive.data
-        vehicles.chassy_desc = form.body.data
-        vehicles.accel_time = form.accel.data
-        vehicles.car_desc = form.car_desc.data
-        vehicles.img_url = car_img_url
+        if user_match is True:
+            # If true then proceeds with processing the data
+            vehicleImage = vehicles.img_url 
+            file_img = form.car_img.data
+            
+            if file_img and allowed_file(file_img.filename):
+                filename = secure_filename(file_img.filename)
+                car_img_url = '/static/images/vehicles/' + filename
+                try:
+                    file_img.save(os.path.join( UPLOAD_FOLDER, filename))
+                except:
+                    return
+            else:
+                car_img_url = vehicleImage
+               
+            vehicles.region = form.region.data
+            vehicles.make = form.make.data
+            vehicles.model = form.model.data
+            vehicles.hp_amount = form.hp.data
+            vehicles.torque_amount = form.torque.data
+            vehicles.model_year = form.year.data
+            vehicles.trans = form.trans.data
+            vehicles.drivetrain = form.drive.data
+            vehicles.chassy_desc = form.body.data
+            vehicles.accel_time = form.accel.data
+            vehicles.car_desc = form.car_desc.data
+            vehicles.img_url = car_img_url
     
     try:
         form.populate_obj(vehicles)
@@ -270,26 +327,44 @@ def editVehicle(car_id, vehicleName):
 @app.route('/delete/<int:car_id>', methods=['GET']) 
 @login_required
 def deleteVehicle(car_id):
+    '''
+    This button deletes the currently viewed car but only if the user is the same 
+    as who uploaded it.
+    '''
+    user = current_user.username
     if request.method == 'GET':
+        user_match = user_uploaded_car(user)
         
-        try:
-            car_id = db.session.query(Car).filter_by(id=car_id).first()
-            db.session.delete(car_id)
-            db.session.commit()
-            flash('Vehicle successfully deleted.')
+        if user_match is True:
+            try:
+                car_id = db.session.query(Car).filter_by(id=car_id).first()
+                db.session.delete(car_id)
+                db.session.commit()
+                flash('Vehicle successfully deleted.')
+                return redirect(url_for('filter'))
+            except:
+                db.session.rollback()
+                flash('Error occured, try again.')
+                return redirect(url_for('filter'))
+        else:
+            flash('You can\'t do that request. You didn\'t upload this vehicle.')
             return redirect(url_for('filter'))
-        except:
-            db.session.rollback()
-            flash('Error occured, try again.')
-            return redirect(url_for('filter'))
-
+            
+            
 @app.route('/summary')
 #@login_required
 def summary():
     return render_template('summary.html')
 
+
 @app.route('/summary/data')
 def summaryData():
+    '''
+    This route compiles the information from the database, puts it as a list within an array 
+    and finally converts it to a JSON URL which is retrieved on the summary.html page to display
+    on a barchart and also a dynamic table.
+    '''
+
     cars = Car.query.all()
     
     USDM = 0
@@ -353,9 +428,15 @@ def summaryData():
     return jsonify(jsonData)
     
 
+
 @app.route('/like/<int:car_id>/<action>')
 @login_required
 def like(car_id, action):
+    
+    '''
+    Route below checks if the user has voted on the current viewed car and responds
+    with either the like or unlike button while adding or removing a vote. 
+    '''
     car = Car.query.filter_by(id=car_id).first_or_404()
     if action == 'like':
         current_user.like_car(car)
@@ -366,7 +447,6 @@ def like(car_id, action):
         
         flash('Like Removed')
     return redirect(url_for('vehicleInfo', car_id=car_id))
-    
 
 
 if __name__ == '__main__':

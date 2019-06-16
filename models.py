@@ -44,8 +44,14 @@ class Users(db.Model, UserMixin):
 
     def get_id(self):
         return self.id
-        
-       
+
+def user_uploaded_car(user):
+    user_match = Users.query.filter(user == Car.upload_by).first()
+    if user_match:
+        return True
+    else:
+        return False
+    
 class Popularity(db.Model):
     __tablename__ = 'popularity'
     id = db.Column(db.Integer, primary_key = True)
@@ -72,6 +78,10 @@ class Car(db.Model):
     upload_by = db.Column(db.String(30), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     likes = db.relationship('Popularity', foreign_keys='Popularity.car_id', backref="car", lazy='dynamic')
+
+'''
+Below are the functions for the database filters
+'''
     
 def car_region(region, query):
     if query == "Brands":
