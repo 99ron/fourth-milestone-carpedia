@@ -1,0 +1,293 @@
+/*-------------------------------------------------------------------------
+    Variables
+-------------------------------------------------------------------------*/
+$nav-bg-colour: #448aff;
+$border-colour: #EEE;
+$chart-colour: #D3D3D3;
+$text-colour-prim: #FFF;
+$table-results-prim: #448aff;
+$table-results-seco: #D3D3D3;
+$text-colour-seco: #000000;
+$overlay-text-colour: #FFF;
+
+/*-------------------------------------------------------------------------
+    Miscellaneous 
+-------------------------------------------------------------------------*/
+
+blockquote {
+    border-left: 5px solid $nav-bg-colour;
+}
+
+.btn-padding {
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+
+// Colour of the bars in the bar chart.
+rect { fill: $chart-colour;
+  
+    &:hover {
+        fill: $nav-bg-colour;
+    }
+}
+
+// Primary text colour
+.text-colour-pri {
+   color: $text-colour-prim; 
+}
+// Secondary text colour
+.text-colour-sec {
+    color: $text-colour-seco;
+}
+
+// When the mouse highlights it add's a white text shadow to enhance the font.
+.overlay-text{
+    color: $overlay-text-colour;
+    text-align: center;
+    font-size: 75px;
+    align-text: center;
+    display: grid;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    
+    &:hover {
+        color: $overlay-text-colour;
+        text-align: center;
+        font-size: 75px;
+        align-text: center;
+        display: grid;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        text-shadow: 0px 0px 3px #fff;
+    }
+}
+
+// formatting the flash message 
+.flash-message {
+    text-align: center;
+    color: $text-colour-prim ;
+    padding: 5px;
+    background-image: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7));
+}
+
+/*-------------------------------------------------------------------------
+    Nav bar
+-------------------------------------------------------------------------*/
+.side-nav .divider {
+    margin: 0px;
+    padding: 0px;
+}
+
+.nav-bg-colour {
+     background-color: $nav-bg-colour;
+}
+
+.brand-logo {
+    margin-left: 10px;
+}
+
+/*-------------------------------------------------------------------------
+    Body
+-------------------------------------------------------------------------*/
+
+.hr {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4%;
+}
+
+.info-container-design {
+    background-color: $text-colour-prim;
+    border: $text-colour-seco solid 1px;
+    border-radius: 20px;
+}
+
+.user-details-container {
+    text-align: center;
+    color: $text-colour-prim;
+}
+
+.login-container {
+    display: inline-block; 
+    padding: 32px 48px; 
+    border: 1px solid $border-colour;
+}
+
+.summary-uploaded-by, .summary-more-info {
+    margin: 15px;
+}
+
+.form-padding {
+    padding: 30px;
+}
+
+.page-footer {
+    background-color: $nav-bg-colour;
+    box-shadow: 0px -2px 6px 0 rgba(0, 0, 0, 0.14), 0 -3px 6px 0 rgba(0, 0, 0, 0.12), 0 -2px 6px 1px rgba(0, 0, 0, 0.2);
+    
+    .pointer {
+    cursor: pointer;
+    }
+}
+
+/*-------------------------------------------------------------------------
+    Tables
+-------------------------------------------------------------------------*/
+.summary-stats-table > table {
+    border-collapse: collapse;
+ 
+    td {
+    width: 50%;
+ }
+} 
+
+.edit-stats-table > table {
+    border-collapse: collapse;
+    table-layout: auto;
+    
+    td {
+    width: 50%;
+ }
+} 
+
+#tableDiv tr:hover {
+    background: $table-results-prim;
+    color: $text-colour-prim;
+}
+
+.box-padding {
+    padding: 10px;
+    margin: 10px;
+}
+
+// Summary results table
+#tableDiv {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#tableDiv > table {
+    table-layout: fixed;
+    width: 100%;
+    background-color: $table-results-seco;
+    border:2px solid;
+    margin-top:20px;
+    border-collapse: collapse;
+    
+    tr {
+        border-bottom: 1px solid ;
+    }
+    
+    td {
+        text-align: center;
+    }
+}
+
+
+
+/*-------------------------------------------------------------------------
+    Images
+-------------------------------------------------------------------------*/
+
+// Background image for login/registration page with tint.
+.login-bg {
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+    url('/static/images/login-bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+// Homepage center image to break up the page.
+.homepage-image {
+    background-image: url(/static/images/hp-image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 355px;
+    width: 100%;
+    overflow: hidden;
+}
+
+// Summary image on the homepage, when highlighted it darkens the gradient to make the text easier to read.
+.summary-image {
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+    url(/static/images/summary-image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    
+    &:hover {
+        background: linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.8)),
+        url(/static/images/summary-image.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 200px;
+        width: 100%;
+        overflow: hidden;
+        
+    }
+}
+
+// filter image on the homepage, when highlighted it darkens the gradient to make the text easier to read.
+.filter-image {
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+    url(/static/images/filter-image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+
+    &:hover {
+        background: linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.8)),
+        url(/static/images/filter-image.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 200px;
+        width: 100%;
+        overflow: hidden;
+        
+    }
+}
+
+// Maximise the space for when on the vehicle info page to display the image.
+.vehicle-info-images > img {
+    width: 100%;
+    height: 100%;
+}
+
+
+.summary-images {
+    height: 240px;
+    margin: 15px;
+}
+
+// Filter results page this forces the image to fit within the div.
+.summary-images > img{
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+
+.edit-images > img{
+    width: 100%;
+    height: 100%;
+}
+
+.profile-image {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100px;
+    height: 100px;
+}

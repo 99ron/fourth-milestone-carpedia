@@ -1,0 +1,213 @@
+/*-------------------------------------------------------------------------
+    Variables
+-------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+    Miscellaneous 
+-------------------------------------------------------------------------*/
+blockquote {
+  border-left: 5px solid #448aff; }
+
+.btn-padding {
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-bottom: 6px;
+  margin-top: 6px; }
+
+rect {
+  fill: #D3D3D3; }
+  rect:hover {
+    fill: #448aff; }
+
+.text-colour-pri {
+  color: #FFF; }
+
+.text-colour-sec {
+  color: #000000; }
+
+.overlay-text {
+  color: #FFF;
+  text-align: center;
+  font-size: 75px;
+  align-text: center;
+  display: grid;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center; }
+  .overlay-text:hover {
+    color: #FFF;
+    text-align: center;
+    font-size: 75px;
+    align-text: center;
+    display: grid;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    text-shadow: 0px 0px 3px #fff; }
+
+.flash-message {
+  text-align: center;
+  color: #FFF;
+  padding: 5px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)); }
+
+/*-------------------------------------------------------------------------
+    Nav bar
+-------------------------------------------------------------------------*/
+.side-nav .divider {
+  margin: 0px;
+  padding: 0px; }
+
+.nav-bg-colour {
+  background-color: #448aff; }
+
+.brand-logo {
+  margin-left: 10px; }
+
+/*-------------------------------------------------------------------------
+    Body
+-------------------------------------------------------------------------*/
+.hr {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4%; }
+
+.info-container-design {
+  background-color: #FFF;
+  border: #000000 solid 1px;
+  border-radius: 20px; }
+
+.user-details-container {
+  text-align: center;
+  color: #FFF; }
+
+.login-container {
+  display: inline-block;
+  padding: 32px 48px;
+  border: 1px solid #EEE; }
+
+.summary-uploaded-by, .summary-more-info {
+  margin: 15px; }
+
+.form-padding {
+  padding: 30px; }
+
+.page-footer {
+  background-color: #448aff;
+  box-shadow: 0px -2px 6px 0 rgba(0, 0, 0, 0.14), 0 -3px 6px 0 rgba(0, 0, 0, 0.12), 0 -2px 6px 1px rgba(0, 0, 0, 0.2); }
+  .page-footer .pointer {
+    cursor: pointer; }
+
+/*-------------------------------------------------------------------------
+    Tables
+-------------------------------------------------------------------------*/
+.summary-stats-table > table {
+  border-collapse: collapse; }
+  .summary-stats-table > table td {
+    width: 50%; }
+
+.edit-stats-table > table {
+  border-collapse: collapse;
+  table-layout: auto; }
+  .edit-stats-table > table td {
+    width: 50%; }
+
+#tableDiv tr:hover {
+  background: #448aff;
+  color: #FFF; }
+
+.box-padding {
+  padding: 10px;
+  margin: 10px; }
+
+#tableDiv {
+  padding-left: 30px;
+  padding-right: 30px; }
+
+#tableDiv > table {
+  table-layout: fixed;
+  width: 100%;
+  background-color: #D3D3D3;
+  border: 2px solid;
+  margin-top: 20px;
+  border-collapse: collapse; }
+  #tableDiv > table tr {
+    border-bottom: 1px solid; }
+  #tableDiv > table td {
+    text-align: center; }
+
+/*-------------------------------------------------------------------------
+    Images
+-------------------------------------------------------------------------*/
+.login-bg {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/images/login-bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+
+.homepage-image {
+  background-image: url(/static/images/hp-image.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 355px;
+  width: 100%;
+  overflow: hidden; }
+
+.summary-image {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/static/images/summary-image.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 20px; }
+  .summary-image:hover {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(/static/images/summary-image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 100%;
+    overflow: hidden; }
+
+.filter-image {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/static/images/filter-image.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
+  width: 100%;
+  overflow: hidden; }
+  .filter-image:hover {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(/static/images/filter-image.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 100%;
+    overflow: hidden; }
+
+.vehicle-info-images > img {
+  width: 100%;
+  height: 100%; }
+
+.summary-images {
+  height: 240px;
+  margin: 15px; }
+
+.summary-images > img {
+  width: 100%;
+  height: 100%;
+  object-fit: scale-down; }
+
+.edit-images > img {
+  width: 100%;
+  height: 100%; }
+
+.profile-image {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100px;
+  height: 100px; }
+
+/*# sourceMappingURL=style.css.map */

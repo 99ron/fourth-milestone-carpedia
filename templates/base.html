@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VINpedia - Virtual Garage</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for ('static', filename='css/style.css') }}" >
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper nav-bg-colour">
+                <a href="/home" class="brand-logo">VINpedia</a>
+                <div class="menu-button">
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                </div>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/home">Home<i class="material-icons right">home</i></a></li>
+                    <li><a href="/summary">Summary<i class="material-icons right">view_list</i></a></li>
+                    <li><a href="/filter-cars">Search Database<i class="material-icons right">data_usage</i></a></li>
+                    <li><a href="/add-vehicle">Add a Vehicle<i class="material-icons right">add_box</i></a></li>
+                    <li><a href="/logout">Logout<i class="material-icons right">person</i></a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="/home">Home<i class="material-icons right">home</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="/summary">Summary<i class="material-icons right">view_list</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="/filter-cars">Search Database<i class="material-icons right">data_usage</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="/add-vehicle">Add a Vehicle<i class="material-icons right">add_box</i></a></li>
+                    <li class="divider"></li>
+                    <li><a href="/logout">Logout<i class="material-icons right">person</i></a></li>
+                </ul>
+            </div>
+        </nav>
+</header>
+<main>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+<footer class="page-footer">
+  <div class="container">
+            <div class="row">
+                
+              <div class="col s12">
+                <h5 class="white-text center pointer" onclick="topFunction()">Back to the top!</h5>
+                
+              </div>
+              
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            <p class="left">© 2019 Copyright</p> 
+            <p class="right">VINpedia</p> 
+            </div>
+          </div>  
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+<script src="{{ url_for ('static', filename='js/graphs.js') }}" type='text/javascript'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="{{ url_for ('static',filename='js/scripts.js') }}" type='text/javascript'></script>
+    
+</body>
+</html>

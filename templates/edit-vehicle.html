@@ -1,0 +1,142 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row">
+    <div class="col s12">
+            
+            <h1 class="center-align">Edit Vehicle</h1>
+            
+            <p class="center">Make any changes as you need to and click on the update button below.</p>
+            
+             {% with messages = get_flashed_messages() %} {% if messages %}
+             <div class="flash-message">
+                 {% for message in messages %}
+                 <li>
+                     <h4>{{ message }}</h4>
+                 </li>
+                 {% endfor %}
+             </div>
+         {% endif %} {% endwith %}
+    </div>
+             
+{% if vehicles %}
+<div class="col s12">
+
+    <form class="z-depth-3 grey lighten-4 row form-padding" method="POST" enctype="multipart/form-data">
+       {{ form.csrf_token }}
+        <div class="container">
+            <div class="row">
+                <div class="col s12 edit-images">
+                    {% if vehicles.img_url %}
+                       <img src= {{ vehicles.img_url }} >
+                    {% else %}
+                        <img src="/static/images/vehicles/no_img.jpg">
+                    {% endif %}
+                </div>
+            </div>
+            <div class- "row">
+                <div class="col s12 edit-make-model center">
+                    <h3>{{ vehicles.make }} {{ vehicles.model }}</h3>
+                </div>
+                <div class="col s12 edit-stats-container center">
+                    <div class="col s12 edit-stats-table">
+                        <table class="centered striped">
+                            <tbody>
+                                <tr>
+                                    <td>Region: </td>
+                                    <td>{{ form.region }} </td>
+                                    {% for error in form.region.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Make: </td>
+                                    <td>{{ form.make }} </td>
+                                    {% for error in form.make.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Model: </td>
+                                    <td>{{ form.model }} </td>
+                                    {% for error in form.model.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Total Horsepower: </td>
+                                    <td>{{ form.hp }} </td>
+                                    {% for error in form.hp.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Total Torque: </td>
+                                    <td>{{ form.torque }}</td>
+                                    {% for error in form.torque.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Car Year:</td>
+                                    <td>{{ form.year }}</td>
+                                    {% for error in form.year.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Transmission type:</td>
+                                    <td>{{ form.trans }}</td>
+                                    {% for error in form.trans.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Drivetrain type:</td>
+                                    <td>{{ form.drive }}</td>
+                                    {% for error in form.drive.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>Body style:</td>
+                                    <td>{{ form.body }}</td>
+                                    {% for error in form.body.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td>0-60mph in seconds:</td>
+                                    <td>{{ form.accel }}</td>
+                                    {% for error in form.accel.errors %}
+                                    <span style="color: red;">{{ error }}</span> 
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="col s12 summary-car-image btn waves-effect blue lighten-1">
+                        {{ form.car_img }}
+                    </div> 
+                    <div class="col s12 edit-car-description center">
+                        <h5 class="center">Description</h5>
+                        {{ form.car_desc(cols="35", rows="20") }}
+                    </div> 
+                </div>
+                <div class="col s12 edit-buttons">
+                    {% if current_user.username == vehicles.upload_by %}
+                        <button type="button" class="btn-large waves-effect blue lighten-1 col s6" value="Back" onclick="window.history.back()"/>Back</button>
+                        <button type='submit' name='btn_submit' class='btn-large waves-effect blue lighten-1 col s6'>Update</button>
+                    {% else %}
+                        <button type="button" class="btn btn-large waves-effect blue lighten-1 col s6" value="Back" onclick="window.history.back()"/>Back</button>
+                    {% endif %}           
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endif %}
+</div>
+{% endblock %}
+
