@@ -14,10 +14,13 @@ $overlay-text-colour: #FFF;
     Miscellaneous 
 -------------------------------------------------------------------------*/
 
+<<<<<<< HEAD
 blockquote {
     border-left: 5px solid $nav-bg-colour;
 }
 
+=======
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 .btn-padding {
     padding-left: 6px;
     padding-right: 6px;
@@ -126,6 +129,7 @@ rect { fill: $chart-colour;
     padding: 30px;
 }
 
+<<<<<<< HEAD
 .page-footer {
     background-color: $nav-bg-colour;
     box-shadow: 0px -2px 6px 0 rgba(0, 0, 0, 0.14), 0 -3px 6px 0 rgba(0, 0, 0, 0.12), 0 -2px 6px 1px rgba(0, 0, 0, 0.2);
@@ -135,6 +139,8 @@ rect { fill: $chart-colour;
     }
 }
 
+=======
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 /*-------------------------------------------------------------------------
     Tables
 -------------------------------------------------------------------------*/
@@ -258,6 +264,7 @@ rect { fill: $chart-colour;
         
     }
 }
+<<<<<<< HEAD
 
 // Maximise the space for when on the vehicle info page to display the image.
 .vehicle-info-images > img {
@@ -271,16 +278,26 @@ rect { fill: $chart-colour;
     margin: 15px;
 }
 
+=======
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 // Filter results page this forces the image to fit within the div.
 .summary-images > img{
     width: 100%;
     height: 100%;
+<<<<<<< HEAD
     object-fit: scale-down;
+=======
+    object-fit: contain;
+    border: 1px black solid;
+    border-radius: 5px;
+    margin-top: 5px;
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 }
 
 .edit-images > img{
     width: 100%;
     height: 100%;
+<<<<<<< HEAD
 }
 
 .profile-image {
@@ -290,4 +307,7 @@ rect { fill: $chart-colour;
     margin-bottom: 5px;
     width: 100px;
     height: 100px;
+=======
+    object-fit: contain;
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 }

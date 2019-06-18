@@ -67,7 +67,11 @@ def index():
 def logout():
 
     '''
+<<<<<<< HEAD
      Checks that a session is active and if so sets it to False.
+=======
+     Checks that a session is active and if so sets it to False
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
      If there's no session and a user tries to log out it'll
      take you to the login screen with a message.
     '''
@@ -81,6 +85,11 @@ def logout():
         user.is_authenticated = False
         logout_user()
     return redirect(url_for('login'))
+<<<<<<< HEAD
+=======
+    #return render_template('login.html', form=form)
+    
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 
 @app.route('/check-user-credentials', methods=['GET','POST'])
 def checkuser():
@@ -95,7 +104,11 @@ def checkuser():
     '''
     
     if request.method == "POST":
+<<<<<<< HEAD
         # I've got it to check if the username exists in the table first.
+=======
+        # I've got it to check for if the username exists in the table first.
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
         user = Users.query.filter_by(username = form.username.data).first()
         
         if user:
@@ -125,7 +138,11 @@ def register():
     '''
     form = RegisterForm()
     try:
+<<<<<<< HEAD
         if request.method == 'POST' and form.validate_on_sumbite():
+=======
+        if request.method == 'POST':
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
             # Posts the users preferred username and password.
             new_user = Users(username=form.username.data, password=form.password.data)
             
@@ -163,7 +180,11 @@ def addVehicle():
                 # Tries to store the image on the server.
                 file_img.save(os.path.join( UPLOAD_FOLDER, filename))
             except:
+<<<<<<< HEAD
                 # Fails if the same image already exists so simply doesn't save the image.
+=======
+                # Fails if the same image already exists so simply doesn't upload the image.
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
                 return
         else:
             car_img_url = '/static/images/vehicles/no_img.jpg'
@@ -200,8 +221,13 @@ def addVehicle():
 #@login_required
 def filter():
     '''
+<<<<<<< HEAD
     This section processes the filter of which I've chosen by Region and Drive type
     to filter by, it's then sorted by Manufacturer A-Z or only cars that have likes on them.
+=======
+    This section processes the filter of which I've chosen by Region and Drive train type
+    to filter, it's then sorted by Manufacturer A-Z or only cars that have likes on them.
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
     '''
     cars = Car.query.all()
     form = FilterCars()
@@ -231,7 +257,11 @@ def filter():
         return render_template('filter-cars.html', form=form, cars=cars)
 
     # When the page loads it requests all cars from the database to display.
+<<<<<<< HEAD
     return render_template('filter-cars.html', form=form, cars=cars, query=query)
+=======
+    return render_template('filter-cars.html', form=form, cars=cars)
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 
 
 @app.route('/vehicle/<int:car_id>', methods=['GET'])
@@ -256,7 +286,10 @@ def editVehicle(car_id, vehicleName):
     
     if request.method == 'GET':
         
+<<<<<<< HEAD
         # Confirms the current logged in user is who uploaded the vehicle.
+=======
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
         user_match = user_uploaded_car(user)
         
         if user_match is True:

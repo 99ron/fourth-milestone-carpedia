@@ -125,7 +125,11 @@ function update(data) {
          .attr("height", function(d) { return height - y(d.value); })
          .attr("fill", "#448aff");
      
+<<<<<<< HEAD
      // If less group in the new dataset, it delete the ones not in use anymore
+=======
+     // If less group in the new dataset, I delete the ones not in use anymore
+>>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
      u
          .exit()
          .remove();
