@@ -125,10 +125,12 @@ def register():
     If the user already exists it'll flash a message and ask to try again.
     '''
     form = RegisterForm()
-    try:
-        if request.method == 'POST' and form.validate_on_sumbite():
-            # Posts the users preferred username and password.
-            new_user = Users(username=form.username.data, password=form.password.data)
+    
+    if request.method == 'POST':
+        # Posts the users preferred username and password.
+        new_user = Users(username=form.username.data, password=form.password.data)
+        
+        try:
             
             if not new_user:
                 # If the username is taken then flash a message to try another.
@@ -139,9 +141,9 @@ def register():
                 db.session.add(new_user)
                 db.session.commit()
                 return redirect(url_for('login'))
-    except:
-        flash('Error Occured, try again.')
-        return render_template('register.html', form=form)
+        except:
+            flash('Error Occured, try again.')
+            return render_template('register.html', form=form)
     
 @app.route('/add-vehicle')
 @login_required
