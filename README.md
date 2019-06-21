@@ -52,7 +52,7 @@ Delete Vehicle - THis is also accessed via the 'more info' page and confirms tha
 
 My backend consists of a relatively simple MySQL database. For testing and Development I use the local Cloud 9 Database and then for the live version I use the ClearDB heroku add on.
 
-My Database consists of 4 tables:
+My Database consists of 3 tables:
 
     users
     cars
