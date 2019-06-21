@@ -4,8 +4,9 @@
     <div class="col s12">
 
         <h1>Adding a Vehicle</h1>
-
+        
         <p>Enter the details of a car you'd like to enter into the database and click on the submit button below!</p>
+        <hr class="hr">
         
         {% with messages = get_flashed_messages() %} {% if messages %}
         <div class="flash-message">
@@ -18,7 +19,9 @@
         {% endif %} {% endwith %}
 
     </div>
-
+    
+    <div class="add-vehicle-header-image z-depth-3"></div>
+    
     <div class="col s12">
 
             <div class="z-depth-3 grey lighten-4 row form-padding">
@@ -48,7 +51,7 @@
                         </div>
                             
                         <div class="row">
-                            <div class='input-field col s12 m12 l12'>
+                            <div class='input-field col s12'>
                                 {{ form.model.label }}
                                 {{ form.model }}
                                 {% for error in form.model.errors %}
@@ -56,8 +59,8 @@
                                 {% endfor %}
                             </div>
                             
-                            <div class='input-field col s12 m12 l12'>
-                                {{ form.car_img (class=" col s12 btn btn-large waves-effect blue lighten-1")}}
+                            <div class='input-field col s12'>
+                                {{ form.car_img (class="col s12 btn waves-effect blue lighten-1") }}
                                 {% for errors in form.car_img.errors %}
                                 <span style="color: red;">{{ error }}</span> 
                                 {% endfor %}

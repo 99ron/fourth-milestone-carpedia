@@ -4,17 +4,13 @@
 /*-------------------------------------------------------------------------
     Miscellaneous 
 -------------------------------------------------------------------------*/
-<<<<<<< HEAD
 blockquote {
   border-left: 5px solid #448aff; }
 
-=======
->>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
-.btn-padding {
-  padding-left: 6px;
-  padding-right: 6px;
-  margin-bottom: 6px;
-  margin-top: 6px; }
+.col.btn-padding {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px; }
 
 rect {
   fill: #D3D3D3; }
@@ -52,6 +48,37 @@ rect {
   color: #FFF;
   padding: 5px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)); }
+
+#scroll {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  background-color: #D3D3D3;
+  text-indent: -9999px;
+  display: none;
+  -webkit-border-radius: 60px;
+  -moz-border-radius: 60px;
+  border-radius: 60px; }
+
+#scroll span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -12px;
+  height: 0;
+  width: 0;
+  border: 8px solid transparent;
+  border-bottom-color: #ffffff; }
+
+#scroll:hover {
+  background-color: #448aff;
+  opacity: 1;
+  filter: "alpha(opacity=100)";
+  -ms-filter: "alpha(opacity=100)"; }
 
 /*-------------------------------------------------------------------------
     Nav bar
@@ -95,15 +122,21 @@ rect {
 .form-padding {
   padding: 30px; }
 
-<<<<<<< HEAD
 .page-footer {
+  padding-top: 10px;
   background-color: #448aff;
   box-shadow: 0px -2px 6px 0 rgba(0, 0, 0, 0.14), 0 -3px 6px 0 rgba(0, 0, 0, 0.12), 0 -2px 6px 1px rgba(0, 0, 0, 0.2); }
   .page-footer .pointer {
     cursor: pointer; }
 
-=======
->>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column; }
+
+main {
+  flex: 1 0 auto; }
+
 /*-------------------------------------------------------------------------
     Tables
 -------------------------------------------------------------------------*/
@@ -138,7 +171,8 @@ rect {
   margin-top: 20px;
   border-collapse: collapse; }
   #tableDiv > table tr {
-    border-bottom: 1px solid; }
+    border-bottom: 1px solid black;
+    border-right: 1px solid black; }
   #tableDiv > table td {
     text-align: center; }
 
@@ -151,6 +185,30 @@ rect {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover; }
+
+.summary-header-image {
+  background-image: url(/static/images/car-stack.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 285px;
+  width: 61%;
+  overflow: hidden;
+  margin-bottom: 35px;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.add-vehicle-header-image {
+  background-image: url(/static/images/add-car.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 285px;
+  width: 82%;
+  overflow: hidden;
+  margin-bottom: 35px;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto; }
 
 .homepage-image {
   background-image: url(/static/images/hp-image.jpg);
@@ -191,7 +249,6 @@ rect {
     width: 100%;
     overflow: hidden; }
 
-<<<<<<< HEAD
 .vehicle-info-images > img {
   width: 100%;
   height: 100%; }
@@ -203,7 +260,7 @@ rect {
 .summary-images > img {
   width: 100%;
   height: 100%;
-  object-fit: scale-down; }
+  object-fit: cover; }
 
 .edit-images > img {
   width: 100%;
@@ -216,19 +273,21 @@ rect {
   margin-bottom: 5px;
   width: 100px;
   height: 100px; }
-=======
-.summary-images > img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border: 1px black solid;
-  border-radius: 5px;
-  margin-top: 5px; }
 
-.edit-images > img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; }
->>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
+#car_img {
+  width: 100%; }
+
+/*-------------------------------------------------------------------------
+    Media Queries
+-------------------------------------------------------------------------*/
+@media only screen and (max-width: 600px) {
+  .summary-graph-container {
+    display: none; } }
+@media only screen and (max-width: 992px) {
+  .add-vehicle-header-image {
+    width: 100%; }
+
+  .summary-header-image {
+    width: 95%; } }
 
 /*# sourceMappingURL=style.css.map */

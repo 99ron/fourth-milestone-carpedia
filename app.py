@@ -356,6 +356,7 @@ def deleteVehicle(car_id):
 @app.route('/summary')
 #@login_required
 def summary():
+   
     return render_template('summary.html')
 
 
@@ -366,9 +367,10 @@ def summaryData():
     and finally converts it to a JSON URL which is retrieved on the summary.html page to display
     on a barchart and also a dynamic table.
     '''
-
-    cars = Car.query.all()
     
+    cars = Car.query.all()
+  
+
     USDM = 0
     USDMN = []
     JDM = 0
@@ -389,6 +391,7 @@ def summaryData():
     LT7N = []
     MT7 = 0
     MT7N = []
+    
     
 
     for car in cars:
@@ -418,14 +421,18 @@ def summaryData():
     
         if car.accel_time <= 4:
             LT4 +=1
-            LT4N.append([' ' + car.make + ' ' + car.model])
+            LT4N.append([' ' + car.make + ' ' + car.model + ' ' + '-' + ' ' + str(car.accel_time)])
         elif car.accel_time <= 7:
             LT7 +=1
-            LT7N.append([' ' + car.make + ' ' + car.model])
+            LT7N.append([' ' + car.make + ' ' + car.model + ' ' + '-' + ' ' + str(car.accel_time)])
         else:
             MT7 +=1
-            MT7N.append([' ' + car.make + ' ' + car.model])
-    
+            MT7N.append([' ' + car.make + ' ' + car.model + ' ' + '-' + ' ' + str(car.accel_time)])
+        
+        
+        
+        
+        
     jsonData = [{'USDM' : USDM , 'JDM' : JDM, 'Euro' : Euro, 'USDMN' : USDMN, 'JDMN' : JDMN, 'EuroN' : EuroN }, {'Manual': Manual, 'SemiAuto': SemiAuto, 'Auto': Auto, 'Sequential': Sequential, 'ManualN' : ManualN, 'SemiAutoN' : SemiAutoN, 'AutoN' : AutoN, 'SequentialN' : SequentialN}, {'LT4' : LT4, 'LT7': LT7, 'MT7': MT7, 'LT4N' : LT4N, 'LT7N' : LT7N, 'MT7N' : MT7N }]
     return jsonify(jsonData)
     
