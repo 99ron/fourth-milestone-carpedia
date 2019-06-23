@@ -60,7 +60,7 @@ def home():
 
 @app.route('/register')
 def index():
-    form = LoginForm()
+    form = RegisterForm()
     return render_template('register.html', form=form)
 
 @app.route('/logout')
