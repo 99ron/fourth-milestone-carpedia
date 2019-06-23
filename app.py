@@ -391,7 +391,12 @@ def summaryData():
     LT7N = []
     MT7 = 0
     MT7N = []
-    
+    MT500 = 0
+    MT500N = []
+    MT300 = 0
+    MT300N = []
+    LT300 = 0
+    LT300N = []
     
 
     for car in cars:
@@ -421,19 +426,28 @@ def summaryData():
     
         if car.accel_time <= 4:
             LT4 +=1
-            LT4N.append([' ' + car.make + ' ' + car.model + ' ' + '-' + ' ' + str(car.accel_time)])
+            LT4N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.accel_time)])
         elif car.accel_time <= 7:
             LT7 +=1
-            LT7N.append([' ' + car.make + ' ' + car.model + ' ' + '-' + ' ' + str(car.accel_time)])
+            LT7N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.accel_time)])
         else:
             MT7 +=1
-            MT7N.append([' ' + car.make + ' ' + car.model + ' ' + '-' + ' ' + str(car.accel_time)])
+            MT7N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.accel_time)])
+        
+        if car.hp_amount >= 500:
+            MT500 +=1
+            MT500N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount)])
+        elif car.hp_amount >=300:
+            MT300 +=1
+            MT300N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount)])
+        else:
+            LT300 +=1
+            LT300N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount)])
+            
         
         
         
-        
-        
-    jsonData = [{'USDM' : USDM , 'JDM' : JDM, 'Euro' : Euro, 'USDMN' : USDMN, 'JDMN' : JDMN, 'EuroN' : EuroN }, {'Manual': Manual, 'SemiAuto': SemiAuto, 'Auto': Auto, 'Sequential': Sequential, 'ManualN' : ManualN, 'SemiAutoN' : SemiAutoN, 'AutoN' : AutoN, 'SequentialN' : SequentialN}, {'LT4' : LT4, 'LT7': LT7, 'MT7': MT7, 'LT4N' : LT4N, 'LT7N' : LT7N, 'MT7N' : MT7N }]
+    jsonData = [{'USDM' : USDM , 'JDM' : JDM, 'Euro' : Euro, 'USDMN' : USDMN, 'JDMN' : JDMN, 'EuroN' : EuroN }, {'Manual': Manual, 'SemiAuto': SemiAuto, 'Auto': Auto, 'Sequential': Sequential, 'ManualN' : ManualN, 'SemiAutoN' : SemiAutoN, 'AutoN' : AutoN, 'SequentialN' : SequentialN}, {'LT4' : LT4, 'LT7': LT7, 'MT7': MT7, 'LT4N' : LT4N, 'LT7N' : LT7N, 'MT7N' : MT7N }, {'MT500' : MT500, 'MT300' : MT300, 'LT300' : LT300, 'MT500N' : MT500N, 'MT300N' : MT300N, 'LT300N' : LT300N}]
     return jsonify(jsonData)
     
 
