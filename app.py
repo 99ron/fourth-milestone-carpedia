@@ -436,13 +436,13 @@ def summaryData():
         
         if car.hp_amount >= 500:
             MT500 +=1
-            MT500N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount)])
+            MT500N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount) + 'bhp'])
         elif car.hp_amount >=300:
             MT300 +=1
-            MT300N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount)])
+            MT300N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount) + 'bhp'])
         else:
             LT300 +=1
-            LT300N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount)])
+            LT300N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount) + 'bhp'])
             
         
         

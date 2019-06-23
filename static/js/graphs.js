@@ -39,9 +39,9 @@ $('#summarySelect').change(function(){
     if(dropdown=="opt4") {
         var bhp = jsonData[3];
         data = [
-            { group: "More Than 500Bhp", value: bhp.MT500, value2: bhp.MT500N},
-            { group: "More Than 300Bhp", value: bhp.MT300, value2: bhp.MT300N},
-            { group: "Less Than 300Bhp", value: bhp.LT300, value2: bhp.LT300N},
+            { group: "More Than 500bhp", value: bhp.MT500, value2: bhp.MT500N},
+            { group: "More Than 300bhp", value: bhp.MT300, value2: bhp.MT300N},
+            { group: "Less Than 300bhp", value: bhp.LT300, value2: bhp.LT300N},
             ];
     update(data);
     }
