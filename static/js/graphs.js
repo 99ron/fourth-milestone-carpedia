@@ -9,33 +9,34 @@ $('#summarySelect').change(function(){
     $.getJSON("/summary/data", function(jsonData){
     
     if(dropdown=="opt1") {
-        var Trans = jsonData[1];
+        var trans = jsonData[1];
         data = [
-            { group: "Automatic", value: Trans.Auto, value2: Trans.AutoN },
-            { group: "Manual", value: Trans.Manual, value2: Trans.ManualN },
-            { group: "SemiAuto", value: Trans.SemiAuto, value2: Trans.SemiAutoN },
-            { group: "Sequential", value: Trans.Sequential, value2: Trans.SequentialN }
+            { group: "Automatic", value: trans.Auto, value2: trans.AutoN },
+            { group: "Manual", value: trans.Manual, value2: trans.ManualN },
+            { group: "SemiAuto", value: trans.SemiAuto, value2: trans.SemiAutoN },
+            { group: "Sequential", value: trans.Sequential, value2: trans.SequentialN }
         ];
         update(data);
     }
     if(dropdown=="opt2") {
-        var Accel = jsonData[2];
+        var accel = jsonData[2];
         data = [
-            { group: "Less than 4 seconds", value: Accel.LT4, value2: Accel.LT4N },
-            { group: "Less than 7 seconds", value: Accel.LT7, value2: Accel.LT7N },
-            { group: "More than 7 seconds", value: Accel.MT7, value2: Accel.MT7N }
+            { group: "Less than 4 seconds", value: accel.LT4, value2: accel.LT4N },
+            { group: "Less than 7 seconds", value: accel.LT7, value2: accel.LT7N },
+            { group: "More than 7 seconds", value: accel.MT7, value2: accel.MT7N }
         ];
         update(data);
     }
     if(dropdown=="opt3") {
-        var Region = jsonData[0];
+        var region = jsonData[0];
         data = [
-            { group: "USDM", value: Region.USDM, value2: Region.USDMN },
-            { group: "JDM", value: Region.JDM, value2: Region.JDMN },
-            { group: "Euro", value: Region.Euro, value2: Region.EuroN }
+            { group: "USDM", value: region.USDM, value2: region.USDMN },
+            { group: "JDM", value: region.JDM, value2: region.JDMN },
+            { group: "Euro", value: region.Euro, value2: region.EuroN }
         ];
         update(data);
         }
+    
  });
 });
 
@@ -72,7 +73,7 @@ $('#summarySelect').change(function(){
   };
   var mousemove = function(d) {
     Tooltip
-      .html("Cars that are " + d.group + ": " + d.value)
+      .html("Cars that are " + d.group + ": " + '<b>' + d.value2 + '</b>')
       .style("left", (d3.mouse(this)[0]+70) + "px")
       .style("top", (d3.mouse(this)[1]) + "px")
   };
