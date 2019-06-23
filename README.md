@@ -100,6 +100,7 @@ SQLAlchemy - This is the module used for all my database queries/commits.
 ## CSS
 
 I'm using SCSS to build my css style sheet which has SASS doing the conversion for me.
+Animated CSS by Daniel Eden. I love this package and use it with all my projects, if needed it can be amended with javascript to make it run a function when it's finished animating and much more (link below).
 
 ## JQuery
 
@@ -156,5 +157,6 @@ I've done all my testing on a local database which doesn't get uploaded to GitHu
 # Acknowledgements
 
     Pencil - To draw my mock ups.
+    Animated.css - https://daneden.github.io/animate.css/
     ClearDB - Database hosted on Heroku/
     SQL image
