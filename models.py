@@ -149,7 +149,7 @@ car_jdm_2 = Car(region='JDM',
                  chassy_desc='Coupe',
                  accel_time='4.2',
                  car_desc='Known for its iconic RB26.',
-                 img_url="/static/images/vehicles/no_img.jpg",
+                 img_url="/static/images/vehicles/skyline-r33.jpg",
                  upload_by='Aaron')
 
 car_jdm_3 = Car(region='JDM',
@@ -163,7 +163,7 @@ car_jdm_3 = Car(region='JDM',
                  chassy_desc='Coupe',
                  accel_time='4.9',
                  car_desc='Wedgelike shape like a lambo at its time.',
-                 img_url="/static/images/vehicles/no_img.jpg",
+                 img_url="/static/images/vehicles/nissan-300zx.jpg",
                  upload_by='Aaron')   
 
 car_jdm_4 = Car(region='JDM',
@@ -177,7 +177,7 @@ car_jdm_4 = Car(region='JDM',
                  chassy_desc='Hatchback',
                  accel_time='6.2',
                  car_desc='Loves to hit the limiter.',
-                 img_url="/static/images/vehicles/no_img.jpg",
+                 img_url="/static/images/vehicles/honda-civic-type-r.jpg",
                  upload_by='Aaron')
 
 car_usdm_1 = Car(region='USDM',
@@ -191,7 +191,7 @@ car_usdm_1 = Car(region='USDM',
                  chassy_desc='Coupe',
                  accel_time='2.8',
                  car_desc='Huge american muscle, so much power!',
-                 img_url="/static/images/vehicles/no_img.jpg",
+                 img_url="/static/images/vehicles/corvette-zr1.jpg",
                  upload_by='Aaron')
 
 car_usdm_2 = Car(region='USDM',
@@ -205,7 +205,7 @@ car_usdm_2 = Car(region='USDM',
                  chassy_desc='Coupe',
                  accel_time='4.4',
                  car_desc='Classic camaro power right here!',
-                 img_url="/static/images/vehicles/no_img.jpg",
+                 img_url="/static/images/vehicles/camaro1.jpg",
                  upload_by='Aaron')
 
 car_usdm_3 = Car(region='USDM',
@@ -219,7 +219,7 @@ car_usdm_3 = Car(region='USDM',
                  chassy_desc='Hatchback',
                  accel_time='6.4',
                  car_desc='Hatchback fun right here!',
-                 img_url="/static/images/vehicles/no_img.jpg",
+                 img_url="/static/images/vehicles/ford-focus-rs.jpg",
                  upload_by='Aaron')
 
 car_euro_1 = Car(region='Euro',
