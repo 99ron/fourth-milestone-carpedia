@@ -137,6 +137,9 @@ body {
 main {
   flex: 1 0 auto; }
 
+.edit-car-description {
+  margin-bottom: 15px; }
+
 /*-------------------------------------------------------------------------
     Tables
 -------------------------------------------------------------------------*/
@@ -290,7 +293,16 @@ main {
 -------------------------------------------------------------------------*/
 @media only screen and (max-width: 600px) {
   .summary-graph-container {
-    display: none; } }
+    display: none; }
+
+  .summary-buttons {
+    width: 100%; }
+    .summary-buttons a {
+      width: 100%;
+      margin-bottom: 10px; }
+
+  .summary-images > img {
+    object-fit: contain; } }
 @media only screen and (max-width: 992px) {
   .add-vehicle-header-image {
     width: 100%; }

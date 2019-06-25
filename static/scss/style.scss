@@ -182,6 +182,10 @@ main {
     flex: 1 0 auto;
 }
 
+// edit page description box
+.edit-car-description {
+    margin-bottom: 15px;
+}
 /*-------------------------------------------------------------------------
     Tables
 -------------------------------------------------------------------------*/
@@ -390,6 +394,19 @@ main {
 @media only screen and (max-width: 600px) {
     .summary-graph-container {
         display: none;
+    }
+    
+    .summary-buttons {
+        width: 100%;
+        a {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+    
+    // When screen size is of a mobile this forces filter car images to fit in the div. 
+    .summary-images > img {
+        object-fit: contain;
     }
 }
 

@@ -100,10 +100,10 @@
                         <p><strong>Likes: </strong> {{ vehicles.likes.count() }} </p>
                     
                     </div>
-                <div class="row summary-buttons center">
+                <div class="row col s12 summary-buttons center">
                     {% if current_user.username == vehicles.upload_by %} 
-                        <a type="button" href="{{url_for('filter')}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left">arrow_back</i>Back</a>
-                        <a type="button" href="{{url_for('editVehicle', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons right">build</i>Edit</a>
+                        <a type="button" href="{{url_for('filter')}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left hide-on-small-only">arrow_back</i>Back</a>
+                        <a type="button" href="{{url_for('editVehicle', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons right hide-on-small-only">build</i>Edit</a>
                         <a type="button" href="{{url_for('deleteVehicle', car_id=vehicles.id)}}" class="waves-effect waves-light btn-large blue lighten-1">Delete</a>
                     {% else %}
                         <a type="button" href="{{url_for('filter')}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left">arrow_back</i>Back</a>

@@ -19,7 +19,7 @@
     </div>
              
 {% if vehicles %}
-<div class="col s12">
+<div class="col s12 animated fadeIn">
 
     <form class="z-depth-3 grey lighten-4 row form-padding" method="POST" enctype="multipart/form-data">
        {{ form.csrf_token }}
@@ -122,13 +122,15 @@
                         <h5 class="center">Description</h5>
                         {{ form.car_desc(cols="35", rows="20") }}
                     </div> 
+                    
                 </div>
-                <div class="col s12 edit-buttons">
+                
+                <div class="col s12 edit-buttons center">
                     {% if current_user.username == vehicles.upload_by %}
-                        <button type="button" class="btn-large waves-effect blue lighten-1 col s6" value="Back" onclick="window.history.back()"/>Back</button>
+                        <a href="{{url_for('vehicleInfo', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue lighten-1 col s6"><i class="material-icons left hide-on-small-only">arrow_back</i>Back</a>
                         <button type='submit' name='btn_submit' class='btn-large waves-effect blue lighten-1 col s6'>Update</button>
                     {% else %}
-                        <button type="button" class="btn btn-large waves-effect blue lighten-1 col s6" value="Back" onclick="window.history.back()"/>Back</button>
+                        <a href="{{url_for('vehicleInfo', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue"><i class="material-icons left">arrow_back</i>Back</a>
                     {% endif %}           
                 </div>
             </div>
