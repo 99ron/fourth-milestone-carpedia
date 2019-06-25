@@ -11,7 +11,7 @@
             
             <p class="center"><b>RWD</b> - Rear Wheel Drive <br> <b>FWD</b> - Front Wheel Drive <br> <b>AWD</b> - All Wheel Drive</p>
             
-            <hr class="hr"></hr>
+            <hr class="hr">
             
              {% with messages = get_flashed_messages() %} {% if messages %}
              <div class="flash-message">
@@ -104,9 +104,9 @@
                     {% if current_user.username == vehicles.upload_by %} 
                         <a type="button" href="{{url_for('filter')}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left hide-on-small-only">arrow_back</i>Back</a>
                         <a type="button" href="{{url_for('editVehicle', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons right hide-on-small-only">build</i>Edit</a>
-                        <a type="button" href="{{url_for('deleteVehicle', car_id=vehicles.id)}}" class="waves-effect waves-light btn-large blue lighten-1">Delete</a>
+                        <a type="button" href="{{url_for('deleteVehicle', car_id=vehicles.id)}}" class="waves-effect waves-light btn-large blue lighten-1 tooltipped" data-position="bottom" data-tooltip="Are you sure?"><i class="material-icons right hide-on-small-only">delete_forever</i>Delete</a>
                     {% else %}
-                        <a type="button" href="{{url_for('filter')}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left">arrow_back</i>Back</a>
+                        <a type="button" href="{{url_for('filter')}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left hide-on-small-only">arrow_back</i>Back</a>
                     {% endif %}           
                 </div>
             </div>

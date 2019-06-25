@@ -102,7 +102,7 @@ rect {
   margin-right: auto;
   margin-bottom: 4%; }
 
-.info-container-design {
+.info-container-design, .edit-container-design {
   background-color: #FFF;
   border: #000000 solid 1px;
   border-radius: 20px; }
@@ -295,9 +295,12 @@ main {
   .summary-graph-container {
     display: none; }
 
-  .summary-buttons {
+  .summary-buttons, .edit-buttons {
     width: 100%; }
-    .summary-buttons a {
+    .summary-buttons a, .edit-buttons a {
+      width: 100%;
+      margin-bottom: 10px; }
+    .summary-buttons button, .edit-buttons button {
       width: 100%;
       margin-bottom: 10px; }
 

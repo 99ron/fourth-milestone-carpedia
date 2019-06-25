@@ -136,7 +136,7 @@ rect { fill: $chart-colour;
     margin-bottom: 4%;
 }
 
-.info-container-design {
+.info-container-design, .edit-container-design {
     background-color: $text-colour-prim;
     border: $text-colour-seco solid 1px;
     border-radius: 20px;
@@ -395,10 +395,15 @@ main {
     .summary-graph-container {
         display: none;
     }
-    
-    .summary-buttons {
+    // Buttons at the bottom of the edit-vehicle and vehicle-info pages.
+    .summary-buttons, .edit-buttons {
         width: 100%;
         a {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        button {
             width: 100%;
             margin-bottom: 10px;
         }

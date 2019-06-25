@@ -7,6 +7,8 @@
             
             <p class="center">Make any changes as you need to and click on the update button below.</p>
             
+            <hr class="hr">
+            
              {% with messages = get_flashed_messages() %} {% if messages %}
              <div class="flash-message">
                  {% for message in messages %}
@@ -33,7 +35,8 @@
                     {% endif %}
                 </div>
             </div>
-            <div class- "row">
+            <hr class="hr">
+            <div class="row info-container-design">
                 <div class="col s12 edit-make-model center">
                     <h3>{{ vehicles.make }} {{ vehicles.model }}</h3>
                 </div>
@@ -125,12 +128,12 @@
                     
                 </div>
                 
-                <div class="col s12 edit-buttons center">
+                <div class="row col s12 edit-buttons center">
                     {% if current_user.username == vehicles.upload_by %}
-                        <a href="{{url_for('vehicleInfo', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue lighten-1 col s6"><i class="material-icons left hide-on-small-only">arrow_back</i>Back</a>
-                        <button type='submit' name='btn_submit' class='btn-large waves-effect blue lighten-1 col s6'>Update</button>
+                        <a href="{{url_for('vehicleInfo', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left hide-on-small-only">arrow_back</i>Back</a>
+                        <button type='submit' name='btn_submit' class='btn-large waves-effect blue lighten-1'><i class="material-icons right hide-on-small-only">sync</i>Update</button>
                     {% else %}
-                        <a href="{{url_for('vehicleInfo', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue"><i class="material-icons left">arrow_back</i>Back</a>
+                        <a href="{{url_for('vehicleInfo', car_id=vehicles.id, vehicleName=vehicles.model)}}" class="waves-effect waves-light btn-large blue lighten-1"><i class="material-icons left hide-on-small-only">arrow_back</i>Back</a>
                     {% endif %}           
                 </div>
             </div>
