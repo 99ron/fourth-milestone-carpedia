@@ -186,6 +186,13 @@ main {
   -o-background-size: cover;
   background-size: cover; }
 
+.base-bg {
+  background: linear-gradient(transparent, transparent), url("/static/images/bg-wallpaper.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+
 .summary-header-image {
   background-image: url(/static/images/car-stack.jpg);
   background-position: center;
@@ -272,7 +279,8 @@ main {
   margin-top: 5px;
   margin-bottom: 5px;
   width: 100px;
-  height: 100px; }
+  height: 100px;
+  object-fit: cover; }
 
 #car_img {
   width: 100%; }

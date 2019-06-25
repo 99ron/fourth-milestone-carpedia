@@ -20,7 +20,7 @@
 
     </div>
     
-    <div class="add-vehicle-header-image z-depth-3"></div>
+    <div class="add-vehicle-header-image z-depth-3 animated fadeIn"></div>
     
     <div class="col s12">
 
@@ -129,11 +129,8 @@
                         </div>
                         <div class='row'>
                             <div class='input-field col s12'>
-                                {{ form.car_desc.label }}
-                                {{ form.car_desc }}
-                                {% for error in form.car_desc.errors %}
-                                <span style="color: red;">{{ error }}</span>
-                                {% endfor %}
+                                <textarea id="add-vehicle-description" class="materialize-textarea"></textarea>
+                                <label for="add-vehicle-description">Description</label>
                             </div>
                         </div>
                     <br/>

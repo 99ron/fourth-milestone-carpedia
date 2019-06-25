@@ -23,7 +23,6 @@ class CarToDatabase(FlaskForm):
     drive = SelectField('Select Drivetrain', choices=[('FWD', 'FWD'), ('RWD', 'RWD'), ('AWD', 'AWD'), ('4WD','4WD')], validators=[DataRequired])
     body = SelectField('Select Body Type', choices=[('Hatchback', 'Hatchback'), ('SUV', 'SUV'), ('Coupe', 'Coupe'), ('Saloon', 'Saloon'), ('Jeep', 'Jeep'),
                         ('Convertible', 'Convertible'), ('Crossover', 'Crossover')], validators=[DataRequired])
-    car_desc = TextAreaField('Enter a description', validators=[DataRequired])
     year = IntegerField('Type in Year (Between 1960 and 2019)', validators=[NumberRange(min=1960, max=2019), DataRequired])
     hp = IntegerField('Horsepower', validators=[DataRequired])
     torque = IntegerField('Torque', validators=[DataRequired])

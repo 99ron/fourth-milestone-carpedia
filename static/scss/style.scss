@@ -202,6 +202,7 @@ main {
  }
 } 
 
+// When users mouse hovers the table it uses the below colours.
 #tableDiv tr:hover {
     background: $table-results-prim;
     color: $text-colour-prim;
@@ -250,6 +251,15 @@ main {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+.base-bg {
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)),
+    url('/static/images/bg-wallpaper.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; 
 }
 
 .summary-header-image {
@@ -366,6 +376,7 @@ main {
     margin-bottom: 5px;
     width: 100px;
     height: 100px;
+    object-fit: cover;
 }
 
 #car_img {
