@@ -312,5 +312,8 @@ main {
 
   .summary-header-image {
     width: 95%; } }
+@media only screen and (min-width: 1201px) {
+  .summary-images > img {
+    object-fit: contain; } }
 
 /*# sourceMappingURL=style.css.map */
