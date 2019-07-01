@@ -3,7 +3,6 @@ $(document).ready(function() {
     $('.collapsible').collapsible();
     $('select').material_select();
     $(".button-collapse").sideNav();
-    
     $(window).scroll(function(){ 
         if ($(this).scrollTop() > 100) { 
             $('#scroll').fadeIn(); 

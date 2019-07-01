@@ -1,9 +1,5 @@
 # The --watch flag is optional.
-<<<<<<< HEAD
 sass --watch /static/scss/style.scss /static/css/style.css 
-=======
-sass --watch ./static/css/style.css ./static/css/style.scss
->>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 
 # Create a requirements file
 pip3 freeze --local > requirements.txt
@@ -29,12 +25,8 @@ mysql-ctl cli
 #Upgrading a package
 sudo -H PACKAGE-NAME install --upgrade PACKAGE-NAME
 
-<<<<<<< HEAD
 # Install from requirements.txt
 pip3 install -r requirements.txt
-=======
-
->>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e
 ----------------------------------
 
 #For when you run it on heroku you will need to change that line to:
@@ -44,35 +36,8 @@ pip3 install -r requirements.txt
 #and db.create_all()
 #To create the tables
 
-
-
-#def remote():
-#    connection = pymysql.connect(
-#        host="eu-cdbr-west-02.cleardb.net",
-#        user="bd6203f445759d",
-#        password="3f8eca2f",
-#        db="heroku_1146a0b312400c5")
-#    return connection
+# Search for likes querying multiple tables: 
+    totalLikes = db.session.query(Users.username, Popularity.likes, Car.make + ' ' + Car.model).filter(Users.id==Popularity.user_id, Car.id==Popularity.car_id)
 
 
 
-## So yeah, you've got a foreign key there from Make to Region,
-so when you get the id of the region you can filter the make on it. 
-The syntax would probably look something like:
-
-Make.query.filter_by(region_id=<whatever_the_id_is>).all()
-
-<<<<<<< HEAD
-=======
----------------------
-# save results as an image for graph
-
-def figure_to_base64(fig1):
-    chart_io = BytesIO()
-    fig1.savefig(chart_io, format='png', dpi=180,
-                bbox_inches="tight", pad_inches=0)
-    chart_str = chart_io.getvalue()
-    return base64.b64encode(chart_str).decode('utf8')
-    
-fig1 being the 
->>>>>>> e335e9a136ab8caccb3c2a1b84bac0dbedee936e

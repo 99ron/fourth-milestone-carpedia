@@ -151,7 +151,7 @@ function table(data) {
             td.attr('class', key);
             td.text(data[i][key]);
             tr.append(td);
-        }
+            }
     summaryTable.append(tr);
     }
     

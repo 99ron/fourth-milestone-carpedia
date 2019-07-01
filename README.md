@@ -150,7 +150,7 @@ I've done all my testing on a local database which doesn't get uploaded to GitHu
     Create requirements.txt and Procfile to tell heroku what is required to run the app
     Login into Heroku Account via command line and add the newly created app
     Go back to Heroku Website and in the settings tab click Reveal Config Vars and add IP and PORT vars from Project Config
-    Install ClearDB and import local MySQL Database dump.sql
+    Install PostGres and run my models.py to create my database.
     Restart all dynos
     Last but not least, do an initial git commit and push to heroku
 

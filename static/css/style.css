@@ -286,7 +286,13 @@ main {
   object-fit: cover; }
 
 #car_img {
-  width: 100%; }
+  width: 100%;
+  height: 100%;
+  padding: 0; }
+
+.summary-car-image {
+  padding: 0px;
+  width: 95%; }
 
 /*-------------------------------------------------------------------------
     Media Queries

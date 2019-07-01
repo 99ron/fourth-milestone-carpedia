@@ -45,7 +45,7 @@
         <hr class="hr">
     </form>
     
-    
+    <!-- Iterate through results and display information on each -->
     {% for car in cars %}
     <div class="col s12 m12 l12 xl6 animated bounceInUp">
     
@@ -98,6 +98,7 @@
         </div>
     </div>
     {% else %}
+    <!-- If no results match criteria then display the message below -->
         <div class="col s12">
             <div class="info-container-design">
                 <div class="container">
