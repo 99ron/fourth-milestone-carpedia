@@ -32,7 +32,7 @@ class CarToDatabase(FlaskForm):
 class FilterCars(FlaskForm):
     region = SelectField('Select Region', choices=[('All' , 'All'), ('JDM', 'Japanese'),('USDM', 'USA'),('Euro', 'Europe')], default='All')
     drive = SelectField('Select Drivetrain', choices=[('All', 'All'), ('FWD', 'FWD'), ('RWD', 'RWD'), ('AWD', 'AWD'), ('4WD','4WD')], default='All')
-    query = SelectField('Select Filter', choices=[('Brands', 'Brands  (A-Z)'), ('Likes', 'Liked')])
+    query = SelectField('Select Filter', choices=[('Brands', 'Brands  (A-Z)'),('BrandsOpp', 'Brands (Z-A)') ,('Likes', 'Liked')])
     submit = SubmitField('Search Database') 
 
 class EditCar(FlaskForm):
