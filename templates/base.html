@@ -6,10 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VINpedia - Virtual Garage</title>
     
+    
+    
+    
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <link rel="stylesheet" href="{{ url_for ('static', filename='css/style.css') }}" >
+    
 </head>
 <body class="base-bg">
     <header>
@@ -42,10 +46,12 @@
 </header>
 
 <main>
+    <!-- Other pages display in the div below -->
     <div class="container">
         {% block content %}
         {% endblock %}
     </div>
+    <!-- This is used for scrolling back to the top -->
     <a href="#" id="scroll" style="display: none;"><span></span></a>
 </main>
 
@@ -58,11 +64,11 @@
     </div> 
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
-<script src="{{ url_for ('static', filename='js/graphs.js') }}" type='text/javascript'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script src="{{ url_for ('static',filename='js/scripts.js') }}" type='text/javascript'></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+    <script src="{{ url_for ('static', filename='js/graphs.js') }}" type='text/javascript'></script>
+    <script src="{{ url_for ('static', filename='js/scripts.js') }}" type='text/javascript'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
 </body>
 </html>
