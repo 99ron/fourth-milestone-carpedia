@@ -1,4 +1,3 @@
-# Test app.py 
 import os
 import sys
 import json
@@ -16,15 +15,13 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 # Used to check image extension is on the allowed list. 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
-
-# DB_URI = 'mysqldb://bd6203f445759d:3f8eca2f@eu-cdbr-west-02.cleardb.net/heroku_1146a0b312400c5?reconnect=true'
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+           
+# 'sqlite:///site.db'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://nseqjruinhgrgc:2b0e6b094826c647e87e0fdab3b1f67904b77d186380a100f1f4303c53335ab1@ec2-54-247-189-1.eu-west-1.compute.amazonaws.com:5432/ddhgivgkfi5o99'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager(app)
@@ -211,7 +208,7 @@ def filter():
     region = form.region.data
     drive = form.drive.data
     query = form.query.data
-
+    
     # If POST this then validates the form and pushes the request.
     if request.method == 'POST' and form.validate_on_submit():
         
@@ -229,7 +226,8 @@ def filter():
         
         # If neither has values then it'll be processed here.  
         if region == "All" and drive == "All":
-            cars= car_all(query)
+            cars = car_all(query)
+            
 
         return render_template('filter-cars.html', form=form, cars=cars)
 
@@ -355,8 +353,8 @@ def deleteVehicle(car_id):
             
 @app.route('/summary')
 #@login_required
+
 def summary():
-   
     return render_template('summary.html')
 
 
@@ -365,7 +363,7 @@ def summaryData():
     '''
     This route compiles the information from the database, puts it as a list within an array 
     and finally converts it to a JSON URL which is retrieved on the summary.html page to display
-    on a barchart and also a dynamic table.
+    on a barchart and a dynamic table.
     '''
     
     cars = Car.query.all()

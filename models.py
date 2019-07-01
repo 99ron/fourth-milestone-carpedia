@@ -93,7 +93,13 @@ def car_region(region, query):
     if query == "Likes":
         region = Car.query.filter_by(region=region).join(Popularity, Car.id==Popularity.car_id).order_by(Popularity.likes)
         return region
-    
+    if query == "BHP":
+        region = Car.query.filter_by(region=region).order_by(desc(Car.hp_amount))
+        return region
+    if query == 'BHPOpp':
+        region = Car.query.filter_by(region=region).order_by(Car.hp_amount)
+        return region
+        
 def car_drive(drive, query):
     if query == "Brands":
         drive = Car.query.filter_by(drivetrain=drive).order_by(Car.make)
@@ -104,7 +110,13 @@ def car_drive(drive, query):
     if query == "Likes":
         drive = Car.query.filter_by(drivetrain=drive).join(Popularity, Car.id==Popularity.car_id).order_by(Popularity.likes)
         return drive
-    
+    if query == "BHP":
+        drive = Car.query.filter_by(drivetrain=drive).order_by(desc(Car.hp_amount))
+        return drive
+    if query == 'BHPOpp':
+        drive = Car.query.filter_by(drivetrain=drive).order_by(Car.hp_amount)
+        return drive
+        
 def car_region_drive(region, drive, query):
     if query == "Brands":
         both = Car.query.filter_by(drivetrain=drive, region=region).order_by(Car.make)
@@ -115,7 +127,13 @@ def car_region_drive(region, drive, query):
     if query == "Likes":
         both = Car.query.filter_by(drivetrain=drive, region=region).join(Popularity, Car.id==Popularity.car_id).order_by(Popularity.likes)
         return both
-
+    if query == "BHP":
+        both = Car.query.filter_by(drivetrain=drive, region=region).order_by(desc(Car.hp_amount))
+        return both
+    if query == 'BHPOpp':
+        both = Car.query.filter_by(drivetrain=drive, region=region).order_by(Car.hp_amount)
+        return both
+        
 def car_all(query):
     if query == "Brands":
         cars = Car.query.filter_by().order_by(Car.make)
@@ -125,9 +143,13 @@ def car_all(query):
         return cars
     if query == "Likes":
         cars = Car.query.filter_by().join(Popularity, Car.id==Popularity.car_id).order_by(Popularity.likes)
-        flash(cars)
         return cars
-        
+    if query == "BHP":
+        cars = Car.query.filter_by().order_by(desc(Car.hp_amount))
+        return cars
+    if query == 'BHPOpp':
+        cars = Car.query.filter_by().order_by(Car.hp_amount)
+        return cars
         
 # Prep populating data into the database # 
 '''
