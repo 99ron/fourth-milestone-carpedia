@@ -197,7 +197,7 @@ def addVehicle():
         return render_template('add-vehicle.html', form=form)
 
 @app.route('/filter-cars', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def filter():
     '''
     This section processes the filter of which I've chosen by Region and Drive type
@@ -227,14 +227,26 @@ def filter():
         # If neither has values then it'll be processed here.  
         if region == "All" and drive == "All":
             cars = car_all(query)
-            
-
+        
         return render_template('filter-cars.html', form=form, cars=cars)
 
     # When the page loads it requests all cars from the database to display.
     return render_template('filter-cars.html', form=form, cars=cars, query=query)
 
 
+@app.route('/filter-cars/mine', methods=['GET', 'POST'])
+@login_required
+def myUploads():
+    form = FilterCars()
+    user = current_user.username
+    try:
+        # Searches for the current logged in user's cars by comparing the user by the upload_by field.
+        cars = Car.query.filter(user==Car.upload_by).order_by(Car.make)
+        return render_template('filter-cars.html', cars=cars, form=form)
+    except:
+        flash("Something went wrong, please try again.")
+        return render_template('filter-cars.html', cars=cars, form=form)
+    
 @app.route('/vehicle/<int:car_id>', methods=['GET'])
 #@login_required
 def vehicleInfo(car_id):
@@ -243,9 +255,8 @@ def vehicleInfo(car_id):
     return render_template("vehicle-info.html", vehicles=vehicles) 
 
 
-
 @app.route('/vehicle/edit/<int:car_id>/<vehicleName>', methods=['POST', 'GET'])
-#@login_required
+@login_required
 def editVehicle(car_id, vehicleName):
     '''
     This section is for editing the vehicle in the database, which can only be done by
@@ -286,10 +297,12 @@ def editVehicle(car_id, vehicleName):
         user_match = user_uploaded_car(user)
         
         if user_match is True:
+            
             # If true then proceeds with processing the data
             vehicleImage = vehicles.img_url 
             file_img = form.car_img.data
             
+            # Confirms there's a file to upload, if not it'll keep the stored image to be used.
             if file_img and allowed_file(file_img.filename):
                 filename = secure_filename(file_img.filename)
                 car_img_url = '/static/images/vehicles/' + filename
@@ -335,6 +348,7 @@ def deleteVehicle(car_id):
     if request.method == 'GET':
         user_match = user_uploaded_car(user)
         
+        # If logged in user matches the uploaded user then it'll process the delete function below.
         if user_match is True:
             try:
                 car_id = db.session.query(Car).filter_by(id=car_id).first()
@@ -352,8 +366,7 @@ def deleteVehicle(car_id):
             
             
 @app.route('/summary')
-#@login_required
-
+@login_required
 def summary():
     return render_template('summary.html')
 
@@ -456,7 +469,8 @@ def like(car_id, action):
     
     '''
     Route below checks if the user has voted on the current viewed car and responds
-    with either the like or unlike button while adding or removing a vote. 
+    with either the like or unlike button while adding or removing a vote, the functions 
+    are in the models.py file
     '''
     car = Car.query.filter_by(id=car_id).first_or_404()
     if action == 'like':
@@ -468,7 +482,6 @@ def like(car_id, action):
         
         flash('Like Removed')
     return redirect(url_for('vehicleInfo', car_id=car_id))
-
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

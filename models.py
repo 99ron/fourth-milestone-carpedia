@@ -1,4 +1,4 @@
-from app import db
+from app import db, current_user
 from sqlalchemy import desc, func, cast, Integer
 from flask import flash
 from flask_login import UserMixin
@@ -150,6 +150,7 @@ def car_all(query):
     if query == 'BHPOpp':
         cars = Car.query.filter_by().order_by(Car.hp_amount)
         return cars
+    
         
 # Prep populating data into the database # 
 '''
