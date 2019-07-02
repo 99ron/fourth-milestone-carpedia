@@ -72,6 +72,7 @@ rect { fill: $chart-colour;
     color: $text-colour-prim ;
     padding: 5px;
     background-image: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7));
+    border-radius: 40px;
 }
 
 // These few styles are for the 'back to top' button that appears when the user scrolls down

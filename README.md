@@ -1,6 +1,6 @@
 # Fourth Milestone Project
 
-This project is heavily based on cars. Being this is a passion of mine I wanted to implement this in my project and came up with the idea of a website that stores vehicles which has information including who uploaded it, this includes the ability to add an image. If browsing as another use who hasn't uploaded the particular vehicle they can view the vehicle in more detail and also give the car a 'like'. There's a summary page which collects data from a JSON URL and puts itself into a dynamic chart and table.
+This project is heavily based on cars. Being this is a passion of mine I wanted to implement this in my project and came up with the idea of a website that stores vehicles for others to view and give a 'like'. You can filter through the list of vehicles and click on the 'more info' button which will bring up all the information for that vehicle on a new page. If you are the user that uploaded this vehicle you can edit or delete it from the database. There's a summary page which collects certain data from a dropdown menu which will send it via a JSON URL and put itself into a dynamic chart and table to make it easy to read.
 
 # UX
 
@@ -24,12 +24,6 @@ My UX process was to analyze the customer’s requirements and try and think of 
     As a user I want to see if I have already voted on a vehicle
     As a user I want to be able to log out of my account
 
-Important UX Notes
-
-The way my authentication works is with a global variable that holds the username and stores it in a session. If this session expires then the application hits an exception and users are redirected back to the login screen.
-
-In my app I have exceptions that catch all. This isn't best practice and is something I'd like to work on in the future but I do have alternative routes for all the errors that can happen so it's smooth for the user.
-
 ## Front End Design
 
 Login/Register Pages - These pages use the same design. If the user has an issue with either login or registration then a information message should appear on the screen.
@@ -50,18 +44,17 @@ Delete Vehicle - THis is also accessed via the 'more info' page and confirms tha
 
 ## Backend
 
-My backend consists of a relatively simple MySQL database. For testing and Development I use the local Cloud 9 Database and then for the live version I use the ClearDB heroku add on.
+My backend consists of a relatively simple MySQL database. For testing and Development I use the local Cloud 9 Database and then for the live version I use the Postgres heroku add on.
 
 My Database consists of 3 tables:
 
-    users
-    cars
-    popularity
+    Users
+    Cars
+    Popularity
 
 The ER Diagram for my database:
 
 .:: Attached as image in repositry ::.
-
 
 # Features
 
@@ -73,11 +66,11 @@ The features of this application are as follows:
     Ability to see if voted on a vehicle and to view its total likes
     Ability to order by Brand, Drive type and organise by Brand name (A - Z) or if the vehicle has likes
 
-Features Left to Implement
+## Features Left to Implement
 
-I'd like to implement a personal profile to have user upload vehicles to their own 'garage'. From this, with enough information I could start implementing average stats, or who has the fastest car of this type,
+I'd like to implement a personal profile to have user upload vehicles to their own 'garage'. From this, with enough information I could start implementing stats for that users vehicles or a % of likes with the same vehicle uploaded by others.
 
-With the personal profile implementation above I'd like to make a section of the site to allow users to find local 'meets' or even make new friends being able to find out who lives nearby. 
+With the personal profile implementation above I'd like to make a section of the site to allow users to find local 'meets' or even make new friends being able to find out who lives nearby, thus also implementing a 'friends' system in. 
 
 Ability to be able to search would be a nice benefit both Vehicles and Profiles (once added).
 
@@ -110,7 +103,7 @@ I've used JQuery to do a simple 'back to top' function but also to convert and d
 
 For testing I have tried the following browsers; Firefox, Chrome, Edge and Internet Explorer.
 
-I've used my PC at home which uses the screen size 2560 x 1080 and built in reponsive browser feature mainly in firefox to test for different resolutions/devices.
+I've used my PC at home which uses the screen size 2560 x 1080 and at work which is dual screen setup, used the built in "reponsive browser" feature mainly in firefox to test for different resolutions/devices.
 
 ## Testing Scenarios
 
@@ -130,6 +123,8 @@ I've used my PC at home which uses the screen size 2560 x 1080 and built in repo
     Order vehicles by Liked
     Order vehicles by Brand (A - Z) with the previous filtering tests
     Order vehicles by Liked with the previous filtering tests
+    Order vehicles by Horsepower (High to Low) with previous filtering tests
+    Order vehicles by Horsepower (Low to High) with previous filtering tests
     Edit a vehicle using the URL and vehicle id for a vehicle that has matching upload_by and current user
     Edit a vehicle using the URL and vehicle id for a vehicle that is another user’s upload
     Delete a vehicle using the URL and vehicle id for a vehicle that has the matching upload_by and current user
@@ -153,10 +148,16 @@ I've done all my testing on a local database which doesn't get uploaded to GitHu
     Install PostGres and run my models.py to create my database.
     Restart all dynos
     Last but not least, do an initial git commit and push to heroku
+    
+    **Since moving over to AWS Cloud9 my heroku commands don't want to work so I know deploy via the 
+    option on heroku which if you have it linked to your GitHub, it'll download/clone the files across
+    for you.
 
 # Acknowledgements
 
     Pencil - To draw my mock ups.
     Animated.css - https://daneden.github.io/animate.css/
-    ClearDB - Database hosted on Heroku/
-    SQL image
+    ClearDB - Database hosted on Heroku
+    SQL Schema - dbdiagram.io
+    SQLAlchemy - Google/FullStack
+    Images - Google Images
