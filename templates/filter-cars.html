@@ -1,19 +1,21 @@
 {% extends 'base.html' %} {% block content %}
 
 <div class="row">
-    <div class="col s12">
+    <div class="col s12 center-align">
 
-        <h1 class="center-align">Filter Vehicles</h1>
+        <h1>Filter Vehicles</h1>
 
         <p>This page is upto you on what to filter below. If no filter is applied then everything from the database will be shown.</p>
-        <p>The results below displayed below: </p>
+        <p>If you'd like to see the vehicles you've uploaded, click <a href="{{url_for('myUploads')}}">HERE</a> to display them below. </p>
 
         {% with messages = get_flashed_messages() %} {% if messages %}
         <div class="flash-message">
             {% for message in messages %}
-            <li>
-                <h4>{{ message }}</h4>
-            </li>
+            <ul>
+                <li>
+                    <h4>{{ message }}</h4>
+                </li>
+            </ul>
             {% endfor %}
         </div>
         {% endif %} {% endwith %}
@@ -38,7 +40,6 @@
                             {{ form.submit }}
                         </button>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -54,9 +55,9 @@
                 <div class="row">
                     <div class="col s12 summary-images z-depth-2">
                         {% if car.img_url %}
-                            <img src= {{ car.img_url }} >
+                            <img src= "{{ car.img_url }}" alt="Vehicle image" >
                         {% else %}
-                            <img src="/static/images/vehicles/no_img.jpg"> 
+                            <img src="/static/images/vehicles/no_img.jpg" alt="No vehicle image"> 
                         {% endif %}
                     </div>
                 </div>

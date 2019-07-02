@@ -13,14 +13,16 @@
         {% with messages = get_flashed_messages() %} {% if messages %}
         <div class="flash-message">
             {% for message in messages %}
-            <li>
-                <h4>{{ message }}</h4>
-            </li>
+            <ul>
+                <li>
+                    <h4>{{ message }}</h4>
+                </li>
+            </ul>
             {% endfor %}
         </div>
         {% endif %} {% endwith %}
     </div>
-
+</div>
 <!-- Dropdown options to display results in a chart and table from the charts.js file. -->
 <div class="col s12 center">
     <div class="z-depth-3 grey lighten-4 box-padding">
@@ -55,5 +57,6 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 
