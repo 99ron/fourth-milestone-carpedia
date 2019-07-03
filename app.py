@@ -142,12 +142,12 @@ def register():
             flash('Error Occured, try again.')
             return render_template('register.html', form=form)
     
-@app.route('/add-vehicle')
+@app.route('/add-vehicle', methods=['POST', 'GET'])
 @login_required
 def addVehicle():
     form = CarToDatabase()
     
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST':
        
         # Collects the image filename from the form
         file_img = form.car_img.data
@@ -178,7 +178,7 @@ def addVehicle():
                       torque_amount=form.torque.data,
                       drivetrain=form.drive.data,
                       chassy_desc=form.body.data,
-                      car_desc=form.car_desc.data,
+                      car_desc=request.form["car-description"],
                       accel_time=form.accel.data,
                       img_url=car_img_url,
                       upload_by=current_user.username)

@@ -32,8 +32,8 @@ class CarToDatabase(FlaskForm):
 class FilterCars(FlaskForm):
     region = SelectField('Select Region', choices=[('All' , 'All'), ('JDM', 'Japanese'),('USDM', 'USA'),('Euro', 'Europe')], default='All')
     drive = SelectField('Select Drivetrain', choices=[('All', 'All'), ('FWD', 'FWD'), ('RWD', 'RWD'), ('AWD', 'AWD'), ('4WD','4WD')], default='All')
-    query = SelectField('Select Filter', choices=[('Brands', 'Brands  (A-Z)'),('BrandsOpp', 'Brands (Z-A)') ,('Likes', 'Liked'), ('BHP', 'Horsepower (High - Low)'), ('BHPOpp', 'Horsepower (Low - High)')])
-    submit = SubmitField('Search Database') 
+    query = SelectField('Select Filter', choices=[('Brands', 'Brands  (A-Z)'),('BrandsOpp', 'Brands (Z-A)'), ('BHP', 'Horsepower (High - Low)'), ('BHPOpp', 'Horsepower (Low - High)'),('Likes', 'Liked')])
+    submit = SubmitField('Search') 
 
 class EditCar(FlaskForm):
     region = SelectField('Select Region', choices=[('JDM', 'Japanese'),('USDM', 'USA'),('Euro', 'Europe')], default='', validators=[InputRequired])
