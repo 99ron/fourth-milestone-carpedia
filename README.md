@@ -131,6 +131,10 @@ I've used my PC at home which uses the screen size 2560 x 1080 and at work which
     Delete a vehicle using the URL and vehicle id for a vehicle that is another user’s vehicle
     Logout
 
+## Bugs
+
+Filter-page: When the user wants to search by 'Likes', this brings back the results but not in order, however, if you keep it on 'Likes' and add the Region to be 'JDM' it orders the results correctly even though it's displaying the same vehicles, likewise with different regions or transmission types. I've had a tutor try and look into this with me but after a week with no results I've added this to the bugs unfixed list.
+
 # Deployment
 
 While developing this app, my code was written in Cloud 9 and then migrated across to AWS Cloud 9. Throughout the development I used GitHub to keep track of changes.
