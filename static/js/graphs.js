@@ -4,8 +4,11 @@
 // Initial data to set up graph
 let data = [];
 
+// This takes an input from the dropdown menu on the summary page and runs the code depending 
+// to which option was selected below. 
 $('#summarySelect').change(function(){
     var dropdown = this.value;
+    // Retrieves data from the JSON url below.
     $.getJSON("/summary/data", function(jsonData){
     
     if(dropdown=="opt1") {
@@ -61,7 +64,8 @@ $('#summarySelect').change(function(){
   .append("g")
   .attr("transform",
    "translate(" + margin.left + "," + margin.top + ")");
-   
+ 
+ // This sets up the whitebox for the text to fill when user highlights a bar on the chart.
  var Tooltip = d3.select("#my_dataviz")
     .append("div")
     .style("opacity", 0)
@@ -106,6 +110,7 @@ $('#summarySelect').change(function(){
  var yAxis = svg.append("g")
      .attr("class", "myYaxis");
 
+// This function is what makes the dynamic bar chart work by processing the information above.
 function update(data) {
      // Update the X axis
      x.domain(data.map(function(d) { return d.group; }));
@@ -140,7 +145,7 @@ function update(data) {
          .remove();
     table(data);
 }
-
+// This creates a basic but dynamic table to put data out in written form.
 function table(data) {
     
     var summaryTable = $('<table></table>');
