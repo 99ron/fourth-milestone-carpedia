@@ -330,7 +330,7 @@ def editVehicle(car_id, vehicleName):
         db.session.merge(vehicles)
         db.session.commit()
         flash('Vehicle updated sucessfully!')
-        return redirect(url_for('filter'))
+        return redirect(url_for('vehicleInfo', car_id=vehicles.id, vehicleName=vehicles.model))
         
     except:
         flash('Invalid Input.')
