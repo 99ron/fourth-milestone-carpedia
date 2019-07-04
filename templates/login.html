@@ -1,0 +1,43 @@
+{% extends 'login-base.html' %} {% block content %}
+
+<div class="section"></div>
+<h5 class="login-header ">Login or Register to Continue</h5>
+<div class="section"></div>
+
+<div class="container">
+  <div class="z-depth-3 grey lighten-4 row login-container">
+
+    <form class="col s12 text-colour-sec" action="/check-user-credentials" method="POST">
+      {{ form.csrf_token}}
+      <div class='row'>
+        <div class='input-field col s12 '>
+          {{ form.username.label }} 
+          {{ form.username(size=20) }} 
+        </div>
+      </div>
+
+      <div class='row'>
+        <div class='input-field col s12'>
+          {{ form.password.label }}
+          {{ form.password(size=20) }}
+        </div>
+      </div>
+
+      <br/>
+
+      <div class='row'>
+        <button class="col s12 btn-large waves-effect blue lighten-1">
+          {{ form.submit }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<div class="user-register-link">
+  <a href="/register">Create account</a>
+</div>
+
+{% endblock %}

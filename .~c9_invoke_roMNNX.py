@@ -1,3 +1,4 @@
+# Test app.py 
 import os
 import sys
 import json
@@ -10,17 +11,20 @@ from sqlalchemy import func
 from werkzeug.utils import secure_filename
 from models import *
 
-# Setting file path and file extensions for image uploads.
 UPLOAD_FOLDER = './static/images/vehicles'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 # Used to check image extension is on the allowed list. 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+# DB_URI = 'mysqldb://bd6203f445759d:3f8eca2f@eu-cdbr-west-02.cleardb.net/heroku_1146a0b312400c5?reconnect=true'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://nseqjruinhgrgc:2b0e6b094826c647e87e0fdab3b1f67904b77d186380a100f1f4303c53335ab1@ec2-54-247-189-1.eu-west-1.compute.amazonaws.com:5432/ddhgivgkfi5o99'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager(app)
@@ -56,7 +60,7 @@ def home():
 
 @app.route('/register')
 def index():
-    form = RegisterForm()
+    form = LoginForm()
     return render_template('register.html', form=form)
 
 @app.route('/logout')
@@ -141,12 +145,12 @@ def register():
             flash('Error Occured, try again.')
             return render_template('register.html', form=form)
     
-@app.route('/add-vehicle', methods=['POST', 'GET'])
+@app.route('/add-vehicle')
 @login_required
 def addVehicle():
     form = CarToDatabase()
     
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate_on_submit():
        
         # Collects the image filename from the form
         file_img = form.car_img.data
@@ -177,7 +181,7 @@ def addVehicle():
                       torque_amount=form.torque.data,
                       drivetrain=form.drive.data,
                       chassy_desc=form.body.data,
-                      car_desc=request.form["car-description"],
+                      car_desc=form.car_desc.data,
                       accel_time=form.accel.data,
                       img_url=car_img_url,
                       upload_by=current_user.username)
@@ -196,7 +200,7 @@ def addVehicle():
         return render_template('add-vehicle.html', form=form)
 
 @app.route('/filter-cars', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def filter():
     '''
     This section processes the filter of which I've chosen by Region and Drive type
@@ -207,7 +211,7 @@ def filter():
     region = form.region.data
     drive = form.drive.data
     query = form.query.data
-    
+
     # If POST this then validates the form and pushes the request.
     if request.method == 'POST' and form.validate_on_submit():
         
@@ -225,37 +229,25 @@ def filter():
         
         # If neither has values then it'll be processed here.  
         if region == "All" and drive == "All":
-            cars = car_all(query)
-        
+            cars= car_all(query)
+
         return render_template('filter-cars.html', form=form, cars=cars)
 
     # When the page loads it requests all cars from the database to display.
     return render_template('filter-cars.html', form=form, cars=cars, query=query)
 
 
-@app.route('/filter-cars/mine', methods=['GET', 'POST'])
-@login_required
-def myUploads():
-    form = FilterCars()
-    user = current_user.username
-    try:
-        # Searches for the current logged in user's cars by comparing the user by the upload_by field.
-        cars = Car.query.filter(user==Car.upload_by).order_by(Car.make)
-        return render_template('filter-cars.html', cars=cars, form=form)
-    except:
-        flash("Something went wrong, please try again.")
-        return render_template('filter-cars.html', cars=cars, form=form)
-    
 @app.route('/vehicle/<int:car_id>', methods=['GET'])
-@login_required
+#@login_required
 def vehicleInfo(car_id):
     # When the user presses the more info button this gets the vehicles ID and displays all the information for that vehicle.
     vehicles=Car.query.filter_by(id=car_id).first()
     return render_template("vehicle-info.html", vehicles=vehicles) 
 
 
+
 @app.route('/vehicle/edit/<int:car_id>/<vehicleName>', methods=['POST', 'GET'])
-@login_required
+#@login_required
 def editVehicle(car_id, vehicleName):
     '''
     This section is for editing the vehicle in the database, which can only be done by
@@ -296,12 +288,10 @@ def editVehicle(car_id, vehicleName):
         user_match = user_uploaded_car(user)
         
         if user_match is True:
-            
             # If true then proceeds with processing the data
             vehicleImage = vehicles.img_url 
             file_img = form.car_img.data
             
-            # Confirms there's a file to upload, if not it'll keep the stored image to be used.
             if file_img and allowed_file(file_img.filename):
                 filename = secure_filename(file_img.filename)
                 car_img_url = '/static/images/vehicles/' + filename
@@ -347,7 +337,6 @@ def deleteVehicle(car_id):
     if request.method == 'GET':
         user_match = user_uploaded_car(user)
         
-        # If logged in user matches the uploaded user then it'll process the delete function below.
         if user_match is True:
             try:
                 car_id = db.session.query(Car).filter_by(id=car_id).first()
@@ -365,8 +354,21 @@ def deleteVehicle(car_id):
             
             
 @app.route('/summary')
-@login_required
+#@login_required
 def summary():
+    likeArray = []
+    totalLikes = db.session.query(Users.username, Popularity.likes, Car.make + ' ' + Car.model).filter(Users.id==Popularity.user_id, Car.id==Popularity.car_id)
+    
+    #flash(totalLikes)
+    
+    for likes in totalLikes:
+        flash (likes)
+        
+        likeArray.append(likes)
+        
+
+        
+    flash(likeArray)
     return render_template('summary.html')
 
 
@@ -375,12 +377,13 @@ def summaryData():
     '''
     This route compiles the information from the database, puts it as a list within an array 
     and finally converts it to a JSON URL which is retrieved on the summary.html page to display
-    on a barchart and a dynamic table.
+    on a barchart and also a dynamic table.
     '''
     
     cars = Car.query.all()
-  
-
+    totalLikes = db.session.query(Users.username, Popularity.likes, Car.make + ' ' + Car.model).filter(Users.id==Popularity.user_id, Car.id==Popularity.car_id)
+    
+    carLikes = []
     USDM = 0
     USDMN = []
     JDM = 0
@@ -401,12 +404,6 @@ def summaryData():
     LT7N = []
     MT7 = 0
     MT7N = []
-    MT500 = 0
-    MT500N = []
-    MT300 = 0
-    MT300N = []
-    LT300 = 0
-    LT300N = []
     
 
     for car in cars:
@@ -436,28 +433,20 @@ def summaryData():
     
         if car.accel_time <= 4:
             LT4 +=1
-            LT4N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.accel_time)])
+            LT4N.append([' ' + car.make + ' ' + car.model])
         elif car.accel_time <= 7:
             LT7 +=1
-            LT7N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.accel_time)])
+            LT7N.append([' ' + car.make + ' ' + car.model])
         else:
             MT7 +=1
-            MT7N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.accel_time)])
+            MT7N.append([' ' + car.make + ' ' + car.model])
         
-        if car.hp_amount >= 500:
-            MT500 +=1
-            MT500N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount) + 'bhp'])
-        elif car.hp_amount >=300:
-            MT300 +=1
-            MT300N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount) + 'bhp'])
-        else:
-            LT300 +=1
-            LT300N.append([' ' + car.make + ' ' + car.model + ' - ' + str(car.hp_amount) + 'bhp'])
-            
+        if car.likes >= 1:
+            carLikes.append([' ' + car.likes])
         
         
         
-    jsonData = [{'USDM' : USDM , 'JDM' : JDM, 'Euro' : Euro, 'USDMN' : USDMN, 'JDMN' : JDMN, 'EuroN' : EuroN }, {'Manual': Manual, 'SemiAuto': SemiAuto, 'Auto': Auto, 'Sequential': Sequential, 'ManualN' : ManualN, 'SemiAutoN' : SemiAutoN, 'AutoN' : AutoN, 'SequentialN' : SequentialN}, {'LT4' : LT4, 'LT7': LT7, 'MT7': MT7, 'LT4N' : LT4N, 'LT7N' : LT7N, 'MT7N' : MT7N }, {'MT500' : MT500, 'MT300' : MT300, 'LT300' : LT300, 'MT500N' : MT500N, 'MT300N' : MT300N, 'LT300N' : LT300N}]
+    jsonData = [{'USDM' : USDM , 'JDM' : JDM, 'Euro' : Euro, 'USDMN' : USDMN, 'JDMN' : JDMN, 'EuroN' : EuroN }, {'Manual': Manual, 'SemiAuto': SemiAuto, 'Auto': Auto, 'Sequential': Sequential, 'ManualN' : ManualN, 'SemiAutoN' : SemiAutoN, 'AutoN' : AutoN, 'SequentialN' : SequentialN}, {'LT4' : LT4, 'LT7': LT7, 'MT7': MT7, 'LT4N' : LT4N, 'LT7N' : LT7N, 'MT7N' : MT7N }]
     return jsonify(jsonData)
     
 
@@ -468,8 +457,7 @@ def like(car_id, action):
     
     '''
     Route below checks if the user has voted on the current viewed car and responds
-    with either the like or unlike button while adding or removing a vote, the functions 
-    are in the models.py file
+    with either the like or unlike button while adding or removing a vote. 
     '''
     car = Car.query.filter_by(id=car_id).first_or_404()
     if action == 'like':
@@ -481,6 +469,7 @@ def like(car_id, action):
         
         flash('Like Removed')
     return redirect(url_for('vehicleInfo', car_id=car_id))
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

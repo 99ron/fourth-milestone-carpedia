@@ -1,0 +1,102 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row">
+    <div class="col s12">
+    
+        <h1 class="center-align">Welcome {{ current_user.username }}</h1>
+        
+        <div class="home-text center-align">
+            <p>This Website lets you upload your favourite cars or trucks. You fill out the stats, link an image and enter it into the database.</p>
+    
+            <p>You can go to the <a href="/summary">summary</a> page to get a variety of stats listed of the vehicles entered in the database so far.</p>
+    
+            <p>If you head over to the <a href="/filter-cars">filter</a> page you can do breakdown searches for certain models or brands.</p>
+            
+            <p>As you are now currently logged in you can add a vehicle into the database, simply head <a href="/add-vehicle"> here</a> to do so!</p>
+    
+            <p>If you look below you'll see a quick link to both the summary and filter pages!</p>
+    
+            <p>Enjoy your visit!</p>
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col s12 homepage-image z-depth-4 animated jackInTheBox"></div>
+    </div>
+    
+    <div class="row">
+        
+        <a href="/summary">
+            <div class="col l6 m12 summary-image overlay-text hoverable animated slideInLeft">Summary</div>
+        </a>
+        
+        <a href="/filter-cars">
+            <div class="col l6 m12 filter-image overlay-text hoverable animated slideInRight">Filter</div>
+        </a>
+    </div>
+    
+    <h2 class="center-align">Reviews</h2>
+    
+    <div class="container animated fadeIn">
+        <hr class="hr">
+            <div class="row">
+                <div class="col s12">
+                    <div class="row valign-wrapper card-panel col s12">
+                        <div class="media-body col s12">
+                            <blockquote>
+                                <p>"I've been to a few sites and I feel this one has what I need. Will recommend to friends and family!"</p>
+                                <footer>Jane Doe on <cite>Twitter</cite></footer>
+                            </blockquote>
+                        </div>
+                        <div class="left-align hide-on-small-only">
+                                <img src="{{ url_for ('static', filename='images/profiles/woman1.jpg') }}" class="circle profile-image" alt="Profile Image">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col s12">
+                    <div class="row valign-wrapper card-panel col s12">
+                        <div class="media-body col s12">
+                            <blockquote>
+                                <p>"Can upload my cars for the world to see! Would like to see an area to add modifications done the vehicles."</p>
+                                <footer>John Smith on <cite>Facebook</cite></footer>
+                            </blockquote>
+                        </div>
+                        <div class="right-align hide-on-small-only">
+                            <img src="{{ url_for ('static', filename='images/profiles/man1.jpg') }}" class="circle profile-image" alt="Profile Image">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col s12">
+                    <div class="row valign-wrapper card-panel col s12">
+                        <div class="media-body col s12">
+                            <blockquote>
+                                <p>"Thing I love about this site is it's easy to navigate and get to where you want. A bonus is it's straight to the point."</p>
+                                <footer>Neil Makenzee on <cite>Instagram</cite></footer>
+                            </blockquote>
+                        </div>
+                        <div class="right-align hide-on-small-only">
+                            <img src="{{ url_for ('static', filename='images/profiles/man2.jpg') }}" class="circle profile-image" alt="Profile Image">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col s12">
+                    <div class="row valign-wrapper card-panel col s12">
+                        <div class="media-body col s12">
+                            <blockquote>
+                                <p>"Simple site, looking forward to progress. "</p>
+                                <footer>Shelly Lowe on <cite>YouTube</cite></footer>
+                            </blockquote>
+                        </div>
+                        <div class="right-align hide-on-small-only">
+                            <img src="{{ url_for ('static', filename='images/profiles/woman2.jpg') }}" class="circle profile-image" alt="Profile Image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
+

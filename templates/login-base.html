@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VINpedia - Virtual Garage</title>
+    <!--Load required stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+</head>
+<body class="login-bg">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-message">
+    {% for message in messages %}
+    <ul>
+      <li><h4>{{ message }}</h4></li>
+    </ul>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+<div class="section"></div>
+
+<!--Will use this class to centre all content for the login page. -->
+<div class="user-details-container">
+
+    <main>
+        <div class="header">
+            <h2>VINpedia<i class="small material-icons logo">commute</i></h2>
+        </div>
+        {% block content %} {% endblock %}
+    </main>
+
+</div>
+
+<!--Load the required scripts, jQuery before materialize. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="/static/js/scripts.js"></script>
+    
+</body>
+</html>

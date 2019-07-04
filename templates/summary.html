@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row">
+    <div class="col s12">
+    
+        <h1 class="center-align">Vehicle Summary</h1>
+        
+        <p class="center-align">This page is to show you a few statistics with the vehicles that are in the database currently.<br>
+        Use the dropdown below to see the results!</p>
+        <hr class="hr">
+        <div class="summary-header-image z-depth-3 animated fadeIn"></div>
+        
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div class="flash-message">
+            {% for message in messages %}
+            <ul>
+                <li>
+                    <h4>{{ message }}</h4>
+                </li>
+            </ul>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+    </div>
+</div>
+<!-- Dropdown options to display results in a chart and table from the charts.js file. -->
+<div class="col s12 center">
+    <div class="z-depth-3 grey lighten-4 box-padding">
+    
+        <div class="row">
+            <div class="input-field col s12">
+                <select id="summarySelect">
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="opt3" id="opt3">Regional Cars</option>
+                    <option value="opt1" id="opt1">Transmission Types</option>
+                    <option value="opt2" id="opt2">0-60mph in Seconds</option>
+                    <option value="opt4" id="opt4">BHP Categorised</option>
+                </select>
+                <label>Summary Select</label>
+            </div>
+        </div>
+        
+        <div class="summary-graph-container">
+            <div class="row ">
+                <h3>Graph</h3>
+                <!-- Create a div where the graph will show -->
+                <div id="my_dataviz"></div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <hr class="hr">
+            <h3>Table Results</h3>
+            <p>Below are the results from the graph above but displayed as a table instead. (Unless you're on mobile)</p>
+            <div id="tableDiv">
+                <!-- Creates a div for the table to display -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

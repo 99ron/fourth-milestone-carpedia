@@ -1,0 +1,116 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row">
+    <div class="col s12 center-align">
+
+        <h1>Filter Vehicles</h1>
+
+        <p>This page is upto you on what to filter below. If no filter is applied then everything from the database will be shown.</p>
+        <p>If you'd like to see the vehicles you've uploaded, click <a href="{{url_for('myUploads')}}">HERE</a> to display them below. </p>
+
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div class="flash-message">
+            {% for message in messages %}
+            <ul>
+                <li>
+                    <h4>{{ message }}</h4>
+                </li>
+            </ul>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+    </div>
+    
+    <form class="col s12 text-colour-sec center-align" action="/filter-cars" method="POST">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="center-align">
+                <div class="row col s12">
+                    <div class="input-field col s12 m3">
+                        {{ form.region.label }}<br> {{ form.region }}
+                    </div>
+                    <div class="input-field col s12 m3">
+                        {{ form.drive.label }}<br> {{ form.drive }}
+                    </div>
+                    <div class="input-field col s12 m3">
+                        {{ form.query.label }}<br> {{ form.query }}
+                    </div>
+                    <div class="submit col s12 m3">
+                        <br><button class="col s12 btn-large waves-effect blue lighten-1">
+                            {{ form.submit }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="hr">
+    </form>
+    
+    <!-- Iterate through results and display information on each -->
+    {% for car in cars %}
+    <div class="col s12 m12 l12 xl6 animated bounceInUp">
+    
+        <div class="z-depth-3 grey lighten-4 box-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 summary-images z-depth-2">
+                        {% if car.img_url %}
+                            <img src= "{{ car.img_url }}" alt="Vehicle image" >
+                        {% else %}
+                            <img src="/static/images/vehicles/no_img.jpg" alt="No vehicle image"> 
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row info-container-design">
+                    <div class="col s12 summary-make-model center">
+                        <h5>{{ car.make }} {{ car.model }}</h5>
+                    </div>
+                <div class="col s12 summary-stats-table">
+                        <table class="centered striped ">
+                            <tbody>
+                                <tr>
+                                    <td>Horsepower:</td>
+                                    <td>{{ car.hp_amount }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Drivetrain type:</td>
+                                    <td>{{ car.drivetrain }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Body style:</td>
+                                    <td>{{ car.chassy_desc }}</td>
+                                </tr>
+                                <tr>
+                                    <td>0-60mph in seconds:</td>
+                                    <td>{{ car.accel_time }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col s12 summary-more-info center">
+                        <a href="{{url_for('vehicleInfo', car_id=car.id, vehicleName=car.model)}}" class="waves-effect waves-light btn blue"><i class="material-icons right">description</i>More Info</a>
+                    </div>
+                    <div class="col s12 summary-total-likes center">
+                        <hr class="hr">
+                        <p>Total likes: {{ car.likes.count() }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- If no results match criteria then display the message below -->
+        <div class="col s12">
+            <div class="info-container-design">
+                <div class="container">
+                    <div class="row">
+                       <h3 class="filter-no-results center-align">No results for this criteria!</h3>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    {% endfor %}
+    </div>
+    {% endblock %}
+    
