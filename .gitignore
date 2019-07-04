@@ -1,1 +1,7 @@
 *.sql
+.sass-cache
+__pycache__
+*.pyc
+Useful Commands
+.c9
+.git
