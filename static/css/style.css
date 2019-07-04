@@ -44,9 +44,10 @@ rect {
 .flash-message {
   text-align: center;
   color: #FFF;
-  padding: 5px;
+  padding: 1px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
-  border-radius: 40px; }
+  border-radius: 40px;
+  margin: 25px; }
 
 #scroll {
   position: fixed;
@@ -257,11 +258,13 @@ main {
 
 .vehicle-info-images > img {
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  border-radius: 15px; }
 
 .summary-images {
   height: 240px;
-  margin: 15px; }
+  margin: 15px;
+  border-radius: 15px; }
 
 .summary-images > img {
   width: 100%;
