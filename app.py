@@ -172,7 +172,7 @@ def addVehicle():
                 # If the file already exists then sets the url to it but doesn't upload the file.
                 
                 s3 = boto3.resource('s3')
-                s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
+                s3.Bucket(S3_BUCKET).put_object(Key="images/" + filename, Body=file_img)
             except:
                 car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
         else:
@@ -319,7 +319,7 @@ def editVehicle(car_id, vehicleName):
                 try:
                     # This tries to places the physical image in to my bucket on S3. 
                     s3 = boto3.resource('s3')
-                    s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
+                    s3.Bucket(S3_BUCKET).put_object(Key="images/" + filename, Body=file_img)
                 except:
                     car_img_url = vehicleImage
             else:
