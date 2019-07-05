@@ -1,28 +1,37 @@
 import os
 import sys
 import json
+import boto3
 from flask_login import current_user, login_user, LoginManager, login_required, logout_user
 from forms import LoginForm, RegisterForm, CarToDatabase, FilterCars, CsrfProtect, EditCar
 from flask_sqlalchemy import SQLAlchemy
+from flask_s3 import FlaskS3
 from flask import Flask, render_template, redirect, request, url_for, flash, session, jsonify
 from sqlalchemy.orm import sessionmaker, load_only
 from sqlalchemy import func
 from werkzeug.utils import secure_filename
 from models import *
 
+
+# Settings for S3 storage. This is used for storing images.
+S3_BUCKET = os.environ.get("S3_BUCKET_NAME")
+S3_LOCATION = 'http://{}.s3.amazonaws.com/'.format(S3_BUCKET)
+
 # Setting file path and file extensions for image uploads.
-UPLOAD_FOLDER = './static/images/vehicles'
+UPLOAD_FOLDER = S3_LOCATION
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 # Used to check image extension is on the allowed list. 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
+# Setting the app details.
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://nseqjruinhgrgc:2b0e6b094826c647e87e0fdab3b1f67904b77d186380a100f1f4303c53335ab1@ec2-54-247-189-1.eu-west-1.compute.amazonaws.com:5432/ddhgivgkfi5o99'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['FLASKS3_ACTIVE'] = True
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 CsrfProtect(app)
@@ -70,7 +79,7 @@ def logout():
     
     form = LoginForm()
     if current_user.is_authenticated == False:
-        flash("You're not logged in.")
+        flash("Why you trying? You're not logged in.")
         return render_template('login.html', form=form)
     else:
         user = current_user
@@ -154,15 +163,18 @@ def addVehicle():
         if file_img and allowed_file(file_img.filename):
             # This processes the image wanting to be uploaded that it is an image format
             # and saves the filepath to the image location in the db while also physically
-            # storing the image in the images/vehicles folder.
-            
+            # storing the image in the bucket.
+
             filename = secure_filename(file_img.filename)
-            car_img_url = '/static/images/vehicles/' + filename
+            car_img_url = UPLOAD_FOLDER + "images/" + filename
             try:
-                # Tries to store the image on the server.
-                file_img.save(os.path.join( UPLOAD_FOLDER, filename))
+                # This tries to places the physical image in to my bucket on S3.
+                # If the file already exists then sets the url to it but doesn't upload the file.
+                
+                s3 = boto3.resource('s3')
+                s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
             except:
-                # Fails if the same image already exists so simply doesn't save the image.
+                
                 return
         else:
             car_img_url = '/static/images/vehicles/no_img.jpg'
@@ -304,9 +316,11 @@ def editVehicle(car_id, vehicleName):
             # Confirms there's a file to upload, if not it'll keep the stored image to be used.
             if file_img and allowed_file(file_img.filename):
                 filename = secure_filename(file_img.filename)
-                car_img_url = '/static/images/vehicles/' + filename
+                car_img_url = UPLOAD_FOLDER + "images/" + filename
                 try:
-                    file_img.save(os.path.join( UPLOAD_FOLDER, filename))
+                    # This tries to places the physical image in to my bucket on S3. 
+                    s3 = boto3.resource('s3')
+                    s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
                 except:
                     return
             else:
