@@ -174,10 +174,9 @@ def addVehicle():
                 s3 = boto3.resource('s3')
                 s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
             except:
-                
-                return
+                car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
         else:
-            car_img_url = '/static/images/vehicles/no_img.jpg'
+            car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
         
         # Collects all the information from the form to compile it into a new vehicle in the database.
         add_car = Car(region=form.region.data,
@@ -322,7 +321,7 @@ def editVehicle(car_id, vehicleName):
                     s3 = boto3.resource('s3')
                     s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
                 except:
-                    return
+                    car_img_url = vehicleImage
             else:
                 car_img_url = vehicleImage
                
@@ -350,7 +349,7 @@ def editVehicle(car_id, vehicleName):
         flash('Invalid Input.')
         return render_template("edit-vehicle.html", form=form, vehicles=vehicles) 
         
-@app.route('/delete/<int:car_id>', methods=['GET']) 
+@app.route('/delete/<int:car_id>', methods=['GET', 'POST']) 
 @login_required
 def deleteVehicle(car_id):
     '''
@@ -369,14 +368,16 @@ def deleteVehicle(car_id):
                 db.session.commit()
                 flash('Vehicle successfully deleted.')
                 return redirect(url_for('filter'))
-            except:
+            except Exception as e:
+                print(e)
                 db.session.rollback()
                 flash('Error occured, try again.')
                 return redirect(url_for('filter'))
         else:
             flash('You can\'t do that request. You didn\'t upload this vehicle.')
             return redirect(url_for('filter'))
-            
+    else:
+        return redirect(url_for('filter'))
             
 @app.route('/summary')
 @login_required
