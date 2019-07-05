@@ -32,6 +32,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['FLASKS3_ACTIVE'] = True
+app.config['FLASKS3_BUCKET_NAME'] = os.environ.get('S3_BUCKET_NAME')
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 CsrfProtect(app)
@@ -172,7 +173,7 @@ def addVehicle():
                 # If the file already exists then sets the url to it but doesn't upload the file.
                 
                 s3 = boto3.resource('s3')
-                s3.Bucket(S3_BUCKET).put_object(Key="images/" + filename, Body=file_img)
+                s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
             except:
                 car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
         else:
@@ -317,10 +318,12 @@ def editVehicle(car_id, vehicleName):
                 filename = secure_filename(file_img.filename)
                 car_img_url = UPLOAD_FOLDER + "images/" + filename
                 try:
-                    # This tries to places the physical image in to my bucket on S3. 
+                    # This tries to places the physical image in to my bucket on S3. If it already exists 
+                    # or fails it'll just use the previous image. 
                     s3 = boto3.resource('s3')
-                    s3.Bucket(S3_BUCKET).put_object(Key="images/" + filename, Body=file_img)
-                except:
+                    s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
+                except Exception as e:
+                    print(e)
                     car_img_url = vehicleImage
             else:
                 car_img_url = vehicleImage
