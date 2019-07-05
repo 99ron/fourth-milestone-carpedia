@@ -33,6 +33,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['FLASKS3_ACTIVE'] = True
 app.config['FLASKS3_BUCKET_NAME'] = os.environ.get('S3_BUCKET_NAME')
+app.config['SECRET_KEY']=os.environ.get('SECRET_KEY')
+
+
+
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 CsrfProtect(app)
@@ -175,6 +179,7 @@ def addVehicle():
                 s3 = boto3.resource('s3')
                 s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
             except:
+                flash('Couldn\'t upload that file. Please try again on the edit page.')
                 car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
         else:
             car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
@@ -324,6 +329,7 @@ def editVehicle(car_id, vehicleName):
                     s3.Bucket('vinpedia').put_object(Key="images/" + filename, Body=file_img)
                 except Exception as e:
                     print(e)
+                    flash('Couldn\'t upload that file. Have put the previous image back on.')
                     car_img_url = vehicleImage
             else:
                 car_img_url = vehicleImage
