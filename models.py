@@ -1,6 +1,5 @@
 from app import db
 from sqlalchemy import desc, func, cast, Integer
-from flask import flash
 from flask_login import UserMixin
 from sqlalchemy.sql import label
 from flask_sqlalchemy import SQLAlchemy
