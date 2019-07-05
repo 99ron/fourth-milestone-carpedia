@@ -4,7 +4,7 @@ This project is heavily based on cars. Being this is a passion of mine I wanted 
 
 # UX
 
-My UX process was to analyze the customer’s requirements and try and think of different ways to implement this in an easy manner for the user.
+My UX process was to analyze the customer’s requirements and try and think of different ways to implement this in an easy manner for the user. 
 
 ## The client’s requirements are:
 
@@ -64,7 +64,7 @@ The features of this application are as follows:
     Ability to Create, Edit, Delete and View Vehicles
     Ability to vote on vehicles
     Ability to see if voted on a vehicle and to view its total likes
-    Ability to order by Brand, Drive type and organise by Brand name (A - Z) or if the vehicle has likes
+    Ability to order by Brand, Drive type and organise by Brand name with an assortment of filters
 
 ## Features Left to Implement
 
@@ -90,9 +90,12 @@ d3 - Used to create my bar charts.
 
 SQLAlchemy - This is the module used for all my database queries/commits.
 
+Boto3 / S3 - Used for uploading images to my Bucket hosted on AWS. 
+
 ## CSS
 
 I'm using SCSS to build my css style sheet which has SASS doing the conversion for me.
+
 Animated CSS by Daniel Eden. I love this package and use it with all my projects, if needed it can be amended with javascript to make it run a function when it's finished animating and much more (link below).
 
 ## JQuery
@@ -133,7 +136,9 @@ I've used my PC at home which uses the screen size 2560 x 1080 and at work which
 
 ## Bugs
 
-Filter-page: When the user wants to search by 'Likes', this brings back the results but not in order, however, if you keep it on 'Likes' and add the Region to be 'JDM' it orders the results correctly even though it's displaying the same vehicles, likewise with different regions or transmission types. I've had a tutor try and look into this with me but after a week with no results I've added this to the bugs unfixed list.
+Filter-page: When the user wants to search by 'Likes', this brings back the results but not in order, however, if you keep it on 'Likes' and add the Region to be 'JDM' it orders the results correctly even though it's displaying the same vehicles on my testing, likewise with different regions or transmission types. I've had a tutor try and look into this with me but after a week with no results I've added this to the bugs unfixed list.
+
+Vehicle Images: When I moved my image storage over to S3 Bucket from the local list, when you went through and reuploaded the same image to update the file path to it's location it update but not display the image. This was because the bucket policy wasn't setting the uploaded content to be 'Public' even though I had set the bucket to be. Tutor helped with this by placing a bucket policy to set newly added documents to be public/read by all.
 
 # Deployment
 
@@ -153,7 +158,7 @@ I've done all my testing on a local database which doesn't get uploaded to GitHu
     Restart all dynos
     Last but not least, do an initial git commit and push to heroku
     
-    **Since moving over to AWS Cloud9 my heroku commands don't want to work so I know deploy via the 
+    **Since moving over to AWS Cloud9 my heroku commands don't want to work so I now deploy via the 
     option on heroku which if you have it linked to your GitHub, it'll download/clone the files across
     for you.
 
@@ -165,7 +170,8 @@ https://fourth-milestone-carpedia.herokuapp.com/
 
     Pencil - To draw my mock ups.
     Animated.css - https://daneden.github.io/animate.css/
-    ClearDB - Database hosted on Heroku
+    Postgres - Database hosted on Heroku
     SQL Schema - dbdiagram.io
-    SQLAlchemy - Google/FullStack
+    SQLAlchemy - Google/FullStack search results using snippets and amending for my purpose
     Images - Google Images
+    CI Tutor - Helped with implementing my S3 Bucket storage and setting newly added documents to be public
