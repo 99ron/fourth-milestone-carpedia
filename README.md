@@ -140,6 +140,8 @@ Filter-page: When the user wants to search by 'Likes', this brings back the resu
 
 Vehicle Images: When I moved my image storage over to S3 Bucket from the local list, when you went through and reuploaded the same image to update the file path to it's location it update but not display the image. This was because the bucket policy wasn't setting the uploaded content to be 'Public' even though I had set the bucket to be. Tutor helped with this by placing a bucket policy to set newly added documents to be public/read by all.
 
+S3 Bucket: After fighting with this for a little while tutors have mentioned i couldn't create a User needed to gain an access and secret key for my app to upload to my bucket. Have created a new free account in AWS, setup the new bucket and now have a user with needed information. Previously I could upload with no issues within AWS cloud9 but when running from Heroku it would say it had uploaded the image when it hadn't, confirmed looking by looking in the bucket for the image to not be there.
+
 # Deployment
 
 While developing this app, my code was written in Cloud 9 and then migrated across to AWS Cloud 9. Throughout the development I used GitHub to keep track of changes.
