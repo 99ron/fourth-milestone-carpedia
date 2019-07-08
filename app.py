@@ -180,9 +180,10 @@ def addVehicle():
                 s3.Bucket('vinpedia-images').put_object(Key="images/" + filename, Body=file_img)
             except Exception as e:
                 print(e)
-                flash('Couldn\'t upload that file. Please try again on the edit page.')
-                car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
+                flash('Something didn\'t quite go to plan, try again in the edit page.')
+                car_img_url = UPLOAD_FOLDER + "images/" + filename
         else:
+            flash('Unsupported or no image type, please try again.')
             car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
         
         # Collects all the information from the form to compile it into a new vehicle in the database.
@@ -333,6 +334,7 @@ def editVehicle(car_id, vehicleName):
                     flash('Something didn\'t quite go to plan but will try to use the image you chose.' + e)
                     car_img_url = UPLOAD_FOLDER + "images/" + filename
             else:
+                flash('Unsupported or no image type, please try again.')
                 car_img_url = vehicleImage
                
             vehicles.region = form.region.data
