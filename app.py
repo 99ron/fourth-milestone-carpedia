@@ -32,6 +32,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['FLASKS3_ACTIVE'] = True
+app.config['FLASKS3_BUCKET_NAME'] = os.environ.get('S3_BUCKET_NAME')
 app.config['AWS_ACCESS_KEY_ID'] = os.environ.get('AWS_ACCESS_KEY_ID')
 app.config['AWS_SECRET_ACCESS_KEY']=os.environ.get('AWS_SECRET_ACCESS_KEY')
 
@@ -177,7 +178,8 @@ def addVehicle():
                 # If the file already exists then sets the url to it but doesn't upload the file.
                 s3 = boto3.resource('s3')
                 s3.Bucket('vinpedia-images').put_object(Key="images/" + filename, Body=file_img)
-            except:
+            except Exception as e:
+                print(e)
                 flash('Couldn\'t upload that file. Please try again on the edit page.')
                 car_img_url = UPLOAD_FOLDER + 'images/no_img.jpg'
         else:
@@ -321,15 +323,15 @@ def editVehicle(car_id, vehicleName):
             if file_img and allowed_file(file_img.filename):
                 filename = secure_filename(file_img.filename)
                 car_img_url = UPLOAD_FOLDER + "images/" + filename
+                print(car_img_url)
                 try:
-                    # This tries to places the physical image in to my bucket on S3. If it already exists 
-                    # or fails it'll just use the previous image. 
                     s3 = boto3.resource('s3')
                     s3.Bucket('vinpedia-images').put_object(Key="images/" + filename, Body=file_img)
+                    print(s3)
                 except Exception as e:
                     print(e)
-                    flash('Couldn\'t upload that file. Have put the previous image back on.')
-                    car_img_url = vehicleImage
+                    flash('Something didn\'t quite go to plan but will try to use the image you chose.' + e)
+                    car_img_url = UPLOAD_FOLDER + "images/" + filename
             else:
                 car_img_url = vehicleImage
                
