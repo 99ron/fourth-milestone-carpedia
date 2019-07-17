@@ -73,7 +73,7 @@ class Car(db.Model):
     drivetrain = db.Column(db.String(30), nullable=False)
     chassy_desc = db.Column(db.String(30), nullable=False)
     accel_time = db.Column(db.Float, nullable=False)
-    car_desc = db.Column(db.String(255), nullable=True)
+    car_desc = db.Column(db.String(1000), nullable=True)
     img_url = db.Column(db.String(250))
     upload_by = db.Column(db.String(30), nullable=False)
     likes = db.relationship('Popularity', foreign_keys='Popularity.car_id', backref="car", lazy='dynamic')
@@ -280,7 +280,7 @@ db.session.add(car_usdm_2)
 db.session.add(car_usdm_3)
 db.session.add(car_euro_1)
 db.session.commit()
+'''
 
 #db.drop_all()
 #db.create_all()    
-'''

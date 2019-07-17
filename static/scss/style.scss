@@ -111,6 +111,8 @@ rect { fill: $chart-colour;
 /*-------------------------------------------------------------------------
     Nav bar
 -------------------------------------------------------------------------*/
+
+// Formatting for the navbar
 .side-nav .divider {
     margin: 0px;
     padding: 0px;
@@ -136,6 +138,7 @@ rect { fill: $chart-colour;
     margin-bottom: 4%;
 }
 
+// Background container design.
 .info-container-design, .edit-container-design {
     background-color: $text-colour-prim;
     border: $text-colour-seco solid 1px;
@@ -155,6 +158,10 @@ rect { fill: $chart-colour;
 
 .summary-uploaded-by, .summary-more-info {
     margin: 15px;
+}
+
+.edit-vehicle-description {
+    padding-top: 10px;
 }
 
 .form-padding {
@@ -217,12 +224,13 @@ main {
     margin: 10px;
 }
 
-// Summary results table
+// Summary results table paddings
 #tableDiv {
     padding-left: 30px;
     padding-right: 30px;
 }
 
+// Formatting the Summary results table
 #tableDiv > table {
     table-layout: fixed;
     width: 100%;
@@ -431,6 +439,7 @@ main {
 }
 
 @media only screen and (max-width: 992px) {
+    // Adjusting vehicle image size for the header image
     .add-vehicle-header-image {
         width: 100%;
     }
@@ -441,6 +450,7 @@ main {
 }
 
 @media only screen and (min-width: 1201px) {
+    // Changes the image size for the displayed results when the resolution changes.
     .summary-images > img {
         object-fit: contain;
     }

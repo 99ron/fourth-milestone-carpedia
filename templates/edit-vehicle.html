@@ -3,23 +3,25 @@
 <div class="row">
     <div class="col s12">
             
-            <h1 class="center-align">Edit Vehicle</h1>
-            
-            <p class="center">Make any changes as you need to and click on the update button below.</p>
-            
-            <hr class="hr">
-            
-             {% with messages = get_flashed_messages() %} {% if messages %}
-             <div class="flash-message">
-                 {% for message in messages %}
-                 <ul>
-                     <li>
-                         <h4>{{ message }}</h4>
-                     </li>
-                 </ul>
-                 {% endfor %}
-             </div>
-         {% endif %} {% endwith %}
+        <h1 class="center-align">Edit Vehicle</h1>
+        
+        <p class="center">Make any changes as you need to and click on the update button below.</p>
+        
+        <hr class="hr">
+        
+         {% with messages = get_flashed_messages() %}
+             {% if messages %}
+                 <div class="flash-message">
+                     {% for message in messages %}
+                     <ul>
+                         <li>
+                             <h4>{{ message }}</h4>
+                         </li>
+                     </ul>
+                     {% endfor %}
+                 </div>
+            {% endif %} 
+        {% endwith %}
     </div>
              
 {% if vehicles %}
@@ -119,15 +121,15 @@
                             </tbody>
                         </table>
                     </div>
-                    
                     <div class="summary-car-image btn waves-effect blue lighten-1">
                         {{ form.car_img }}
                     </div> 
-                    <div class="col s12 edit-car-description center">
-                        <h5 class="center">Description</h5>
-                        {{ form.car_desc(cols="35", rows="20") }}
-                    </div> 
-                    
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <textarea id="edit-vehicle-description" class="materialize-textarea edit-vehicle-description" name="edit-car-description" data-length="1000"> {{ form.car_desc.data }}</textarea>
+                            <label for="edit-vehicle-description">Description</label>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="row col s12 edit-buttons center">

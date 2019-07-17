@@ -116,6 +116,9 @@ rect {
 .summary-uploaded-by, .summary-more-info {
   margin: 15px; }
 
+.edit-vehicle-description {
+  padding-top: 10px; }
+
 .form-padding {
   padding: 30px; }
 

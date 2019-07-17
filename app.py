@@ -145,15 +145,16 @@ def register():
             
             if not new_user:
                 # If the username is taken then flash a message to try another.
-                flash('This user already exists.')
+                flash('User already exists.')
                 return render_template('register.html', form=form)
             else:
                 # If username isn't taken then add to the Users table.
                 db.session.add(new_user)
                 db.session.commit()
                 return redirect(url_for('login'))
-        except:
-            flash('Error Occured, try again.')
+        except Exception as e:
+            print(e)
+            flash('User exists, please try another.')
             return render_template('register.html', form=form)
     
 @app.route('/add-vehicle', methods=['POST', 'GET'])
@@ -207,7 +208,8 @@ def addVehicle():
             db.session.commit()
             flash('Vehicle added to database.')
             return redirect(url_for('filter'))
-        except:
+        except Exception as e:
+            print(e)
             flash("This vehicle couldn't be added, try again.")
             return redirect(url_for('addVehicle'))
     else:
@@ -261,7 +263,8 @@ def myUploads():
         # Searches for the current logged in user's cars by comparing the user by the upload_by field.
         cars = Car.query.filter(user==Car.upload_by).order_by(Car.make)
         return render_template('filter-cars.html', cars=cars, form=form)
-    except:
+    except Exception as e:
+        print(e)
         flash("Something went wrong, please try again.")
         return render_template('filter-cars.html', cars=cars, form=form)
     
@@ -302,7 +305,7 @@ def editVehicle(car_id, vehicleName):
             form.body.data = vehicles.chassy_desc
             form.accel.data = vehicles.accel_time
             form.car_desc.data = vehicles.car_desc
-            
+
             
             return render_template("edit-vehicle.html", form=form, vehicles=vehicles)
         else:
@@ -357,7 +360,8 @@ def editVehicle(car_id, vehicleName):
         flash('Vehicle updated sucessfully!')
         return redirect(url_for('vehicleInfo', car_id=vehicles.id, vehicleName=vehicles.model))
         
-    except:
+    except Exception as e:
+        print(e)
         flash('Invalid Input.')
         return render_template("edit-vehicle.html", form=form, vehicles=vehicles) 
         
