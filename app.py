@@ -28,7 +28,12 @@ def allowed_file(filename):
 # Setting the app details.
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+
+# Local or Remote Database
+DATABASE_LOCAL = 'sqlite:///site.db'
+DATABASE_REMOTE = os.environ.get("DATABASE_URL")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_REMOTE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['FLASKS3_ACTIVE'] = True
@@ -516,4 +521,4 @@ def like(car_id, action):
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
     port=int(os.environ.get('PORT')),
-debug=True)
+debug=False)

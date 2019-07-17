@@ -152,6 +152,25 @@ The development version of my application is on GitHub and I push this code usin
 
 I've done all my testing on a local database which doesn't get uploaded to GitHub.
 
+## Local Deployment
+
+If you'd like to run this app locally you'll need to clone/pull from my git hub link: https://github.com/99ron/fourth-milestone-carpedia.git
+
+Once it's finished downloading, open a terminal and copy this command: pip3 install -r requirements.txt
+this will install the required modules.
+
+Open app.py and put a '#' infront of import * from models on line 13
+scroll down to line 36 and change the DATABASE_REMOTE to DATABASE_LOCAL so it will create the database locally.
+
+Open models.py and remove the '#' on line 286 to enable the db.create_all() command.
+Go to the terminal and type: python3 models.py and this will create the database locally, place the '#' back infront on line 286
+
+If you wanted to pre populate the database, remove the 3 ' on line 162 and also on line 285 and run in the terminal python3 models.py
+and once this has finished add the 3 ' back on line 162 and 285.
+
+From here you can remove the '#' on the app.py on line 13 we added earlier on, save and run the program by using python3 app.py in the terminal 
+to get on and create a new account and start adding to the database.
+
 ## Heroku Deployment Steps
 
     Go to the Heroku Website and create new app
