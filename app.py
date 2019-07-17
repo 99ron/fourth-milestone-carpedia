@@ -332,17 +332,15 @@ def editVehicle(car_id, vehicleName):
             if file_img and allowed_file(file_img.filename):
                 filename = secure_filename(file_img.filename)
                 car_img_url = UPLOAD_FOLDER + "images/" + filename
-                print(car_img_url)
+                
                 try:
                     s3 = boto3.resource('s3')
                     s3.Bucket('vinpedia-images').put_object(Key="images/" + filename, Body=file_img)
-                    print(s3)
                 except Exception as e:
                     print(e)
-                    flash('Something didn\'t quite go to plan but will try to use the image you chose.' + e)
+                    flash('Something didn\'t quite go to plan but will try to use the image you chose.')
                     car_img_url = UPLOAD_FOLDER + "images/" + filename
             else:
-                flash('Unsupported or no image type, please try again.')
                 car_img_url = vehicleImage
                
             vehicles.region = form.region.data
@@ -357,7 +355,7 @@ def editVehicle(car_id, vehicleName):
             vehicles.accel_time = form.accel.data
             vehicles.car_desc = form.car_desc.data
             vehicles.img_url = car_img_url
-    
+
     try:
         form.populate_obj(vehicles)
         db.session.merge(vehicles)

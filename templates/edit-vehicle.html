@@ -125,10 +125,10 @@
                         {{ form.car_img }}
                     </div> 
                     <div class='row'>
-                        <div class='input-field col s12'>
-                            <textarea id="edit-vehicle-description" class="materialize-textarea edit-vehicle-description" name="edit-car-description" data-length="1000"> {{ form.car_desc.data }}</textarea>
-                            <label for="edit-vehicle-description">Description</label>
-                        </div>
+                        <div class="col s12 edit-car-description center">
+                            <h5 class="center">Description</h5>
+                            {{ form.car_desc(cols="35", rows="20") }}
+                        </div> 
                     </div>
                 </div>
                 
